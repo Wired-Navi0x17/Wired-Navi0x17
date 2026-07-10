@@ -1,0 +1,223 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 170" width="100%" height="auto">
+    <style>
+        .meter-bg {
+            fill: #08030d;
+            stroke: #3b1f4a;
+            stroke-width: 2;
+        }
+        .label-text {
+            fill: #6b4f80;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 11px;
+            letter-spacing: 2px;
+        }
+        .divergence-glow {
+            filter: url(#panel-glow);
+        }
+    </style>
+    
+    <defs>
+        <!-- Nixie Glow (High Intensity Warm Amber) -->
+        <filter id="nixie-glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="3.5" result="blur1" />
+            <feGaussianBlur stdDeviation="8" result="blur2" />
+            <feMerge>
+                <feMergeNode in="blur2" />
+                <feMergeNode in="blur1" />
+                <feMergeNode in="SourceGraphic" />
+            </feMerge>
+        </filter>
+        
+        <!-- Panel Subtle Glow -->
+        <filter id="panel-glow" x="-10%" y="-10%" width="120%" height="120%">
+            <feGaussianBlur stdDeviation="10" result="blur" />
+            <feComponentTransfer in="blur" result="glow">
+                <feFuncA type="linear" slope="0.3"/>
+            </feComponentTransfer>
+            <feMerge>
+                <feMergeNode in="glow" />
+                <feMergeNode in="SourceGraphic" />
+            </feMerge>
+        </filter>
+
+        <!-- Glass Reflection Gradient -->
+        <linearGradient id="glass-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.3"/>
+            <stop offset="25%" stop-color="#ffffff" stop-opacity="0.05"/>
+            <stop offset="50%" stop-color="#ffffff" stop-opacity="0.0"/>
+            <stop offset="85%" stop-color="#ffffff" stop-opacity="0.05"/>
+            <stop offset="100%" stop-color="#ffffff" stop-opacity="0.25"/>
+        </linearGradient>
+
+        <!-- Metal Grid Mesh Pattern -->
+        <pattern id="grid-mesh" width="4" height="4" patternUnits="userSpaceOnUse">
+            <line x1="0" y1="0" x2="4" y2="0" stroke="#ff5500" stroke-width="0.3" opacity="0.3"/>
+            <line x1="0" y1="0" x2="0" y2="4" stroke="#ff5500" stroke-width="0.3" opacity="0.3"/>
+        </pattern>
+    </defs>
+
+    <!-- Meter Back Panel Chassis -->
+    <rect class="meter-bg" width="680" height="170" rx="6" />
+    
+    <!-- Vent grills (retro details) -->
+    <rect x="40" y="6" width="600" height="4" rx="2" fill="#000" opacity="0.6"/>
+    <rect x="40" y="160" width="600" height="4" rx="2" fill="#000" opacity="0.6"/>
+    
+    <!-- Nixie Tubes Group -->
+    <g class="divergence-glow" transform="translate(10, 5)">
+        
+            <!-- Nixie Digit Tube for '1' -->
+            <g transform="translate(40, 0)">
+                <!-- Back Grid Metal Mesh (Nixie characteristic) -->
+                <rect x="5" y="15" width="55" height="120" rx="10" fill="url(#grid-mesh)" opacity="0.25" stroke="#6b4f80" stroke-width="0.5" />
+                
+                <!-- Glass Envelope -->
+                <rect x="2" y="10" width="61" height="130" rx="15" fill="none" stroke="#3b1f4a" stroke-width="1.5" opacity="0.8" />
+                <rect x="5" y="13" width="55" height="124" rx="12" fill="url(#glass-gradient)" opacity="0.1" />
+                
+                <!-- Inactive digits background silhouette (gives a realistic Nixie feel) -->
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#ff5500" opacity="0.04">8</text>
+                
+                <!-- Active Glowing Digit -->
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#eab308" filter="url(#nixie-glow)">1</text>
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#fff" opacity="0.8">1</text>
+                
+                <!-- Base Mount -->
+                <rect x="2" y="135" width="61" height="12" rx="2" fill="#1f1130" stroke="#3b1f4a" stroke-width="1" />
+            </g>
+            
+            <!-- Nixie Dot Tube -->
+            <g transform="translate(117, 0)">
+                <!-- Glass Outer Tube -->
+                <rect x="20" y="25" width="25" height="100" rx="12.5" fill="none" stroke="#3b1f4a" stroke-width="1.5" opacity="0.8" />
+                <rect x="22" y="27" width="21" height="96" rx="10.5" fill="url(#glass-gradient)" opacity="0.1" />
+                <!-- Glowing Nixie Dot -->
+                <circle cx="32" cy="105" r="4" fill="#eab308" filter="url(#nixie-glow)" />
+                <circle cx="32" cy="105" r="2" fill="#fff" />
+            </g>
+            
+            <!-- Nixie Digit Tube for '0' -->
+            <g transform="translate(194, 0)">
+                <!-- Back Grid Metal Mesh (Nixie characteristic) -->
+                <rect x="5" y="15" width="55" height="120" rx="10" fill="url(#grid-mesh)" opacity="0.25" stroke="#6b4f80" stroke-width="0.5" />
+                
+                <!-- Glass Envelope -->
+                <rect x="2" y="10" width="61" height="130" rx="15" fill="none" stroke="#3b1f4a" stroke-width="1.5" opacity="0.8" />
+                <rect x="5" y="13" width="55" height="124" rx="12" fill="url(#glass-gradient)" opacity="0.1" />
+                
+                <!-- Inactive digits background silhouette (gives a realistic Nixie feel) -->
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#ff5500" opacity="0.04">8</text>
+                
+                <!-- Active Glowing Digit -->
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#eab308" filter="url(#nixie-glow)">0</text>
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#fff" opacity="0.8">0</text>
+                
+                <!-- Base Mount -->
+                <rect x="2" y="135" width="61" height="12" rx="2" fill="#1f1130" stroke="#3b1f4a" stroke-width="1" />
+            </g>
+            
+            <!-- Nixie Digit Tube for '4' -->
+            <g transform="translate(271, 0)">
+                <!-- Back Grid Metal Mesh (Nixie characteristic) -->
+                <rect x="5" y="15" width="55" height="120" rx="10" fill="url(#grid-mesh)" opacity="0.25" stroke="#6b4f80" stroke-width="0.5" />
+                
+                <!-- Glass Envelope -->
+                <rect x="2" y="10" width="61" height="130" rx="15" fill="none" stroke="#3b1f4a" stroke-width="1.5" opacity="0.8" />
+                <rect x="5" y="13" width="55" height="124" rx="12" fill="url(#glass-gradient)" opacity="0.1" />
+                
+                <!-- Inactive digits background silhouette (gives a realistic Nixie feel) -->
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#ff5500" opacity="0.04">8</text>
+                
+                <!-- Active Glowing Digit -->
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#eab308" filter="url(#nixie-glow)">4</text>
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#fff" opacity="0.8">4</text>
+                
+                <!-- Base Mount -->
+                <rect x="2" y="135" width="61" height="12" rx="2" fill="#1f1130" stroke="#3b1f4a" stroke-width="1" />
+            </g>
+            
+            <!-- Nixie Digit Tube for '8' -->
+            <g transform="translate(348, 0)">
+                <!-- Back Grid Metal Mesh (Nixie characteristic) -->
+                <rect x="5" y="15" width="55" height="120" rx="10" fill="url(#grid-mesh)" opacity="0.25" stroke="#6b4f80" stroke-width="0.5" />
+                
+                <!-- Glass Envelope -->
+                <rect x="2" y="10" width="61" height="130" rx="15" fill="none" stroke="#3b1f4a" stroke-width="1.5" opacity="0.8" />
+                <rect x="5" y="13" width="55" height="124" rx="12" fill="url(#glass-gradient)" opacity="0.1" />
+                
+                <!-- Inactive digits background silhouette (gives a realistic Nixie feel) -->
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#ff5500" opacity="0.04">8</text>
+                
+                <!-- Active Glowing Digit -->
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#eab308" filter="url(#nixie-glow)">8</text>
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#fff" opacity="0.8">8</text>
+                
+                <!-- Base Mount -->
+                <rect x="2" y="135" width="61" height="12" rx="2" fill="#1f1130" stroke="#3b1f4a" stroke-width="1" />
+            </g>
+            
+            <!-- Nixie Digit Tube for '5' -->
+            <g transform="translate(425, 0)">
+                <!-- Back Grid Metal Mesh (Nixie characteristic) -->
+                <rect x="5" y="15" width="55" height="120" rx="10" fill="url(#grid-mesh)" opacity="0.25" stroke="#6b4f80" stroke-width="0.5" />
+                
+                <!-- Glass Envelope -->
+                <rect x="2" y="10" width="61" height="130" rx="15" fill="none" stroke="#3b1f4a" stroke-width="1.5" opacity="0.8" />
+                <rect x="5" y="13" width="55" height="124" rx="12" fill="url(#glass-gradient)" opacity="0.1" />
+                
+                <!-- Inactive digits background silhouette (gives a realistic Nixie feel) -->
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#ff5500" opacity="0.04">8</text>
+                
+                <!-- Active Glowing Digit -->
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#eab308" filter="url(#nixie-glow)">5</text>
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#fff" opacity="0.8">5</text>
+                
+                <!-- Base Mount -->
+                <rect x="2" y="135" width="61" height="12" rx="2" fill="#1f1130" stroke="#3b1f4a" stroke-width="1" />
+            </g>
+            
+            <!-- Nixie Digit Tube for '9' -->
+            <g transform="translate(502, 0)">
+                <!-- Back Grid Metal Mesh (Nixie characteristic) -->
+                <rect x="5" y="15" width="55" height="120" rx="10" fill="url(#grid-mesh)" opacity="0.25" stroke="#6b4f80" stroke-width="0.5" />
+                
+                <!-- Glass Envelope -->
+                <rect x="2" y="10" width="61" height="130" rx="15" fill="none" stroke="#3b1f4a" stroke-width="1.5" opacity="0.8" />
+                <rect x="5" y="13" width="55" height="124" rx="12" fill="url(#glass-gradient)" opacity="0.1" />
+                
+                <!-- Inactive digits background silhouette (gives a realistic Nixie feel) -->
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#ff5500" opacity="0.04">8</text>
+                
+                <!-- Active Glowing Digit -->
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#eab308" filter="url(#nixie-glow)">9</text>
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#fff" opacity="0.8">9</text>
+                
+                <!-- Base Mount -->
+                <rect x="2" y="135" width="61" height="12" rx="2" fill="#1f1130" stroke="#3b1f4a" stroke-width="1" />
+            </g>
+            
+            <!-- Nixie Digit Tube for '6' -->
+            <g transform="translate(579, 0)">
+                <!-- Back Grid Metal Mesh (Nixie characteristic) -->
+                <rect x="5" y="15" width="55" height="120" rx="10" fill="url(#grid-mesh)" opacity="0.25" stroke="#6b4f80" stroke-width="0.5" />
+                
+                <!-- Glass Envelope -->
+                <rect x="2" y="10" width="61" height="130" rx="15" fill="none" stroke="#3b1f4a" stroke-width="1.5" opacity="0.8" />
+                <rect x="5" y="13" width="55" height="124" rx="12" fill="url(#glass-gradient)" opacity="0.1" />
+                
+                <!-- Inactive digits background silhouette (gives a realistic Nixie feel) -->
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#ff5500" opacity="0.04">8</text>
+                
+                <!-- Active Glowing Digit -->
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#eab308" filter="url(#nixie-glow)">6</text>
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#fff" opacity="0.8">6</text>
+                
+                <!-- Base Mount -->
+                <rect x="2" y="135" width="61" height="12" rx="2" fill="#1f1130" stroke="#3b1f4a" stroke-width="1" />
+            </g>
+            
+    </g>
+    
+    <!-- Panel label -->
+    <text x="640" y="152" class="label-text" text-anchor="end">WORLD LINE DIVERGENCE METER</text>
+</svg>
