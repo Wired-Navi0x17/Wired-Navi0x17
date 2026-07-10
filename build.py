@@ -26,13 +26,12 @@ def fetch_github_stats(username):
     Includes rate-limit fallbacks to keep the build resilient.
     """
     headers = {}
-    # Use PAT token if available in env (e.g. during GitHub Actions run)
     token = os.environ.get("GITHUB_TOKEN")
     if token:
         headers["Authorization"] = f"token {token}"
         
     stats = {
-        "repos": 3,
+        "repos": 5,
         "stars": 0,
         "followers": 1,
         "last_sync": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC"),
@@ -54,9 +53,9 @@ def fetch_github_stats(username):
             total_stars = sum(repo.get("stargazers_count", 0) for repo in repos_data)
             stats["stars"] = total_stars
             
-        # Dynamic calculation of cognitive sync rate based on date/hour (for fun visual dynamics)
+        # Dynamic calculation of cognitive sync rate
         hour = datetime.datetime.now().hour
-        sync_val = 90.0 + (hour * 0.4)
+        sync_val = 92.0 + (hour * 0.3)
         stats["sync_pct"] = f"{sync_val:.1f}%"
         
     except Exception as e:
@@ -77,34 +76,34 @@ def generate_terminal_svg(username, stats):
 ██║ █╗ ██║██║██████╔╝█████╗  ██║  ██║    ██╔██╗ ██║███████║██║   ██║██║
 ██║███╗██║██║██╔══██╗██╔══╝  ██║  ██║    ██║╚██╗██║██╔══██║╚██╗ ██╔╝██║
 ╚███╔███╔╝██║██║  ██║███████╗██████╔╝    ██║ ╚████║██║  ██║ ╚████╔╝ ██║
- ╚══╝╚══╝ ╚═╝╚═╝  ╚═╝╚══════╝╚═════╝     ╚═╝  ╚═══╝╚═╝  ╚═╝  ╚═══╝  ╚═╝"""
+ ╚══╝╚══╝ ╚═╝╚═╝  ╚═╝╚══════╝╚═════╝     ╚═╝  ╚═══╝╚═╝  ╚═╝  ╚═══╝  ╚══╝"""
 
     ascii_lines = [line for line in ascii_art.split("\n") if line.strip()]
     ascii_svg_lines = ""
     y_start = 90
     for idx, line in enumerate(ascii_lines):
         escaped_line = line.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
-        # Plain text without SVG filter to prevent browser double-render / ghost text bugs in Safari/Firefox
         ascii_svg_lines += f'<text x="50" y="{y_start + idx*12}" fill="{THEME["border_active"]}" font-family="monospace" font-size="8.5" font-weight="bold" xml:space="preserve">{escaped_line}</text>\n'
 
-    # Technical Skills
+    # Technical Skills matching the user's actual profile
     skills = [
-        {"name": "Java Engineering", "desc": "Enterprise API, Decoders", "level": 90, "color": THEME["cyan"]},
-        {"name": "Python Automation", "desc": "System Telemetry, Scripts", "level": 85, "color": THEME["pink"]},
-        {"name": "Linux / DevOps", "desc": "Unix Systems, Shell Rice", "level": 80, "color": THEME["gold"]}
+        {"name": "Java Engineering", "desc": "APIs, OOP Architecture", "level": 90, "color": THEME["cyan"]},
+        {"name": "Python / Flask", "desc": "ML Pipelines, Backend", "level": 85, "color": THEME["pink"]},
+        {"name": "Embedded C/C++", "desc": "Cortex-M0+, RP2040", "level": 80, "color": THEME["gold"]},
+        {"name": "SQL / Supabase", "desc": "Relational DB, Auth", "level": 75, "color": THEME["border_active"]}
     ]
     
     skills_svg = ""
-    skills_y = 230
+    skills_y = 225
     for idx, skill in enumerate(skills):
         filled_blocks = skill["level"] // 10
         empty_blocks = 10 - filled_blocks
         bar = "■" * filled_blocks + "□" * empty_blocks
         skills_svg += f"""
-        <text x="50" y="{skills_y + idx*26}" fill="{THEME["fg"]}" font-family="monospace" font-size="13">
-            <tspan fill="{THEME["gray"]}">&gt; </tspan><tspan font-weight="bold">{skill["name"].ljust(20)}</tspan> 
+        <text x="50" y="{skills_y + idx*23}" fill="{THEME["fg"]}" font-family="monospace" font-size="12">
+            <tspan fill="{THEME["gray"]}">&gt; </tspan><tspan font-weight="bold">{skill["name"].ljust(18)}</tspan> 
             <tspan fill="{THEME["gray"]}">[</tspan><tspan fill="{skill["color"]}">{bar}</tspan><tspan fill="{THEME["gray"]}">]</tspan>
-            <tspan fill="{THEME["gray"]}" font-size="11"> // {skill["desc"]}</tspan>
+            <tspan fill="{THEME["gray"]}" font-size="10.5"> // {skill["desc"]}</tspan>
         </text>
         """
 
@@ -125,7 +124,6 @@ def generate_terminal_svg(username, stats):
         .console-text {{
             font-family: 'JetBrains Mono', 'Courier New', monospace;
             font-size: 14px;
-            /* Safe CSS drop-shadow instead of SVG filter to bypass Safari ghosting bugs */
             text-shadow: 0 0 3px rgba(192, 132, 252, 0.45);
         }}
         .header-glow {{
@@ -241,17 +239,17 @@ def generate_terminal_svg(username, stats):
         <line x1="50" y1="210" x2="790" y2="210" stroke="{THEME["border_inactive"]}" stroke-width="1.5" stroke-dasharray="5 5" />
         
         <!-- Skills Header -->
-        <text x="50" y="225" fill="{THEME["gold"]}" font-family="monospace" font-size="13" font-weight="bold">&gt;_ core_modules_loaded</text>
+        <text x="50" y="220" fill="{THEME["gold"]}" font-family="monospace" font-size="12" font-weight="bold">&gt;_ core_modules_loaded</text>
         
         <!-- Skills/Languages List -->
         {skills_svg}
         
-        <!-- Connected Nodes Section (Professional Links) -->
-        <text x="50" y="325" fill="{THEME["cyan"]}" font-family="monospace" font-size="13" font-weight="bold" class="header-glow">&gt;_ connected_nodes</text>
-        <text x="50" y="348" fill="{THEME["fg"]}" font-family="monospace" font-size="13">
+        <!-- Connected Nodes Section -->
+        <text x="50" y="335" fill="{THEME["cyan"]}" font-family="monospace" font-size="12" font-weight="bold" class="header-glow">&gt;_ connected_nodes</text>
+        <text x="50" y="354" fill="{THEME["fg"]}" font-family="monospace" font-size="12">
             <tspan fill="{THEME["gray"]}">&gt; </tspan>Website: <tspan fill="{THEME["cyan"]}">https://pr0t0lain.dpdns.org</tspan>
         </text>
-        <text x="50" y="368" fill="{THEME["fg"]}" font-family="monospace" font-size="13">
+        <text x="50" y="372" fill="{THEME["fg"]}" font-family="monospace" font-size="12">
             <tspan fill="{THEME["gray"]}">&gt; </tspan>LinkedIn: <tspan fill="{THEME["cyan"]}">https://linkedin.com/in/haru-l41n-pr0t0</tspan>
         </text>
         
@@ -266,7 +264,7 @@ def generate_terminal_svg(username, stats):
         </g>
         
         <!-- Blinking Prompt -->
-        <text x="50" y="465" fill="{THEME["fg"]}" font-family="monospace" font-size="14">
+        <text x="50" y="465" fill="{THEME["fg"]}" font-family="monospace" font-size="13">
             <tspan fill="{THEME["cyan"]}">Wired-Navi0x1F@wired</tspan>:<tspan fill="{THEME["pink"]}">~</tspan>$ <tspan fill="{THEME["fg"]}">close_world --open-next</tspan>
         </text>
         <rect x="424" y="452" width="8" height="15" class="cursor" />
@@ -338,7 +336,7 @@ def generate_divergence_meter_svg():
             </g>
             """
 
-    svg_content = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 190" width="100%" height="auto">
+    svg_content = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 170" width="100%" height="auto">
     <style>
         .meter-bg {{
             fill: #06020a;
@@ -410,7 +408,7 @@ def generate_divergence_meter_svg():
     <!-- Metallic Bezel Lines -->
     <rect x="5" y="5" width="670" height="160" rx="4" fill="none" stroke="{THEME["border_inactive"]}" stroke-width="1" opacity="0.4" />
     
-    <!-- Vent grills (retro details) -->
+    <!-- Vent grills -->
     <rect x="40" y="8" width="600" height="3" rx="1.5" fill="#000000" opacity="0.8"/>
     <rect x="40" y="159" width="600" height="3" rx="1.5" fill="#000000" opacity="0.8"/>
     
@@ -419,7 +417,7 @@ def generate_divergence_meter_svg():
         {nixie_tubes}
     </g>
     
-    <!-- Panel label (Provides explicit Steins;Gate easter-egg context) -->
+    <!-- Panel label (Steins;Gate worldline context) -->
     <text x="640" y="152" class="label-text" text-anchor="end">TARGET DIVERGENCE: 1.048596% // STEINS;GATE WORLD LINE METER</text>
 </svg>
 """
@@ -447,13 +445,13 @@ def main():
     readme_content = f"""# 🌐 Wired-Navi0x1F
 
 <div align="center">
-  <img src="terminal.svg?v=4" width="850" alt="Lain-themed NAVI terminal showing system parameters and technical skills" style="max-width: 100%; height: auto;" />
+  <img src="terminal.svg?v=5" width="850" alt="Lain-themed NAVI terminal showing system parameters and technical skills" style="max-width: 100%; height: auto;" />
 </div>
 
 <br />
 
 <div align="center">
-  <img src="divergence_meter.svg?v=4" width="680" alt="Steins;Gate Nixie Tube World Line Divergence Meter displaying 1.048596%" style="max-width: 100%; height: auto;" />
+  <img src="divergence_meter.svg?v=5" width="680" alt="Steins;Gate Nixie Tube World Line Divergence Meter displaying 1.048596%" style="max-width: 100%; height: auto;" />
 </div>
 
 <br />
@@ -463,25 +461,50 @@ def main():
     <img src="https://img.shields.io/badge/🌐_NODE_DOMAIN-pr0t0lain.dpdns.org-00f0ff?style=for-the-badge&logo=internet-explorer&logoColor=ffffff&labelColor=150a21" alt="Website Link" />
   </a>
   &nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="https://linkedin.com/in/haru-l41n-pr0t0" target="_blank" alt="Visit LinkedIn Profile">
+  <a href="https://in.linkedin.com/in/haru-l41n-pr0t0" target="_blank" alt="Visit LinkedIn Profile">
     <img src="https://img.shields.io/badge/💼_GUILD_LINK-linkedin.com/in/haru--l41n--pr0t0-ff66cc?style=for-the-badge&logo=linkedin&logoColor=ffffff&labelColor=150a21" alt="LinkedIn Link" />
   </a>
 </div>
 
 <br />
 
-## ─── 📡 ACTIVE WORKSTATION NODES ───
+## ─── 📡 BIOLOGICAL NODE PARAMETERS (ABOUT ME) ───
 
-A developer profile focusing on low-level systems, intelligent monitoring, and data graphs, built inside Layer 07 of the Wired.
+I am a **Computer Science & Engineering (CSE)** student at **RV University**, specializing in embedded systems, backend infrastructure, and artificial intelligence, operating at the intersection of the physical and virtual worlds.
 
-### 🧠 Featured Operational Modules
+*   🔭 **Research Focus:** Project intern at **CARA**, researching machine learning models and **neuro-symbolic AI** for Network Intrusion Detection Systems (IDS).
+*   💼 **Industry Experience:** Developing legal-tech automation platforms and case workflow planners for **The Kala Lawyers**, utilizing **Supabase** and robust database patterns.
+*   🧭 **Aesthetic Vibe:** Heavy hardware-hacking and retro-cybernetics enthusiast inspired by *Serial Experiments Lain* and *Steins;Gate*.
 
-*   **[Synapse-Notes](https://github.com/Wired-Navi0x1F/Synapse-Notes)**
+---
+
+### 🧠 CORE SYSTEM SPECS (TECH STACK)
+
+*   **Languages:** `Java`, `Python`, `C`, `C++`, `SQL`
+*   **Web & Data Layer:** `Flask`, `Three.js`, `Supabase`, `MySQL`, `HTML5/CSS3`
+*   **Systems & Embedded:** `ARM Cortex-M0+`, `RP2040`, `Linux`, `Bash`
+
+---
+
+### 🕸️ ACTIVE PROJECT NODES (FEATURED PROJECTS)
+
+*   ⚡ **[Synapse-Notes](https://github.com/Wired-Navi0x1F/Synapse-Notes)**
     *   *A 3D force-directed knowledge graph mapping personal notes.* Built with **Flask**, **MySQL**, and **Three.js** to map and traverse interconnected knowledge nodes.
-*   **[Neuro-Symbolic-IDS](https://github.com/Wired-Navi0x1F/Neuro-Symbolic-IDS)**
+*   🤖 **[Neuro-Symbolic-IDS](https://github.com/Wired-Navi0x1F/Neuro-Symbolic-IDS)**
     *   *Hybrid machine learning intrusion detection system.* Combining deep-learning pattern matching with neuro-symbolic logic to monitor and protect local system nodes.
-*   **[Embedded NAVI Controllers](https://github.com/Wired-Navi0x1F/LainOS-Wired)**
-    *   *Microcontroller casing and system rices.* C, C++, and Python firmware scripts for ARM Cortex-M0+ / RP2040 boards and custom desktop environments.
+*   💾 **[LainOS-Wired](https://github.com/Wired-Navi0x1F/LainOS-Wired)**
+    *   *Microcontroller scripts and system configurations.* C, C++, and Python firmware scripts for custom ARM Cortex-M0+ boards and UNIX desktop environments.
+
+---
+
+### ⚙️ SYSTEM STATE (`/dev/status`)
+
+```
+[SYSTEM PARAMETERS]
+> CURRENT_PROJECT: Synapse-Notes (Flask + MySQL + Three.js 3D graph)
+> CURRENT_BOSS:    Neuro-symbolic rule extraction from IDS logs
+> COMPILER_TARGET: Real-time inference optimization on RP2040 nodes
+```
 
 ---
 

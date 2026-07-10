@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 190" width="100%" height="auto">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 170" width="100%" height="auto">
     <style>
         .meter-bg {
             fill: #06020a;
@@ -70,7 +70,7 @@
     <!-- Metallic Bezel Lines -->
     <rect x="5" y="5" width="670" height="160" rx="4" fill="none" stroke="#311840" stroke-width="1" opacity="0.4" />
     
-    <!-- Vent grills (retro details) -->
+    <!-- Vent grills -->
     <rect x="40" y="8" width="600" height="3" rx="1.5" fill="#000000" opacity="0.8"/>
     <rect x="40" y="159" width="600" height="3" rx="1.5" fill="#000000" opacity="0.8"/>
     
@@ -272,6 +272,6 @@
             
     </g>
     
-    <!-- Panel label (Provides explicit Steins;Gate easter-egg context) -->
+    <!-- Panel label (Steins;Gate worldline context) -->
     <text x="640" y="152" class="label-text" text-anchor="end">TARGET DIVERGENCE: 1.048596% // STEINS;GATE WORLD LINE METER</text>
 </svg>
