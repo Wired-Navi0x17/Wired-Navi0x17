@@ -20,6 +20,50 @@ THEME = {
     "light_orange": "#ffcc66"      # Nixie Filament
 }
 
+def fetch_github_stats(username):
+    """
+    Fetches real public metadata from GitHub API for dynamic display.
+    Includes rate-limit fallbacks to keep the build resilient.
+    """
+    headers = {}
+    # Use PAT token if available in env (e.g. during GitHub Actions run)
+    token = os.environ.get("GITHUB_TOKEN")
+    if token:
+        headers["Authorization"] = f"token {token}"
+        
+    stats = {
+        "repos": 3,
+        "stars": 0,
+        "followers": 1,
+        "last_sync": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC"),
+        "sync_pct": "98.4%"
+    }
+    
+    try:
+        # Fetch user profile data
+        user_res = requests.get(f"https://api.github.com/users/{username}", headers=headers, timeout=5)
+        if user_res.status_code == 200:
+            user_data = user_res.json()
+            stats["repos"] = user_data.get("public_repos", stats["repos"])
+            stats["followers"] = user_data.get("followers", stats["followers"])
+            
+        # Fetch repos to count stars
+        repos_res = requests.get(f"https://api.github.com/users/{username}/repos?per_page=100", headers=headers, timeout=5)
+        if repos_res.status_code == 200:
+            repos_data = repos_res.json()
+            total_stars = sum(repo.get("stargazers_count", 0) for repo in repos_data)
+            stats["stars"] = total_stars
+            
+        # Dynamic calculation of cognitive sync rate based on date/hour (for fun visual dynamics)
+        hour = datetime.datetime.now().hour
+        sync_val = 90.0 + (hour * 0.4)
+        stats["sync_pct"] = f"{sync_val:.1f}%"
+        
+    except Exception as e:
+        print(f"Error fetching GitHub stats: {e}. Falling back to default metrics.", file=sys.stderr)
+        
+    return stats
+
 def generate_terminal_svg(username, stats):
     """
     Generates a highly immersive, 3D CRT-style terminal SVG with deep Serial Experiments Lain visual cues.
@@ -40,9 +84,10 @@ def generate_terminal_svg(username, stats):
     y_start = 90
     for idx, line in enumerate(ascii_lines):
         escaped_line = line.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+        # Plain text without SVG filter to prevent browser double-render / ghost text bugs in Safari/Firefox
         ascii_svg_lines += f'<text x="50" y="{y_start + idx*12}" fill="{THEME["border_active"]}" font-family="monospace" font-size="8.5" font-weight="bold" xml:space="preserve">{escaped_line}</text>\n'
 
-    # Technical Skills - professional but styled
+    # Technical Skills
     skills = [
         {"name": "Java Engineering", "desc": "Enterprise API, Decoders", "level": 90, "color": THEME["cyan"]},
         {"name": "Python Automation", "desc": "System Telemetry, Scripts", "level": 85, "color": THEME["pink"]},
@@ -80,9 +125,11 @@ def generate_terminal_svg(username, stats):
         .console-text {{
             font-family: 'JetBrains Mono', 'Courier New', monospace;
             font-size: 14px;
+            /* Safe CSS drop-shadow instead of SVG filter to bypass Safari ghosting bugs */
+            text-shadow: 0 0 3px rgba(192, 132, 252, 0.45);
         }}
-        .glow {{
-            filter: url(#crt-glow);
+        .header-glow {{
+            text-shadow: 0 0 4px rgba(0, 240, 255, 0.6);
         }}
         @keyframes blink {{
             0%, 49% {{ opacity: 1; }}
@@ -95,15 +142,6 @@ def generate_terminal_svg(username, stats):
     </style>
 
     <defs>
-        <!-- CRT Glow Filter -->
-        <filter id="crt-glow" x="-10%" y="-10%" width="120%" height="120%">
-            <feGaussianBlur stdDeviation="1.8" result="blur" />
-            <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-            </feMerge>
-        </filter>
-        
         <!-- Scanline Pattern -->
         <pattern id="scanline-pattern" width="850" height="6" patternUnits="userSpaceOnUse">
             <rect width="850" height="3" fill="#000" />
@@ -147,7 +185,7 @@ def generate_terminal_svg(username, stats):
     <rect x="14" y="14" width="822" height="482" rx="8" class="terminal-bg" />
     
     <!-- Immersive Background Silhouette: Telephone Pole and Powerlines (Lain visual essence) -->
-    <g opacity="0.35">
+    <g opacity="0.32">
         <!-- Power Pole -->
         <line x1="720" y1="14" x2="720" y2="496" stroke="#251233" stroke-width="8" />
         <line x1="640" y1="100" x2="800" y2="100" stroke="#251233" stroke-width="4" />
@@ -169,7 +207,7 @@ def generate_terminal_svg(username, stats):
     <rect x="14" y="14" width="822" height="482" class="scanlines" rx="8" pointer-events="none" />
     
     <!-- Sweeping Laser Scanline (CRT electron gun sweep) -->
-    <rect x="15" y="35" width="820" height="2" fill="{THEME["cyan"]}" opacity="0.35" filter="url(#crt-glow)">
+    <rect x="15" y="35" width="820" height="2" fill="{THEME["cyan"]}" opacity="0.3" pointer-events="none">
         <animate attributeName="y" from="35" to="490" dur="8s" repeatCount="indefinite" />
     </rect>
     
@@ -184,17 +222,17 @@ def generate_terminal_svg(username, stats):
     <text x="425" y="36" class="title-text" text-anchor="middle" font-weight="bold">Wired-Navi0x1F@NAVI-Terminal:~ (Protocol: Layer_07_Active)</text>
     
     <!-- System Diagnostics Block -->
-    <g class="console-text glow">
+    <g class="console-text">
         <!-- Diagnostic Block (Right Side) -->
         <rect x="540" y="70" width="265" height="135" rx="4" fill="{THEME["bg"]}" stroke="{THEME["border_inactive"]}" stroke-width="1.5" />
-        <text x="555" y="95" fill="{THEME["cyan"]}" font-family="monospace" font-size="12" font-weight="bold">[SYSTEM DIAGNOSTICS]</text>
-        <text x="555" y="120" fill="{THEME["fg"]}" font-family="monospace" font-size="11">NODE: Wired-Navi0x1F</text>
-        <text x="555" y="140" fill="{THEME["fg"]}" font-family="monospace" font-size="11">WIRED PROTOCOL: ACTIVE</text>
-        <text x="555" y="160" fill="{THEME["fg"]}" font-family="monospace" font-size="11">COGNITIVE SYNC: 98.4%</text>
-        <text x="555" y="180" fill="{THEME["fg"]}" font-family="monospace" font-size="10" fill-opacity="0.7">REALM: Layer 07 // The Wired</text>
+        <text x="555" y="95" fill="{THEME["cyan"]}" font-family="monospace" font-size="12" font-weight="bold" class="header-glow">[SYSTEM DIAGNOSTICS]</text>
+        <text x="555" y="120" fill="{THEME["fg"]}" font-family="monospace" font-size="11">NODE: {username}</text>
+        <text x="555" y="140" fill="{THEME["fg"]}" font-family="monospace" font-size="11">ACTIVE MODULES: {stats["repos"]}</text>
+        <text x="555" y="160" fill="{THEME["fg"]}" font-family="monospace" font-size="11">SYNC RATE: {stats["sync_pct"]}</text>
+        <text x="555" y="180" fill="{THEME["fg"]}" font-family="monospace" font-size="10" fill-opacity="0.7">LAST SYNC: {stats["last_sync"].split()[0]}</text>
         
         <!-- Welcome Messages -->
-        <text x="50" y="75" fill="{THEME["cyan"]}" font-family="monospace" font-size="13" font-weight="bold">&gt; Initializing NAVI-OS v7.25...</text>
+        <text x="50" y="75" fill="{THEME["cyan"]}" font-family="monospace" font-size="13" font-weight="bold" class="header-glow">&gt; Initializing NAVI-OS v7.25...</text>
         
         <!-- ASCII Logo -->
         {ascii_svg_lines}
@@ -209,7 +247,7 @@ def generate_terminal_svg(username, stats):
         {skills_svg}
         
         <!-- Connected Nodes Section (Professional Links) -->
-        <text x="50" y="325" fill="{THEME["cyan"]}" font-family="monospace" font-size="13" font-weight="bold">&gt;_ connected_nodes</text>
+        <text x="50" y="325" fill="{THEME["cyan"]}" font-family="monospace" font-size="13" font-weight="bold" class="header-glow">&gt;_ connected_nodes</text>
         <text x="50" y="348" fill="{THEME["fg"]}" font-family="monospace" font-size="13">
             <tspan fill="{THEME["gray"]}">&gt; </tspan>Website: <tspan fill="{THEME["cyan"]}">https://pr0t0lain.dpdns.org</tspan>
         </text>
@@ -247,7 +285,7 @@ def generate_terminal_svg(username, stats):
 def generate_divergence_meter_svg():
     """
     Generates a high-fidelity Steins;Gate Divergence Meter SVG using glowing Nixie Tubes.
-    Features metallic chassis, detailed tube grids, filaments, and deep warmth glows.
+    Includes detailed chassis, filaments, warmth glows, and a clear label identifying the worldline.
     """
     digits = ["1", ".", "0", "4", "8", "5", "9", "6"]
     nixie_tubes = ""
@@ -300,7 +338,7 @@ def generate_divergence_meter_svg():
             </g>
             """
 
-    svg_content = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 170" width="100%" height="auto">
+    svg_content = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 190" width="100%" height="auto">
     <style>
         .meter-bg {{
             fill: #06020a;
@@ -310,7 +348,7 @@ def generate_divergence_meter_svg():
         .label-text {{
             fill: {THEME["gray"]};
             font-family: 'JetBrains Mono', 'Courier New', monospace;
-            font-size: 11px;
+            font-size: 9px;
             letter-spacing: 2px;
         }}
         .divergence-glow {{
@@ -381,8 +419,8 @@ def generate_divergence_meter_svg():
         {nixie_tubes}
     </g>
     
-    <!-- Panel label -->
-    <text x="640" y="152" class="label-text" text-anchor="end">WORLD LINE DIVERGENCE METER</text>
+    <!-- Panel label (Provides explicit Steins;Gate easter-egg context) -->
+    <text x="640" y="152" class="label-text" text-anchor="end">TARGET DIVERGENCE: 1.048596% // STEINS;GATE WORLD LINE METER</text>
 </svg>
 """
     return svg_content
@@ -390,7 +428,9 @@ def generate_divergence_meter_svg():
 
 def main():
     username = "Wired-Navi0x1F"
-    stats = {}
+    
+    print("Fetching live data from GitHub API...")
+    stats = fetch_github_stats(username)
     
     print("Generating retro terminal card...")
     terminal_svg = generate_terminal_svg(username, stats)
@@ -403,75 +443,69 @@ def main():
         f.write(divergence_svg)
 
     print("Generating README.md...")
-    # Generate the Markdown file structure with links
+    # Generate the Markdown file structure with clean layout and links
     readme_content = f"""# 🌐 Wired-Navi0x1F
 
 <div align="center">
-  <img src="terminal.svg?v=3" width="850" alt="NAVI Terminal System Core" style="max-width: 100%; height: auto;" />
+  <img src="terminal.svg?v=4" width="850" alt="Lain-themed NAVI terminal showing system parameters and technical skills" style="max-width: 100%; height: auto;" />
 </div>
 
 <br />
 
 <div align="center">
-  <img src="divergence_meter.svg?v=3" width="680" alt="World Line Divergence Meter" style="max-width: 100%; height: auto;" />
+  <img src="divergence_meter.svg?v=4" width="680" alt="Steins;Gate Nixie Tube World Line Divergence Meter displaying 1.048596%" style="max-width: 100%; height: auto;" />
 </div>
 
 <br />
 
 <div align="center">
-  <a href="https://pr0t0lain.dpdns.org" target="_blank">
-    <img src="https://img.shields.io/badge/🌐_NODE_DOMAIN-pr0t0lain.dpdns.org-00f0ff?style=for-the-badge&logo=internet-explorer&logoColor=ffffff&labelColor=150a21" />
+  <a href="https://pr0t0lain.dpdns.org" target="_blank" alt="Visit Personal Website">
+    <img src="https://img.shields.io/badge/🌐_NODE_DOMAIN-pr0t0lain.dpdns.org-00f0ff?style=for-the-badge&logo=internet-explorer&logoColor=ffffff&labelColor=150a21" alt="Website Link" />
   </a>
   &nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="https://linkedin.com/in/haru-l41n-pr0t0" target="_blank">
-    <img src="https://img.shields.io/badge/💼_GUILD_LINK-linkedin.com/in/haru--l41n--pr0t0-ff66cc?style=for-the-badge&logo=linkedin&logoColor=ffffff&labelColor=150a21" />
+  <a href="https://linkedin.com/in/haru-l41n-pr0t0" target="_blank" alt="Visit LinkedIn Profile">
+    <img src="https://img.shields.io/badge/💼_GUILD_LINK-linkedin.com/in/haru--l41n--pr0t0-ff66cc?style=for-the-badge&logo=linkedin&logoColor=ffffff&labelColor=150a21" alt="LinkedIn Link" />
   </a>
 </div>
 
 <br />
 
-## ─── 📡 PHYSICAL PARAMETERS & WIRED STATE ───
+## ─── 📡 ACTIVE WORKSTATION NODES ───
 
-```
-[SYSTEM IDENTITY]
-Username:   Wired-Navi0x1F
-System OS:  NAVI Copula Kernel 7.25
-Presence:   Connected to the Wired
-Location:   Layer 07 // The Wired
-```
+A developer profile focusing on low-level systems, intelligent monitoring, and data graphs, built inside Layer 07 of the Wired.
 
-### 🧠 Core Directives & Technologies
+### 🧠 Featured Operational Modules
 
-- ☕ **Java & Enterprise Architecture**: Designing modular backends, synchronous server architectures, and network layer systems.
-- 🐍 **Python & Intelligent Tools**: Constructing automation scripts, processing diagnostic logs, and neural data layers.
-- 🐧 **Linux Terminal & Environments**: System customisation, shell utilities, and automation scripts.
-
----
-
-### 🕸️ Project Sub-nodes (System Repos)
-
-Here are the active operational modules currently synchronized on the local node:
-
-1. **[LainOS-Wired](https://github.com/Wired-Navi0x1F/LainOS-Wired)** *(Config files & dotfiles for Hyprland rices reflecting the retro-cyber aesthetics of Serial Experiments Lain)*
-2. **[Copula-Core](https://github.com/Wired-Navi0x1F/Copula-Core)** *(Java system protocols and data structures modeled after retro NAVI systems)*
-3. **[Nixie-Divergence](https://github.com/Wired-Navi0x1F/Nixie-Divergence)** *(Python-based world line calculation and simulation modules)*
+*   **[Synapse-Notes](https://github.com/Wired-Navi0x1F/Synapse-Notes)**
+    *   *A 3D force-directed knowledge graph mapping personal notes.* Built with **Flask**, **MySQL**, and **Three.js** to map and traverse interconnected knowledge nodes.
+*   **[Neuro-Symbolic-IDS](https://github.com/Wired-Navi0x1F/Neuro-Symbolic-IDS)**
+    *   *Hybrid machine learning intrusion detection system.* Combining deep-learning pattern matching with neuro-symbolic logic to monitor and protect local system nodes.
+*   **[Embedded NAVI Controllers](https://github.com/Wired-Navi0x1F/LainOS-Wired)**
+    *   *Microcontroller casing and system rices.* C, C++, and Python firmware scripts for ARM Cortex-M0+ / RP2040 boards and custom desktop environments.
 
 ---
 
 ### 🎙️ Transmission Received
 
-> "No matter where you are, everyone is always connected."
-> 
-> *— Serial Experiments Lain*
-
-> "This is the choice of Steins;Gate. El Psy Kongroo."
-> 
-> *— Okabe Rintaro (Steins;Gate)*
+<table width="100%" border="0" cellspacing="0" cellpadding="10" style="border: none;">
+  <tr>
+    <td width="30%" align="center" valign="middle" style="border: none;">
+      <img src="lain-wired.gif" width="180" alt="Lain connected to the Wired" style="border-radius: 4px;" />
+    </td>
+    <td width="70%" valign="middle" style="border: none; font-family: monospace; line-height: 1.6;">
+      <p><i>"No matter where you are, everyone is always connected. Even if you die, your consciousness remains in the Wired."</i><br>
+      <strong>— Serial Experiments Lain</strong></p>
+      <br>
+      <p><i>"This is the choice of Steins;Gate. The world line can be rewritten. El Psy Kongroo."</i><br>
+      <strong>— Okabe Rintaro (Steins;Gate)</strong></p>
+    </td>
+  </tr>
+</table>
 
 ---
 
 <div align="center">
-  <p align="center" style="font-family: monospace; color: {THEME["gray"]};">
+  <p align="center" style="font-family: monospace; color: {THEME["gray"]}; font-size: 11px;">
     WIRED PROTOCOL INITIATED // IP STATE: SECURE // CLOSE THE WORLD, OPEN THE NEXT.
   </p>
 </div>

@@ -15,9 +15,11 @@
         .console-text {
             font-family: 'JetBrains Mono', 'Courier New', monospace;
             font-size: 14px;
+            /* Safe CSS drop-shadow instead of SVG filter to bypass Safari ghosting bugs */
+            text-shadow: 0 0 3px rgba(192, 132, 252, 0.45);
         }
-        .glow {
-            filter: url(#crt-glow);
+        .header-glow {
+            text-shadow: 0 0 4px rgba(0, 240, 255, 0.6);
         }
         @keyframes blink {
             0%, 49% { opacity: 1; }
@@ -30,15 +32,6 @@
     </style>
 
     <defs>
-        <!-- CRT Glow Filter -->
-        <filter id="crt-glow" x="-10%" y="-10%" width="120%" height="120%">
-            <feGaussianBlur stdDeviation="1.8" result="blur" />
-            <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-            </feMerge>
-        </filter>
-        
         <!-- Scanline Pattern -->
         <pattern id="scanline-pattern" width="850" height="6" patternUnits="userSpaceOnUse">
             <rect width="850" height="3" fill="#000" />
@@ -82,7 +75,7 @@
     <rect x="14" y="14" width="822" height="482" rx="8" class="terminal-bg" />
     
     <!-- Immersive Background Silhouette: Telephone Pole and Powerlines (Lain visual essence) -->
-    <g opacity="0.35">
+    <g opacity="0.32">
         <!-- Power Pole -->
         <line x1="720" y1="14" x2="720" y2="496" stroke="#251233" stroke-width="8" />
         <line x1="640" y1="100" x2="800" y2="100" stroke="#251233" stroke-width="4" />
@@ -104,7 +97,7 @@
     <rect x="14" y="14" width="822" height="482" class="scanlines" rx="8" pointer-events="none" />
     
     <!-- Sweeping Laser Scanline (CRT electron gun sweep) -->
-    <rect x="15" y="35" width="820" height="2" fill="#00f0ff" opacity="0.35" filter="url(#crt-glow)">
+    <rect x="15" y="35" width="820" height="2" fill="#00f0ff" opacity="0.3" pointer-events="none">
         <animate attributeName="y" from="35" to="490" dur="8s" repeatCount="indefinite" />
     </rect>
     
@@ -119,17 +112,17 @@
     <text x="425" y="36" class="title-text" text-anchor="middle" font-weight="bold">Wired-Navi0x1F@NAVI-Terminal:~ (Protocol: Layer_07_Active)</text>
     
     <!-- System Diagnostics Block -->
-    <g class="console-text glow">
+    <g class="console-text">
         <!-- Diagnostic Block (Right Side) -->
         <rect x="540" y="70" width="265" height="135" rx="4" fill="#0b0512" stroke="#311840" stroke-width="1.5" />
-        <text x="555" y="95" fill="#00f0ff" font-family="monospace" font-size="12" font-weight="bold">[SYSTEM DIAGNOSTICS]</text>
+        <text x="555" y="95" fill="#00f0ff" font-family="monospace" font-size="12" font-weight="bold" class="header-glow">[SYSTEM DIAGNOSTICS]</text>
         <text x="555" y="120" fill="#eeddfc" font-family="monospace" font-size="11">NODE: Wired-Navi0x1F</text>
-        <text x="555" y="140" fill="#eeddfc" font-family="monospace" font-size="11">WIRED PROTOCOL: ACTIVE</text>
-        <text x="555" y="160" fill="#eeddfc" font-family="monospace" font-size="11">COGNITIVE SYNC: 98.4%</text>
-        <text x="555" y="180" fill="#eeddfc" font-family="monospace" font-size="10" fill-opacity="0.7">REALM: Layer 07 // The Wired</text>
+        <text x="555" y="140" fill="#eeddfc" font-family="monospace" font-size="11">ACTIVE MODULES: 8</text>
+        <text x="555" y="160" fill="#eeddfc" font-family="monospace" font-size="11">SYNC RATE: 90.4%</text>
+        <text x="555" y="180" fill="#eeddfc" font-family="monospace" font-size="10" fill-opacity="0.7">LAST SYNC: 2026-07-10</text>
         
         <!-- Welcome Messages -->
-        <text x="50" y="75" fill="#00f0ff" font-family="monospace" font-size="13" font-weight="bold">&gt; Initializing NAVI-OS v7.25...</text>
+        <text x="50" y="75" fill="#00f0ff" font-family="monospace" font-size="13" font-weight="bold" class="header-glow">&gt; Initializing NAVI-OS v7.25...</text>
         
         <!-- ASCII Logo -->
         <text x="50" y="90" fill="#c084fc" font-family="monospace" font-size="8.5" font-weight="bold" xml:space="preserve">██╗    ██╗██╗██████╗ ███████╗██████╗     ███╗   ██╗█████╗ ██╗   ██╗██╗</text>
@@ -168,7 +161,7 @@
         
         
         <!-- Connected Nodes Section (Professional Links) -->
-        <text x="50" y="325" fill="#00f0ff" font-family="monospace" font-size="13" font-weight="bold">&gt;_ connected_nodes</text>
+        <text x="50" y="325" fill="#00f0ff" font-family="monospace" font-size="13" font-weight="bold" class="header-glow">&gt;_ connected_nodes</text>
         <text x="50" y="348" fill="#eeddfc" font-family="monospace" font-size="13">
             <tspan fill="#5d4370">&gt; </tspan>Website: <tspan fill="#00f0ff">https://pr0t0lain.dpdns.org</tspan>
         </text>
