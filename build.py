@@ -31,7 +31,7 @@ def fetch_github_stats(username):
         headers["Authorization"] = f"token {token}"
         
     stats = {
-        "repos": 5,
+        "repos": 8,
         "stars": 0,
         "followers": 1,
         "last_sync": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC"),
@@ -53,9 +53,9 @@ def fetch_github_stats(username):
             total_stars = sum(repo.get("stargazers_count", 0) for repo in repos_data)
             stats["stars"] = total_stars
             
-        # Dynamic calculation of cognitive sync rate
-        hour = datetime.datetime.now().hour
-        sync_val = 92.0 + (hour * 0.3)
+        # Dynamic calculation of cognitive sync rate based on current UTC hour
+        hour = datetime.datetime.now(datetime.timezone.utc).hour
+        sync_val = 94.0 + (hour * 0.2)
         stats["sync_pct"] = f"{sync_val:.1f}%"
         
     except Exception as e:
@@ -85,12 +85,12 @@ def generate_terminal_svg(username, stats):
         escaped_line = line.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
         ascii_svg_lines += f'<text x="50" y="{y_start + idx*12}" fill="{THEME["border_active"]}" font-family="monospace" font-size="8.5" font-weight="bold" xml:space="preserve">{escaped_line}</text>\n'
 
-    # Technical Skills matching the user's actual profile
+    # Technical Skills matching the user's actual profile (no Java, aligned with PDF)
     skills = [
-        {"name": "Java Engineering", "desc": "APIs, OOP Architecture", "level": 90, "color": THEME["cyan"]},
-        {"name": "Python / Flask", "desc": "ML Pipelines, Backend", "level": 85, "color": THEME["pink"]},
-        {"name": "Embedded C/C++", "desc": "Cortex-M0+, RP2040", "level": 80, "color": THEME["gold"]},
-        {"name": "SQL / Supabase", "desc": "Relational DB, Auth", "level": 75, "color": THEME["border_active"]}
+        {"name": "Python / PyTorch", "desc": "ML Models, TensorFlow", "level": 90, "color": THEME["cyan"]},
+        {"name": "C / C++ Systems", "desc": "Algorithms, Hardware", "level": 80, "color": THEME["gold"]},
+        {"name": "Web (Three.js/Flask)", "desc": "Interactive 3D Graphics", "level": 85, "color": THEME["pink"]},
+        {"name": "ROS2 / Robotics", "desc": "Simulation, Trajectories", "level": 75, "color": THEME["border_active"]}
     ]
     
     skills_svg = ""
@@ -101,7 +101,7 @@ def generate_terminal_svg(username, stats):
         bar = "■" * filled_blocks + "□" * empty_blocks
         skills_svg += f"""
         <text x="50" y="{skills_y + idx*23}" fill="{THEME["fg"]}" font-family="monospace" font-size="12">
-            <tspan fill="{THEME["gray"]}">&gt; </tspan><tspan font-weight="bold">{skill["name"].ljust(18)}</tspan> 
+            <tspan fill="{THEME["gray"]}">&gt; </tspan><tspan font-weight="bold">{skill["name"].ljust(20)}</tspan> 
             <tspan fill="{THEME["gray"]}">[</tspan><tspan fill="{skill["color"]}">{bar}</tspan><tspan fill="{THEME["gray"]}">]</tspan>
             <tspan fill="{THEME["gray"]}" font-size="10.5"> // {skill["desc"]}</tspan>
         </text>
@@ -250,7 +250,7 @@ def generate_terminal_svg(username, stats):
             <tspan fill="{THEME["gray"]}">&gt; </tspan>Website: <tspan fill="{THEME["cyan"]}">https://pr0t0lain.dpdns.org</tspan>
         </text>
         <text x="50" y="372" fill="{THEME["fg"]}" font-family="monospace" font-size="12">
-            <tspan fill="{THEME["gray"]}">&gt; </tspan>LinkedIn: <tspan fill="{THEME["cyan"]}">https://linkedin.com/in/haru-l41n-pr0t0</tspan>
+            <tspan fill="{THEME["gray"]}">&gt; </tspan>LinkedIn: <tspan fill="{THEME["cyan"]}">https://in.linkedin.com/in/haru-l41n-pr0t0</tspan>
         </text>
         
         <!-- Oscilloscope Waveform Animation -->
@@ -441,27 +441,31 @@ def main():
         f.write(divergence_svg)
 
     print("Generating README.md...")
-    # Generate the Markdown file structure with clean layout and links
+    # Generate the Markdown file structure with clean layout, exact resume facts, and lightbox click prevention
     readme_content = f"""# 🌐 Wired-Navi0x1F
 
 <div align="center">
-  <img src="terminal.svg?v=5" width="850" alt="Lain-themed NAVI terminal showing system parameters and technical skills" style="max-width: 100%; height: auto;" />
+  <picture>
+    <img src="terminal.svg?v=6" width="850" alt="Lain-themed NAVI terminal showing system parameters and technical skills" style="max-width: 100%; height: auto;" />
+  </picture>
 </div>
 
 <br />
 
 <div align="center">
-  <img src="divergence_meter.svg?v=5" width="680" alt="Steins;Gate Nixie Tube World Line Divergence Meter displaying 1.048596%" style="max-width: 100%; height: auto;" />
+  <picture>
+    <img src="divergence_meter.svg?v=6" width="680" alt="Steins;Gate Nixie Tube World Line Divergence Meter displaying 1.048596%" style="max-width: 100%; height: auto;" />
+  </picture>
 </div>
 
 <br />
 
 <div align="center">
-  <a href="https://pr0t0lain.dpdns.org" target="_blank" alt="Visit Personal Website">
+  <a href="https://pr0t0lain.dpdns.org" target="_blank" rel="noopener noreferrer">
     <img src="https://img.shields.io/badge/🌐_NODE_DOMAIN-pr0t0lain.dpdns.org-00f0ff?style=for-the-badge&logo=internet-explorer&logoColor=ffffff&labelColor=150a21" alt="Website Link" />
   </a>
   &nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="https://in.linkedin.com/in/haru-l41n-pr0t0" target="_blank" alt="Visit LinkedIn Profile">
+  <a href="https://in.linkedin.com/in/haru-l41n-pr0t0" target="_blank" rel="noopener noreferrer">
     <img src="https://img.shields.io/badge/💼_GUILD_LINK-linkedin.com/in/haru--l41n--pr0t0-ff66cc?style=for-the-badge&logo=linkedin&logoColor=ffffff&labelColor=150a21" alt="LinkedIn Link" />
   </a>
 </div>
@@ -470,30 +474,32 @@ def main():
 
 ## ─── 📡 BIOLOGICAL NODE PARAMETERS (ABOUT ME) ───
 
-I am a **Computer Science & Engineering (CSE)** student at **RV University**, specializing in embedded systems, backend infrastructure, and artificial intelligence, operating at the intersection of the physical and virtual worlds.
+I am a **Computer Science & Engineering (CSE)** student at **RV University** (Bengaluru, India), specializing in Artificial Intelligence, Machine Learning, and low-level system logic. I build systems where neural algorithms interface with physical data layers.
 
-*   🔭 **Research Focus:** Project intern at **CARA**, researching machine learning models and **neuro-symbolic AI** for Network Intrusion Detection Systems (IDS).
-*   💼 **Industry Experience:** Developing legal-tech automation platforms and case workflow planners for **The Kala Lawyers**, utilizing **Supabase** and robust database patterns.
-*   🧭 **Aesthetic Vibe:** Heavy hardware-hacking and retro-cybernetics enthusiast inspired by *Serial Experiments Lain* and *Steins;Gate*.
+*   🔭 **Current Project & Research:** Developing **Synapse Notes**, a dynamic markdown-based knowledge management web app featuring **Three.js** 3D force-directed node-link graph mapping.
+*   🤖 **Predictive Agent Systems:** Engineering **Bayesian MPC Predictive Agents** for autonomous driving environments, implementing trajectory prediction GMM heads, Monte Carlo dropout, and **ROS2** control workflows.
+*   🦾 **Academic Pursuits:** Pursuing my B.Tech (Hons.) in Artificial Intelligence & Machine Learning (2025 – Present), specializing in AI robustness, data structures, and real-time inference.
 
 ---
 
 ### 🧠 CORE SYSTEM SPECS (TECH STACK)
 
-*   **Languages:** `Java`, `Python`, `C`, `C++`, `SQL`
-*   **Web & Data Layer:** `Flask`, `Three.js`, `Supabase`, `MySQL`, `HTML5/CSS3`
-*   **Systems & Embedded:** `ARM Cortex-M0+`, `RP2040`, `Linux`, `Bash`
+*   **Programming Languages:** `Python`, `C`, `C++`, `HTML5`, `CSS3`, `JavaScript`
+*   **Frameworks & Libraries:** `TensorFlow`, `PyTorch`, `Pandas`, `NumPy`, `FastAPI`, `Flask`, `Three.js`
+*   **Tools & Environments:** `Git`, `GitHub`, `Linux`, `ROS2`, `VS Code`, `Jupyter`
 
 ---
 
 ### 🕸️ ACTIVE PROJECT NODES (FEATURED PROJECTS)
 
-*   ⚡ **[Synapse-Notes](https://github.com/Wired-Navi0x1F/Synapse-Notes)**
-    *   *A 3D force-directed knowledge graph mapping personal notes.* Built with **Flask**, **MySQL**, and **Three.js** to map and traverse interconnected knowledge nodes.
-*   🤖 **[Neuro-Symbolic-IDS](https://github.com/Wired-Navi0x1F/Neuro-Symbolic-IDS)**
-    *   *Hybrid machine learning intrusion detection system.* Combining deep-learning pattern matching with neuro-symbolic logic to monitor and protect local system nodes.
-*   💾 **[LainOS-Wired](https://github.com/Wired-Navi0x1F/LainOS-Wired)**
-    *   *Microcontroller scripts and system configurations.* C, C++, and Python firmware scripts for custom ARM Cortex-M0+ boards and UNIX desktop environments.
+*   ⚡ **[Synapse Notes Web Application](https://github.com/Wired-Navi0x1F/synapse-notes)**
+    *   *A markdown-based note editing system with live preview and 3D relationship mapping.*
+    *   **Features:** Developed guest authentication, archive vaulting, markdown rendering, and "The Wired" (an interactive **Three.js** 3D node network mapping notes' relationships).
+    *   **Technologies:** Flask, MySQL, JavaScript, Three.js, Python.
+*   🚘 **[Bayesian MPC Predictive Agent](https://github.com/Wired-Navi0x1F/Enigmaa)**
+    *   *Trajectory prediction and active collision prevention agent for autonomous vehicles.*
+    *   **Features:** Implemented a GMM-based Bayesian trajectory prediction model, Monte Carlo dropout, Hard Shield AEB safety modules, and **ROS2** vehicle simulation control workflows.
+    *   **Technologies:** PyTorch, highway-env, Gymnasium, ROS2.
 
 ---
 
@@ -501,9 +507,9 @@ I am a **Computer Science & Engineering (CSE)** student at **RV University**, sp
 
 ```
 [SYSTEM PARAMETERS]
-> CURRENT_PROJECT: Synapse-Notes (Flask + MySQL + Three.js 3D graph)
-> CURRENT_BOSS:    Neuro-symbolic rule extraction from IDS logs
-> COMPILER_TARGET: Real-time inference optimization on RP2040 nodes
+> CURRENT_PROJECT:  Synapse Notes (Flask + MySQL + Three.js 3D graph)
+> CURRENT_RESEARCH: Bayesian MPC Predictive Agent (PyTorch + ROS2)
+> COMPILER_TARGET:  Real-time trajectory prediction with GMM and Monte Carlo dropout
 ```
 
 ---

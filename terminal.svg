@@ -117,7 +117,7 @@
         <text x="555" y="95" fill="#00f0ff" font-family="monospace" font-size="12" font-weight="bold" class="header-glow">[SYSTEM DIAGNOSTICS]</text>
         <text x="555" y="120" fill="#eeddfc" font-family="monospace" font-size="11">NODE: Wired-Navi0x1F</text>
         <text x="555" y="140" fill="#eeddfc" font-family="monospace" font-size="11">ACTIVE MODULES: 8</text>
-        <text x="555" y="160" fill="#eeddfc" font-family="monospace" font-size="11">SYNC RATE: 92.3%</text>
+        <text x="555" y="160" fill="#eeddfc" font-family="monospace" font-size="11">SYNC RATE: 98.2%</text>
         <text x="555" y="180" fill="#eeddfc" font-family="monospace" font-size="10" fill-opacity="0.7">LAST SYNC: 2026-07-10</text>
         
         <!-- Welcome Messages -->
@@ -141,27 +141,27 @@
         <!-- Skills/Languages List -->
         
         <text x="50" y="225" fill="#eeddfc" font-family="monospace" font-size="12">
-            <tspan fill="#5d4370">&gt; </tspan><tspan font-weight="bold">Java Engineering  </tspan> 
+            <tspan fill="#5d4370">&gt; </tspan><tspan font-weight="bold">Python / PyTorch    </tspan> 
             <tspan fill="#5d4370">[</tspan><tspan fill="#00f0ff">■■■■■■■■■□</tspan><tspan fill="#5d4370">]</tspan>
-            <tspan fill="#5d4370" font-size="10.5"> // APIs, OOP Architecture</tspan>
+            <tspan fill="#5d4370" font-size="10.5"> // ML Models, TensorFlow</tspan>
         </text>
         
         <text x="50" y="248" fill="#eeddfc" font-family="monospace" font-size="12">
-            <tspan fill="#5d4370">&gt; </tspan><tspan font-weight="bold">Python / Flask    </tspan> 
-            <tspan fill="#5d4370">[</tspan><tspan fill="#ff66cc">■■■■■■■■□□</tspan><tspan fill="#5d4370">]</tspan>
-            <tspan fill="#5d4370" font-size="10.5"> // ML Pipelines, Backend</tspan>
+            <tspan fill="#5d4370">&gt; </tspan><tspan font-weight="bold">C / C++ Systems     </tspan> 
+            <tspan fill="#5d4370">[</tspan><tspan fill="#eab308">■■■■■■■■□□</tspan><tspan fill="#5d4370">]</tspan>
+            <tspan fill="#5d4370" font-size="10.5"> // Algorithms, Hardware</tspan>
         </text>
         
         <text x="50" y="271" fill="#eeddfc" font-family="monospace" font-size="12">
-            <tspan fill="#5d4370">&gt; </tspan><tspan font-weight="bold">Embedded C/C++    </tspan> 
-            <tspan fill="#5d4370">[</tspan><tspan fill="#eab308">■■■■■■■■□□</tspan><tspan fill="#5d4370">]</tspan>
-            <tspan fill="#5d4370" font-size="10.5"> // Cortex-M0+, RP2040</tspan>
+            <tspan fill="#5d4370">&gt; </tspan><tspan font-weight="bold">Web (Three.js/Flask)</tspan> 
+            <tspan fill="#5d4370">[</tspan><tspan fill="#ff66cc">■■■■■■■■□□</tspan><tspan fill="#5d4370">]</tspan>
+            <tspan fill="#5d4370" font-size="10.5"> // Interactive 3D Graphics</tspan>
         </text>
         
         <text x="50" y="294" fill="#eeddfc" font-family="monospace" font-size="12">
-            <tspan fill="#5d4370">&gt; </tspan><tspan font-weight="bold">SQL / Supabase    </tspan> 
+            <tspan fill="#5d4370">&gt; </tspan><tspan font-weight="bold">ROS2 / Robotics     </tspan> 
             <tspan fill="#5d4370">[</tspan><tspan fill="#c084fc">■■■■■■■□□□</tspan><tspan fill="#5d4370">]</tspan>
-            <tspan fill="#5d4370" font-size="10.5"> // Relational DB, Auth</tspan>
+            <tspan fill="#5d4370" font-size="10.5"> // Simulation, Trajectories</tspan>
         </text>
         
         
@@ -171,7 +171,7 @@
             <tspan fill="#5d4370">&gt; </tspan>Website: <tspan fill="#00f0ff">https://pr0t0lain.dpdns.org</tspan>
         </text>
         <text x="50" y="372" fill="#eeddfc" font-family="monospace" font-size="12">
-            <tspan fill="#5d4370">&gt; </tspan>LinkedIn: <tspan fill="#00f0ff">https://linkedin.com/in/haru-l41n-pr0t0</tspan>
+            <tspan fill="#5d4370">&gt; </tspan>LinkedIn: <tspan fill="#00f0ff">https://in.linkedin.com/in/haru-l41n-pr0t0</tspan>
         </text>
         
         <!-- Oscilloscope Waveform Animation -->
