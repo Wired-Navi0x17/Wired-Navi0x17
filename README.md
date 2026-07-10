@@ -1,13 +1,13 @@
 # 🌐 Wired-Navi0x1F
 
 <div align="center">
-  <img src="terminal.svg" width="850" alt="NAVI Terminal System Core" style="max-width: 100%; height: auto;" />
+  <img src="terminal.svg?v=3" width="850" alt="NAVI Terminal System Core" style="max-width: 100%; height: auto;" />
 </div>
 
 <br />
 
 <div align="center">
-  <img src="divergence_meter.svg" width="680" alt="World Line Divergence Meter" style="max-width: 100%; height: auto;" />
+  <img src="divergence_meter.svg?v=3" width="680" alt="World Line Divergence Meter" style="max-width: 100%; height: auto;" />
 </div>
 
 <br />
