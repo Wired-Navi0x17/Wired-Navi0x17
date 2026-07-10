@@ -7,24 +7,24 @@ import requests
 
 # Default configuration matching the user's terminal theme
 THEME = {
-    "bg": "#0e0616",               # Very dark violet
-    "fg": "#e9dcf5",               # Soft lavender
+    "bg": "#0b0512",               # Deepest dark violet
+    "fg": "#eeddfc",               # Bright soft lavender
     "border_active": "#c084fc",    # Purplish pink
-    "border_inactive": "#3b1f4a",  # Dark muted purple
-    "cyan": "#00f0ff",             # Cyan
+    "border_inactive": "#311840",  # Muted deep purple
+    "cyan": "#00f0ff",             # Neon Cyan
     "cursor": "#c084fc",           # Purplish pink
     "gold": "#eab308",             # Warm gold
     "pink": "#ff66cc",             # Magenta pink
-    "gray": "#6b4f80",             # Muted purple
+    "gray": "#5d4370",             # Dark muted purple/gray
     "orange": "#ff5500",           # Nixie Orange
     "light_orange": "#ffcc66"      # Nixie Filament
 }
 
 def generate_terminal_svg(username, stats):
     """
-    Generates an animated, ultra-premium retro terminal SVG.
-    Includes a sweeping scanline, custom cyber grid, rolling waveform animation,
-    system diagnostic panel, and high-fidelity Unicode ASCII art.
+    Generates a highly immersive, 3D CRT-style terminal SVG with deep Serial Experiments Lain visual cues.
+    Includes background powerline silhouettes, spherical screen curvature shadow,
+    glass glare, scanline sweep, and clean technical alignment for professional visibility.
     """
     # Clean ASCII art logo (WIRED NAVI)
     ascii_art = r"""
@@ -37,17 +37,16 @@ def generate_terminal_svg(username, stats):
 
     ascii_lines = [line for line in ascii_art.split("\n") if line.strip()]
     ascii_svg_lines = ""
-    y_start = 100
+    y_start = 90
     for idx, line in enumerate(ascii_lines):
         escaped_line = line.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
-        ascii_svg_lines += f'<text x="50" y="{y_start + idx*13}" fill="{THEME["border_active"]}" font-family="monospace" font-size="9" font-weight="bold" xml:space="preserve">{escaped_line}</text>\n'
+        ascii_svg_lines += f'<text x="50" y="{y_start + idx*12}" fill="{THEME["border_active"]}" font-family="monospace" font-size="8.5" font-weight="bold" xml:space="preserve">{escaped_line}</text>\n'
 
-    # Skill modules block
+    # Technical Skills - professional but styled
     skills = [
-        {"lang": "Java Core", "level": 90, "color": THEME["cyan"]},
-        {"lang": "Python Automation", "level": 85, "color": THEME["pink"]},
-        {"lang": "Linux & Bash", "level": 80, "color": THEME["gold"]},
-        {"lang": "Systems / C++", "level": 70, "color": THEME["border_active"]}
+        {"name": "Java Engineering", "desc": "Enterprise API, Decoders", "level": 90, "color": THEME["cyan"]},
+        {"name": "Python Automation", "desc": "System Telemetry, Scripts", "level": 85, "color": THEME["pink"]},
+        {"name": "Linux / DevOps", "desc": "Unix Systems, Shell Rice", "level": 80, "color": THEME["gold"]}
     ]
     
     skills_svg = ""
@@ -57,22 +56,21 @@ def generate_terminal_svg(username, stats):
         empty_blocks = 10 - filled_blocks
         bar = "■" * filled_blocks + "□" * empty_blocks
         skills_svg += f"""
-        <text x="50" y="{skills_y + idx*22}" fill="{THEME["fg"]}" font-family="monospace" font-size="13">
-            <tspan fill="{THEME["gray"]}">&gt; </tspan>{skill["lang"].ljust(18)}: 
-            <tspan fill="{skill["color"]}">{bar}</tspan> {skill["level"]}%
+        <text x="50" y="{skills_y + idx*26}" fill="{THEME["fg"]}" font-family="monospace" font-size="13">
+            <tspan fill="{THEME["gray"]}">&gt; </tspan><tspan font-weight="bold">{skill["name"].ljust(20)}</tspan> 
+            <tspan fill="{THEME["gray"]}">[</tspan><tspan fill="{skill["color"]}">{bar}</tspan><tspan fill="{THEME["gray"]}">]</tspan>
+            <tspan fill="{THEME["gray"]}" font-size="11"> // {skill["desc"]}</tspan>
         </text>
         """
 
-    svg_content = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 480" width="100%" height="auto">
+    svg_content = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 510" width="100%" height="auto">
     <style>
         .terminal-bg {{
             fill: {THEME["bg"]};
-            stroke: {THEME["border_active"]};
-            stroke-width: 2.5;
         }}
         .scanlines {{
             fill: url(#scanline-pattern);
-            opacity: 0.15;
+            opacity: 0.18;
         }}
         .title-text {{
             fill: {THEME["fg"]};
@@ -99,7 +97,7 @@ def generate_terminal_svg(username, stats):
     <defs>
         <!-- CRT Glow Filter -->
         <filter id="crt-glow" x="-10%" y="-10%" width="120%" height="120%">
-            <feGaussianBlur stdDeviation="2" result="blur" />
+            <feGaussianBlur stdDeviation="1.8" result="blur" />
             <feMerge>
                 <feMergeNode in="blur" />
                 <feMergeNode in="SourceGraphic" />
@@ -107,95 +105,140 @@ def generate_terminal_svg(username, stats):
         </filter>
         
         <!-- Scanline Pattern -->
-        <pattern id="scanline-pattern" width="820" height="6" patternUnits="userSpaceOnUse">
-            <rect width="820" height="3" fill="#000" />
-            <rect y="3" width="820" height="3" fill="transparent" />
+        <pattern id="scanline-pattern" width="850" height="6" patternUnits="userSpaceOnUse">
+            <rect width="850" height="3" fill="#000" />
+            <rect y="3" width="850" height="3" fill="transparent" />
         </pattern>
         
-        <!-- Matrix Grid Pattern -->
-        <pattern id="matrix-grid" width="40" height="40" patternUnits="userSpaceOnUse">
-            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="{THEME["border_inactive"]}" stroke-width="0.5" opacity="0.2" />
+        <!-- Diagonal Cyber Grid -->
+        <pattern id="cyber-grid" width="30" height="30" patternUnits="userSpaceOnUse">
+            <path d="M 30 0 L 0 0 0 30" fill="none" stroke="{THEME["border_inactive"]}" stroke-width="0.7" opacity="0.15" />
         </pattern>
+
+        <!-- Glass Reflection Gradient -->
+        <linearGradient id="glass-reflection" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.12"/>
+            <stop offset="30%" stop-color="#ffffff" stop-opacity="0.04"/>
+            <stop offset="31%" stop-color="#ffffff" stop-opacity="0.0"/>
+            <stop offset="100%" stop-color="#ffffff" stop-opacity="0.0"/>
+        </linearGradient>
+
+        <!-- Curvature Inner Radial Shadow -->
+        <radialGradient id="screen-curve" cx="50%" cy="50%" r="50%">
+            <stop offset="80%" stop-color="#000000" stop-opacity="0.0"/>
+            <stop offset="95%" stop-color="#000000" stop-opacity="0.4"/>
+            <stop offset="100%" stop-color="#000000" stop-opacity="0.75"/>
+        </radialGradient>
+
+        <!-- Bezel Metallic Border -->
+        <linearGradient id="bezel-metallic" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#2d153d"/>
+            <stop offset="50%" stop-color="#150820"/>
+            <stop offset="100%" stop-color="#09030d"/>
+        </linearGradient>
     </defs>
 
-    <!-- Terminal Window Frame -->
-    <rect class="terminal-bg" width="820" height="480" rx="8" />
+    <!-- Bezel Monitor Frame (3D Casing) -->
+    <rect x="0" y="0" width="850" height="510" rx="14" fill="url(#bezel-metallic)" stroke="{THEME["border_active"]}" stroke-width="1" />
+    <!-- Bezel Highlight line -->
+    <rect x="6" y="6" width="838" height="498" rx="10" fill="none" stroke="#522a6b" stroke-width="1.5" opacity="0.6" />
+
+    <!-- Screen Bezel Cutout -->
+    <rect x="14" y="14" width="822" height="482" rx="8" class="terminal-bg" />
     
-    <!-- Matrix Grid Layout -->
-    <rect width="820" height="480" fill="url(#matrix-grid)" rx="8" />
+    <!-- Immersive Background Silhouette: Telephone Pole and Powerlines (Lain visual essence) -->
+    <g opacity="0.35">
+        <!-- Power Pole -->
+        <line x1="720" y1="14" x2="720" y2="496" stroke="#251233" stroke-width="8" />
+        <line x1="640" y1="100" x2="800" y2="100" stroke="#251233" stroke-width="4" />
+        <line x1="660" y1="180" x2="780" y2="180" stroke="#251233" stroke-width="3" />
+        <!-- Diagonal wires -->
+        <path d="M 0 120 Q 400 280, 720 180" fill="none" stroke="{THEME["border_inactive"]}" stroke-width="1.2" />
+        <path d="M 0 160 Q 400 320, 720 180" fill="none" stroke="{THEME["border_inactive"]}" stroke-width="1.2" />
+        <path d="M 0 80 Q 350 200, 720 100" fill="none" stroke="{THEME["border_inactive"]}" stroke-width="1.5" />
+        <path d="M 0 40 Q 350 160, 720 100" fill="none" stroke="{THEME["border_inactive"]}" stroke-width="1.5" />
+        <!-- Wires extending to the right -->
+        <line x1="720" y1="100" x2="836" y2="140" stroke="{THEME["border_inactive"]}" stroke-width="1.5" />
+        <line x1="720" y1="180" x2="836" y2="210" stroke="{THEME["border_inactive"]}" stroke-width="1.2" />
+    </g>
+
+    <!-- Diagonal Cyber Grid -->
+    <rect x="14" y="14" width="822" height="482" fill="url(#cyber-grid)" rx="8" />
     
     <!-- CRT Effect Scanlines -->
-    <rect class="scanlines" width="820" height="480" rx="8" pointer-events="none" />
+    <rect x="14" y="14" width="822" height="482" class="scanlines" rx="8" pointer-events="none" />
     
-    <!-- Sweeping Laser Scanline (CRT feel) -->
-    <rect x="2" y="35" width="816" height="2" fill="{THEME["cyan"]}" opacity="0.4" filter="url(#crt-glow)">
-        <animate attributeName="y" from="35" to="475" dur="7s" repeatCount="indefinite" />
+    <!-- Sweeping Laser Scanline (CRT electron gun sweep) -->
+    <rect x="15" y="35" width="820" height="2" fill="{THEME["cyan"]}" opacity="0.35" filter="url(#crt-glow)">
+        <animate attributeName="y" from="35" to="490" dur="8s" repeatCount="indefinite" />
     </rect>
     
-    <!-- Header Bar -->
-    <rect x="0" y="0" width="820" height="35" rx="8" fill="{THEME["border_inactive"]}" />
+    <!-- Header Bar inside screen -->
+    <rect x="14" y="14" width="822" height="35" rx="8" fill="{THEME["border_inactive"]}" />
     <!-- Window buttons -->
-    <circle cx="20" cy="18" r="6" fill="{THEME["pink"]}" />
-    <circle cx="40" cy="18" r="6" fill="{THEME["gold"]}" />
-    <circle cx="60" cy="18" r="6" fill="{THEME["cyan"]}" />
+    <circle cx="34" cy="32" r="5" fill="{THEME["pink"]}" />
+    <circle cx="50" cy="32" r="5" fill="{THEME["gold"]}" />
+    <circle cx="66" cy="32" r="5" fill="{THEME["cyan"]}" />
     
     <!-- Header Title -->
-    <text x="410" y="22" class="title-text" text-anchor="middle" font-weight="bold">Wired-Navi0x1F@NAVI-Terminal:~ (Protocol: Copula-0x1F)</text>
+    <text x="425" y="36" class="title-text" text-anchor="middle" font-weight="bold">Wired-Navi0x1F@NAVI-Terminal:~ (Protocol: Layer_07_Active)</text>
     
     <!-- System Diagnostics Block -->
     <g class="console-text glow">
         <!-- Diagnostic Block (Right Side) -->
-        <rect x="525" y="70" width="245" height="135" rx="4" fill="{THEME["bg"]}" stroke="{THEME["border_inactive"]}" stroke-width="1.5" />
-        <text x="540" y="95" fill="{THEME["cyan"]}" font-family="monospace" font-size="12" font-weight="bold">[SYSTEM DIAGNOSTICS]</text>
-        <text x="540" y="120" fill="{THEME["fg"]}" font-family="monospace" font-size="11">NODE: Wired-Navi0x1F</text>
-        <text x="540" y="140" fill="{THEME["fg"]}" font-family="monospace" font-size="11">COGNITIVE SYNC: 98.4%</text>
-        <text x="540" y="160" fill="{THEME["fg"]}" font-family="monospace" font-size="11">WIRED CONNECT: SYNCED</text>
-        <text x="540" y="180" fill="{THEME["fg"]}" font-family="monospace" font-size="10" fill-opacity="0.7">UPTIME: 1048596s</text>
+        <rect x="540" y="70" width="265" height="135" rx="4" fill="{THEME["bg"]}" stroke="{THEME["border_inactive"]}" stroke-width="1.5" />
+        <text x="555" y="95" fill="{THEME["cyan"]}" font-family="monospace" font-size="12" font-weight="bold">[SYSTEM DIAGNOSTICS]</text>
+        <text x="555" y="120" fill="{THEME["fg"]}" font-family="monospace" font-size="11">NODE: Wired-Navi0x1F</text>
+        <text x="555" y="140" fill="{THEME["fg"]}" font-family="monospace" font-size="11">WIRED PROTOCOL: ACTIVE</text>
+        <text x="555" y="160" fill="{THEME["fg"]}" font-family="monospace" font-size="11">COGNITIVE SYNC: 98.4%</text>
+        <text x="555" y="180" fill="{THEME["fg"]}" font-family="monospace" font-size="10" fill-opacity="0.7">REALM: Layer 07 // The Wired</text>
         
         <!-- Welcome Messages -->
-        <text x="50" y="75" fill="{THEME["cyan"]}" font-family="monospace" font-size="14" font-weight="bold">&gt; Initializing NAVI-OS v7.25...</text>
+        <text x="50" y="75" fill="{THEME["cyan"]}" font-family="monospace" font-size="13" font-weight="bold">&gt; Initializing NAVI-OS v7.25...</text>
         
         <!-- ASCII Logo -->
         {ascii_svg_lines}
         
         <!-- Divider -->
-        <line x1="50" y1="205" x2="770" y2="205" stroke="{THEME["border_inactive"]}" stroke-width="1.5" stroke-dasharray="5 5" />
+        <line x1="50" y1="210" x2="790" y2="210" stroke="{THEME["border_inactive"]}" stroke-width="1.5" stroke-dasharray="5 5" />
         
         <!-- Skills Header -->
-        <text x="50" y="215" fill="{THEME["gold"]}" font-family="monospace" font-size="13" font-weight="bold">&gt;_ system_parameters_loaded</text>
+        <text x="50" y="225" fill="{THEME["gold"]}" font-family="monospace" font-size="13" font-weight="bold">&gt;_ core_modules_loaded</text>
         
         <!-- Skills/Languages List -->
         {skills_svg}
         
-        <!-- Terminal Prompt & Command Line -->
-        <text x="50" y="325" fill="{THEME["fg"]}" font-family="monospace" font-size="13">
-            <tspan fill="{THEME["cyan"]}">Wired-Navi0x1F@wired</tspan>:<tspan fill="{THEME["pink"]}">~</tspan>$ cat thoughts.txt
+        <!-- Connected Nodes Section (Professional Links) -->
+        <text x="50" y="325" fill="{THEME["cyan"]}" font-family="monospace" font-size="13" font-weight="bold">&gt;_ connected_nodes</text>
+        <text x="50" y="348" fill="{THEME["fg"]}" font-family="monospace" font-size="13">
+            <tspan fill="{THEME["gray"]}">&gt; </tspan>Website: <tspan fill="{THEME["cyan"]}">https://pr0t0lain.dpdns.org</tspan>
+        </text>
+        <text x="50" y="368" fill="{THEME["fg"]}" font-family="monospace" font-size="13">
+            <tspan fill="{THEME["gray"]}">&gt; </tspan>LinkedIn: <tspan fill="{THEME["cyan"]}">https://linkedin.com/in/haru-l41n-pr0t0</tspan>
         </text>
         
-        <!-- thoughts.txt output -->
-        <text x="50" y="350" fill="{THEME["gray"]}" font-family="monospace" font-size="12" font-style="italic">
-            &quot;No matter where you are, everyone is always connected.&quot;
-        </text>
-        <text x="50" y="368" fill="{THEME["gray"]}" font-family="monospace" font-size="12" font-style="italic">
-            &quot;There is no barrier between the Wired and the Real.&quot;
-        </text>
-        
-        <!-- Oscilloscope "Hum of the Wired" Waveform Animation -->
+        <!-- Oscilloscope Waveform Animation -->
         <g>
-            <path d="M 0 410 C 50 380, 100 440, 150 410 C 200 380, 250 440, 300 410 C 350 380, 400 440, 450 410 C 500 380, 550 440, 600 410 C 650 380, 700 440, 750 410 C 800 380, 850 440, 900 410 C 950 380, 1000 440, 1050 410" fill="none" stroke="{THEME["cyan"]}" stroke-width="1.5" opacity="0.4">
-                <animateTransform attributeName="transform" type="translate" from="0,0" to="-300,0" dur="4s" repeatCount="indefinite" />
+            <path d="M 0 420 C 50 390, 100 450, 150 420 C 200 390, 250 450, 300 420 C 350 390, 400 450, 450 420 C 500 390, 550 450, 600 420 C 650 390, 700 450, 750 420 C 800 390, 850 450, 900 420" fill="none" stroke="{THEME["cyan"]}" stroke-width="1.5" opacity="0.3">
+                <animateTransform attributeName="transform" type="translate" from="0,0" to="-300,0" dur="4.5s" repeatCount="indefinite" />
             </path>
-            <path d="M 0 410 C 60 430, 120 390, 180 410 C 240 430, 300 390, 360 410 C 420 430, 480 390, 540 410 C 600 430, 660 390, 720 410 C 780 430, 840 390, 900 410 C 960 430, 1020 390, 1080 410" fill="none" stroke="{THEME["pink"]}" stroke-width="1" opacity="0.25">
-                <animateTransform attributeName="transform" type="translate" from="0,0" to="-360,0" dur="6s" repeatCount="indefinite" />
+            <path d="M 0 420 C 60 440, 120 400, 180 420 C 240 440, 300 400, 360 420 C 420 440, 480 400, 540 420 C 600 440, 660 400, 720 420 C 780 440, 840 400, 900 420" fill="none" stroke="{THEME["pink"]}" stroke-width="1" opacity="0.2">
+                <animateTransform attributeName="transform" type="translate" from="0,0" to="-360,0" dur="6.5s" repeatCount="indefinite" />
             </path>
         </g>
         
         <!-- Blinking Prompt -->
-        <text x="50" y="445" fill="{THEME["fg"]}" font-family="monospace" font-size="14">
-            <tspan fill="{THEME["cyan"]}">Wired-Navi0x1F@wired</tspan>:<tspan fill="{THEME["pink"]}">~</tspan>$ <tspan fill="{THEME["fg"]}">El_Psy_Kongroo</tspan>
+        <text x="50" y="465" fill="{THEME["fg"]}" font-family="monospace" font-size="14">
+            <tspan fill="{THEME["cyan"]}">Wired-Navi0x1F@wired</tspan>:<tspan fill="{THEME["pink"]}">~</tspan>$ <tspan fill="{THEME["fg"]}">close_world --open-next</tspan>
         </text>
-        <rect x="298" y="432" width="8" height="15" class="cursor" />
+        <rect x="424" y="452" width="8" height="15" class="cursor" />
     </g>
+
+    <!-- Curvature shadow overlay (Spherical screen effect) -->
+    <rect x="14" y="14" width="822" height="482" fill="url(#screen-curve)" rx="8" pointer-events="none" />
+
+    <!-- Glass Reflection glare overlay -->
+    <rect x="14" y="14" width="822" height="482" fill="url(#glass-reflection)" rx="8" pointer-events="none" />
 </svg>
 """
     return svg_content
@@ -203,7 +246,7 @@ def generate_terminal_svg(username, stats):
 
 def generate_divergence_meter_svg():
     """
-    Generates a ultra-premium Steins;Gate Divergence Meter SVG using glowing Nixie Tubes.
+    Generates a high-fidelity Steins;Gate Divergence Meter SVG using glowing Nixie Tubes.
     Features metallic chassis, detailed tube grids, filaments, and deep warmth glows.
     """
     digits = ["1", ".", "0", "4", "8", "5", "9", "6"]
@@ -360,17 +403,29 @@ def main():
         f.write(divergence_svg)
 
     print("Generating README.md...")
-    # Generate the Markdown file structure
+    # Generate the Markdown file structure with links
     readme_content = f"""# 🌐 Wired-Navi0x1F
 
 <div align="center">
-  <img src="terminal.svg" width="820" alt="NAVI Terminal System Core" style="max-width: 100%; height: auto;" />
+  <img src="terminal.svg" width="850" alt="NAVI Terminal System Core" style="max-width: 100%; height: auto;" />
 </div>
 
 <br />
 
 <div align="center">
   <img src="divergence_meter.svg" width="680" alt="World Line Divergence Meter" style="max-width: 100%; height: auto;" />
+</div>
+
+<br />
+
+<div align="center">
+  <a href="https://pr0t0lain.dpdns.org" target="_blank">
+    <img src="https://img.shields.io/badge/🌐_NODE_DOMAIN-pr0t0lain.dpdns.org-00f0ff?style=for-the-badge&logo=internet-explorer&logoColor=ffffff&labelColor=150a21" />
+  </a>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://linkedin.com/in/haru-l41n-pr0t0" target="_blank">
+    <img src="https://img.shields.io/badge/💼_GUILD_LINK-linkedin.com/in/haru--l41n--pr0t0-ff66cc?style=for-the-badge&logo=linkedin&logoColor=ffffff&labelColor=150a21" />
+  </a>
 </div>
 
 <br />
@@ -387,9 +442,9 @@ Location:   Layer 07 // The Wired
 
 ### 🧠 Core Directives & Technologies
 
-- ☕ **Java & Object-Oriented Engineering**: Architecting heavy enterprise layers, protocol decoders, and structured logic modules.
-- 🐍 **Python & Automation Scripts**: Parsing system telemetry, handling neural-net integration data, and automated node scripts.
-- 🐧 **Linux Terminal & Systems**: Ricing, shell automation, and configuring custom desktop environments with a serial aesthetic.
+- ☕ **Java & Enterprise Architecture**: Designing modular backends, synchronous server architectures, and network layer systems.
+- 🐍 **Python & Intelligent Tools**: Constructing automation scripts, processing diagnostic logs, and neural data layers.
+- 🐧 **Linux Terminal & Environments**: System customisation, shell utilities, and automation scripts.
 
 ---
 

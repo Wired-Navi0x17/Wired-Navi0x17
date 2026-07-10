@@ -1,16 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 480" width="100%" height="auto">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 510" width="100%" height="auto">
     <style>
         .terminal-bg {
-            fill: #0e0616;
-            stroke: #c084fc;
-            stroke-width: 2.5;
+            fill: #0b0512;
         }
         .scanlines {
             fill: url(#scanline-pattern);
-            opacity: 0.15;
+            opacity: 0.18;
         }
         .title-text {
-            fill: #e9dcf5;
+            fill: #eeddfc;
             font-family: 'JetBrains Mono', 'Courier New', monospace;
             font-size: 13px;
         }
@@ -34,7 +32,7 @@
     <defs>
         <!-- CRT Glow Filter -->
         <filter id="crt-glow" x="-10%" y="-10%" width="120%" height="120%">
-            <feGaussianBlur stdDeviation="2" result="blur" />
+            <feGaussianBlur stdDeviation="1.8" result="blur" />
             <feMerge>
                 <feMergeNode in="blur" />
                 <feMergeNode in="SourceGraphic" />
@@ -42,119 +40,162 @@
         </filter>
         
         <!-- Scanline Pattern -->
-        <pattern id="scanline-pattern" width="820" height="6" patternUnits="userSpaceOnUse">
-            <rect width="820" height="3" fill="#000" />
-            <rect y="3" width="820" height="3" fill="transparent" />
+        <pattern id="scanline-pattern" width="850" height="6" patternUnits="userSpaceOnUse">
+            <rect width="850" height="3" fill="#000" />
+            <rect y="3" width="850" height="3" fill="transparent" />
         </pattern>
         
-        <!-- Matrix Grid Pattern -->
-        <pattern id="matrix-grid" width="40" height="40" patternUnits="userSpaceOnUse">
-            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#3b1f4a" stroke-width="0.5" opacity="0.2" />
+        <!-- Diagonal Cyber Grid -->
+        <pattern id="cyber-grid" width="30" height="30" patternUnits="userSpaceOnUse">
+            <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#311840" stroke-width="0.7" opacity="0.15" />
         </pattern>
+
+        <!-- Glass Reflection Gradient -->
+        <linearGradient id="glass-reflection" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.12"/>
+            <stop offset="30%" stop-color="#ffffff" stop-opacity="0.04"/>
+            <stop offset="31%" stop-color="#ffffff" stop-opacity="0.0"/>
+            <stop offset="100%" stop-color="#ffffff" stop-opacity="0.0"/>
+        </linearGradient>
+
+        <!-- Curvature Inner Radial Shadow -->
+        <radialGradient id="screen-curve" cx="50%" cy="50%" r="50%">
+            <stop offset="80%" stop-color="#000000" stop-opacity="0.0"/>
+            <stop offset="95%" stop-color="#000000" stop-opacity="0.4"/>
+            <stop offset="100%" stop-color="#000000" stop-opacity="0.75"/>
+        </radialGradient>
+
+        <!-- Bezel Metallic Border -->
+        <linearGradient id="bezel-metallic" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#2d153d"/>
+            <stop offset="50%" stop-color="#150820"/>
+            <stop offset="100%" stop-color="#09030d"/>
+        </linearGradient>
     </defs>
 
-    <!-- Terminal Window Frame -->
-    <rect class="terminal-bg" width="820" height="480" rx="8" />
+    <!-- Bezel Monitor Frame (3D Casing) -->
+    <rect x="0" y="0" width="850" height="510" rx="14" fill="url(#bezel-metallic)" stroke="#c084fc" stroke-width="1" />
+    <!-- Bezel Highlight line -->
+    <rect x="6" y="6" width="838" height="498" rx="10" fill="none" stroke="#522a6b" stroke-width="1.5" opacity="0.6" />
+
+    <!-- Screen Bezel Cutout -->
+    <rect x="14" y="14" width="822" height="482" rx="8" class="terminal-bg" />
     
-    <!-- Matrix Grid Layout -->
-    <rect width="820" height="480" fill="url(#matrix-grid)" rx="8" />
+    <!-- Immersive Background Silhouette: Telephone Pole and Powerlines (Lain visual essence) -->
+    <g opacity="0.35">
+        <!-- Power Pole -->
+        <line x1="720" y1="14" x2="720" y2="496" stroke="#251233" stroke-width="8" />
+        <line x1="640" y1="100" x2="800" y2="100" stroke="#251233" stroke-width="4" />
+        <line x1="660" y1="180" x2="780" y2="180" stroke="#251233" stroke-width="3" />
+        <!-- Diagonal wires -->
+        <path d="M 0 120 Q 400 280, 720 180" fill="none" stroke="#311840" stroke-width="1.2" />
+        <path d="M 0 160 Q 400 320, 720 180" fill="none" stroke="#311840" stroke-width="1.2" />
+        <path d="M 0 80 Q 350 200, 720 100" fill="none" stroke="#311840" stroke-width="1.5" />
+        <path d="M 0 40 Q 350 160, 720 100" fill="none" stroke="#311840" stroke-width="1.5" />
+        <!-- Wires extending to the right -->
+        <line x1="720" y1="100" x2="836" y2="140" stroke="#311840" stroke-width="1.5" />
+        <line x1="720" y1="180" x2="836" y2="210" stroke="#311840" stroke-width="1.2" />
+    </g>
+
+    <!-- Diagonal Cyber Grid -->
+    <rect x="14" y="14" width="822" height="482" fill="url(#cyber-grid)" rx="8" />
     
     <!-- CRT Effect Scanlines -->
-    <rect class="scanlines" width="820" height="480" rx="8" pointer-events="none" />
+    <rect x="14" y="14" width="822" height="482" class="scanlines" rx="8" pointer-events="none" />
     
-    <!-- Sweeping Laser Scanline (CRT feel) -->
-    <rect x="2" y="35" width="816" height="2" fill="#00f0ff" opacity="0.4" filter="url(#crt-glow)">
-        <animate attributeName="y" from="35" to="475" dur="7s" repeatCount="indefinite" />
+    <!-- Sweeping Laser Scanline (CRT electron gun sweep) -->
+    <rect x="15" y="35" width="820" height="2" fill="#00f0ff" opacity="0.35" filter="url(#crt-glow)">
+        <animate attributeName="y" from="35" to="490" dur="8s" repeatCount="indefinite" />
     </rect>
     
-    <!-- Header Bar -->
-    <rect x="0" y="0" width="820" height="35" rx="8" fill="#3b1f4a" />
+    <!-- Header Bar inside screen -->
+    <rect x="14" y="14" width="822" height="35" rx="8" fill="#311840" />
     <!-- Window buttons -->
-    <circle cx="20" cy="18" r="6" fill="#ff66cc" />
-    <circle cx="40" cy="18" r="6" fill="#eab308" />
-    <circle cx="60" cy="18" r="6" fill="#00f0ff" />
+    <circle cx="34" cy="32" r="5" fill="#ff66cc" />
+    <circle cx="50" cy="32" r="5" fill="#eab308" />
+    <circle cx="66" cy="32" r="5" fill="#00f0ff" />
     
     <!-- Header Title -->
-    <text x="410" y="22" class="title-text" text-anchor="middle" font-weight="bold">Wired-Navi0x1F@NAVI-Terminal:~ (Protocol: Copula-0x1F)</text>
+    <text x="425" y="36" class="title-text" text-anchor="middle" font-weight="bold">Wired-Navi0x1F@NAVI-Terminal:~ (Protocol: Layer_07_Active)</text>
     
     <!-- System Diagnostics Block -->
     <g class="console-text glow">
         <!-- Diagnostic Block (Right Side) -->
-        <rect x="525" y="70" width="245" height="135" rx="4" fill="#0e0616" stroke="#3b1f4a" stroke-width="1.5" />
-        <text x="540" y="95" fill="#00f0ff" font-family="monospace" font-size="12" font-weight="bold">[SYSTEM DIAGNOSTICS]</text>
-        <text x="540" y="120" fill="#e9dcf5" font-family="monospace" font-size="11">NODE: Wired-Navi0x1F</text>
-        <text x="540" y="140" fill="#e9dcf5" font-family="monospace" font-size="11">COGNITIVE SYNC: 98.4%</text>
-        <text x="540" y="160" fill="#e9dcf5" font-family="monospace" font-size="11">WIRED CONNECT: SYNCED</text>
-        <text x="540" y="180" fill="#e9dcf5" font-family="monospace" font-size="10" fill-opacity="0.7">UPTIME: 1048596s</text>
+        <rect x="540" y="70" width="265" height="135" rx="4" fill="#0b0512" stroke="#311840" stroke-width="1.5" />
+        <text x="555" y="95" fill="#00f0ff" font-family="monospace" font-size="12" font-weight="bold">[SYSTEM DIAGNOSTICS]</text>
+        <text x="555" y="120" fill="#eeddfc" font-family="monospace" font-size="11">NODE: Wired-Navi0x1F</text>
+        <text x="555" y="140" fill="#eeddfc" font-family="monospace" font-size="11">WIRED PROTOCOL: ACTIVE</text>
+        <text x="555" y="160" fill="#eeddfc" font-family="monospace" font-size="11">COGNITIVE SYNC: 98.4%</text>
+        <text x="555" y="180" fill="#eeddfc" font-family="monospace" font-size="10" fill-opacity="0.7">REALM: Layer 07 // The Wired</text>
         
         <!-- Welcome Messages -->
-        <text x="50" y="75" fill="#00f0ff" font-family="monospace" font-size="14" font-weight="bold">&gt; Initializing NAVI-OS v7.25...</text>
+        <text x="50" y="75" fill="#00f0ff" font-family="monospace" font-size="13" font-weight="bold">&gt; Initializing NAVI-OS v7.25...</text>
         
         <!-- ASCII Logo -->
-        <text x="50" y="100" fill="#c084fc" font-family="monospace" font-size="9" font-weight="bold" xml:space="preserve">██╗    ██╗██╗██████╗ ███████╗██████╗     ███╗   ██╗█████╗ ██╗   ██╗██╗</text>
-<text x="50" y="113" fill="#c084fc" font-family="monospace" font-size="9" font-weight="bold" xml:space="preserve">██║    ██║██║██╔══██╗██╔════╝██╔══██╗    ████╗  ██║██╔══██╗██║   ██║██║</text>
-<text x="50" y="126" fill="#c084fc" font-family="monospace" font-size="9" font-weight="bold" xml:space="preserve">██║ █╗ ██║██║██████╔╝█████╗  ██║  ██║    ██╔██╗ ██║███████║██║   ██║██║</text>
-<text x="50" y="139" fill="#c084fc" font-family="monospace" font-size="9" font-weight="bold" xml:space="preserve">██║███╗██║██║██╔══██╗██╔══╝  ██║  ██║    ██║╚██╗██║██╔══██║╚██╗ ██╔╝██║</text>
-<text x="50" y="152" fill="#c084fc" font-family="monospace" font-size="9" font-weight="bold" xml:space="preserve">╚███╔███╔╝██║██║  ██║███████╗██████╔╝    ██║ ╚████║██║  ██║ ╚████╔╝ ██║</text>
-<text x="50" y="165" fill="#c084fc" font-family="monospace" font-size="9" font-weight="bold" xml:space="preserve"> ╚══╝╚══╝ ╚═╝╚═╝  ╚═╝╚══════╝╚═════╝     ╚═╝  ╚═══╝╚═╝  ╚═╝  ╚═══╝  ╚═╝</text>
+        <text x="50" y="90" fill="#c084fc" font-family="monospace" font-size="8.5" font-weight="bold" xml:space="preserve">██╗    ██╗██╗██████╗ ███████╗██████╗     ███╗   ██╗█████╗ ██╗   ██╗██╗</text>
+<text x="50" y="102" fill="#c084fc" font-family="monospace" font-size="8.5" font-weight="bold" xml:space="preserve">██║    ██║██║██╔══██╗██╔════╝██╔══██╗    ████╗  ██║██╔══██╗██║   ██║██║</text>
+<text x="50" y="114" fill="#c084fc" font-family="monospace" font-size="8.5" font-weight="bold" xml:space="preserve">██║ █╗ ██║██║██████╔╝█████╗  ██║  ██║    ██╔██╗ ██║███████║██║   ██║██║</text>
+<text x="50" y="126" fill="#c084fc" font-family="monospace" font-size="8.5" font-weight="bold" xml:space="preserve">██║███╗██║██║██╔══██╗██╔══╝  ██║  ██║    ██║╚██╗██║██╔══██║╚██╗ ██╔╝██║</text>
+<text x="50" y="138" fill="#c084fc" font-family="monospace" font-size="8.5" font-weight="bold" xml:space="preserve">╚███╔███╔╝██║██║  ██║███████╗██████╔╝    ██║ ╚████║██║  ██║ ╚████╔╝ ██║</text>
+<text x="50" y="150" fill="#c084fc" font-family="monospace" font-size="8.5" font-weight="bold" xml:space="preserve"> ╚══╝╚══╝ ╚═╝╚═╝  ╚═╝╚══════╝╚═════╝     ╚═╝  ╚═══╝╚═╝  ╚═╝  ╚═══╝  ╚═╝</text>
 
         
         <!-- Divider -->
-        <line x1="50" y1="205" x2="770" y2="205" stroke="#3b1f4a" stroke-width="1.5" stroke-dasharray="5 5" />
+        <line x1="50" y1="210" x2="790" y2="210" stroke="#311840" stroke-width="1.5" stroke-dasharray="5 5" />
         
         <!-- Skills Header -->
-        <text x="50" y="215" fill="#eab308" font-family="monospace" font-size="13" font-weight="bold">&gt;_ system_parameters_loaded</text>
+        <text x="50" y="225" fill="#eab308" font-family="monospace" font-size="13" font-weight="bold">&gt;_ core_modules_loaded</text>
         
         <!-- Skills/Languages List -->
         
-        <text x="50" y="230" fill="#e9dcf5" font-family="monospace" font-size="13">
-            <tspan fill="#6b4f80">&gt; </tspan>Java Core         : 
-            <tspan fill="#00f0ff">■■■■■■■■■□</tspan> 90%
+        <text x="50" y="230" fill="#eeddfc" font-family="monospace" font-size="13">
+            <tspan fill="#5d4370">&gt; </tspan><tspan font-weight="bold">Java Engineering    </tspan> 
+            <tspan fill="#5d4370">[</tspan><tspan fill="#00f0ff">■■■■■■■■■□</tspan><tspan fill="#5d4370">]</tspan>
+            <tspan fill="#5d4370" font-size="11"> // Enterprise API, Decoders</tspan>
         </text>
         
-        <text x="50" y="252" fill="#e9dcf5" font-family="monospace" font-size="13">
-            <tspan fill="#6b4f80">&gt; </tspan>Python Automation : 
-            <tspan fill="#ff66cc">■■■■■■■■□□</tspan> 85%
+        <text x="50" y="256" fill="#eeddfc" font-family="monospace" font-size="13">
+            <tspan fill="#5d4370">&gt; </tspan><tspan font-weight="bold">Python Automation   </tspan> 
+            <tspan fill="#5d4370">[</tspan><tspan fill="#ff66cc">■■■■■■■■□□</tspan><tspan fill="#5d4370">]</tspan>
+            <tspan fill="#5d4370" font-size="11"> // System Telemetry, Scripts</tspan>
         </text>
         
-        <text x="50" y="274" fill="#e9dcf5" font-family="monospace" font-size="13">
-            <tspan fill="#6b4f80">&gt; </tspan>Linux & Bash      : 
-            <tspan fill="#eab308">■■■■■■■■□□</tspan> 80%
-        </text>
-        
-        <text x="50" y="296" fill="#e9dcf5" font-family="monospace" font-size="13">
-            <tspan fill="#6b4f80">&gt; </tspan>Systems / C++     : 
-            <tspan fill="#c084fc">■■■■■■■□□□</tspan> 70%
+        <text x="50" y="282" fill="#eeddfc" font-family="monospace" font-size="13">
+            <tspan fill="#5d4370">&gt; </tspan><tspan font-weight="bold">Linux / DevOps      </tspan> 
+            <tspan fill="#5d4370">[</tspan><tspan fill="#eab308">■■■■■■■■□□</tspan><tspan fill="#5d4370">]</tspan>
+            <tspan fill="#5d4370" font-size="11"> // Unix Systems, Shell Rice</tspan>
         </text>
         
         
-        <!-- Terminal Prompt & Command Line -->
-        <text x="50" y="325" fill="#e9dcf5" font-family="monospace" font-size="13">
-            <tspan fill="#00f0ff">Wired-Navi0x1F@wired</tspan>:<tspan fill="#ff66cc">~</tspan>$ cat thoughts.txt
+        <!-- Connected Nodes Section (Professional Links) -->
+        <text x="50" y="325" fill="#00f0ff" font-family="monospace" font-size="13" font-weight="bold">&gt;_ connected_nodes</text>
+        <text x="50" y="348" fill="#eeddfc" font-family="monospace" font-size="13">
+            <tspan fill="#5d4370">&gt; </tspan>Website: <tspan fill="#00f0ff">https://pr0t0lain.dpdns.org</tspan>
+        </text>
+        <text x="50" y="368" fill="#eeddfc" font-family="monospace" font-size="13">
+            <tspan fill="#5d4370">&gt; </tspan>LinkedIn: <tspan fill="#00f0ff">https://linkedin.com/in/haru-l41n-pr0t0</tspan>
         </text>
         
-        <!-- thoughts.txt output -->
-        <text x="50" y="350" fill="#6b4f80" font-family="monospace" font-size="12" font-style="italic">
-            &quot;No matter where you are, everyone is always connected.&quot;
-        </text>
-        <text x="50" y="368" fill="#6b4f80" font-family="monospace" font-size="12" font-style="italic">
-            &quot;There is no barrier between the Wired and the Real.&quot;
-        </text>
-        
-        <!-- Oscilloscope "Hum of the Wired" Waveform Animation -->
+        <!-- Oscilloscope Waveform Animation -->
         <g>
-            <path d="M 0 410 C 50 380, 100 440, 150 410 C 200 380, 250 440, 300 410 C 350 380, 400 440, 450 410 C 500 380, 550 440, 600 410 C 650 380, 700 440, 750 410 C 800 380, 850 440, 900 410 C 950 380, 1000 440, 1050 410" fill="none" stroke="#00f0ff" stroke-width="1.5" opacity="0.4">
-                <animateTransform attributeName="transform" type="translate" from="0,0" to="-300,0" dur="4s" repeatCount="indefinite" />
+            <path d="M 0 420 C 50 390, 100 450, 150 420 C 200 390, 250 450, 300 420 C 350 390, 400 450, 450 420 C 500 390, 550 450, 600 420 C 650 390, 700 450, 750 420 C 800 390, 850 450, 900 420" fill="none" stroke="#00f0ff" stroke-width="1.5" opacity="0.3">
+                <animateTransform attributeName="transform" type="translate" from="0,0" to="-300,0" dur="4.5s" repeatCount="indefinite" />
             </path>
-            <path d="M 0 410 C 60 430, 120 390, 180 410 C 240 430, 300 390, 360 410 C 420 430, 480 390, 540 410 C 600 430, 660 390, 720 410 C 780 430, 840 390, 900 410 C 960 430, 1020 390, 1080 410" fill="none" stroke="#ff66cc" stroke-width="1" opacity="0.25">
-                <animateTransform attributeName="transform" type="translate" from="0,0" to="-360,0" dur="6s" repeatCount="indefinite" />
+            <path d="M 0 420 C 60 440, 120 400, 180 420 C 240 440, 300 400, 360 420 C 420 440, 480 400, 540 420 C 600 440, 660 400, 720 420 C 780 440, 840 400, 900 420" fill="none" stroke="#ff66cc" stroke-width="1" opacity="0.2">
+                <animateTransform attributeName="transform" type="translate" from="0,0" to="-360,0" dur="6.5s" repeatCount="indefinite" />
             </path>
         </g>
         
         <!-- Blinking Prompt -->
-        <text x="50" y="445" fill="#e9dcf5" font-family="monospace" font-size="14">
-            <tspan fill="#00f0ff">Wired-Navi0x1F@wired</tspan>:<tspan fill="#ff66cc">~</tspan>$ <tspan fill="#e9dcf5">El_Psy_Kongroo</tspan>
+        <text x="50" y="465" fill="#eeddfc" font-family="monospace" font-size="14">
+            <tspan fill="#00f0ff">Wired-Navi0x1F@wired</tspan>:<tspan fill="#ff66cc">~</tspan>$ <tspan fill="#eeddfc">close_world --open-next</tspan>
         </text>
-        <rect x="298" y="432" width="8" height="15" class="cursor" />
+        <rect x="424" y="452" width="8" height="15" class="cursor" />
     </g>
+
+    <!-- Curvature shadow overlay (Spherical screen effect) -->
+    <rect x="14" y="14" width="822" height="482" fill="url(#screen-curve)" rx="8" pointer-events="none" />
+
+    <!-- Glass Reflection glare overlay -->
+    <rect x="14" y="14" width="822" height="482" fill="url(#glass-reflection)" rx="8" pointer-events="none" />
 </svg>
