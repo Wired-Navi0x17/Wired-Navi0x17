@@ -15,39 +15,39 @@ THEME = {
     "cursor": "#c084fc",           # Purplish pink
     "gold": "#eab308",             # Warm gold
     "pink": "#ff66cc",             # Magenta pink
-    "gray": "#6b4f80"              # Muted purple
+    "gray": "#6b4f80",             # Muted purple
+    "orange": "#ff5500",           # Nixie Orange
+    "light_orange": "#ffcc66"      # Nixie Filament
 }
 
 def generate_terminal_svg(username, stats):
     """
-    Generates a retro terminal SVG showcasing NAVI OS status and coding parameters.
-    Includes a blinking cursor, subtle CRT grid, and scanlines.
+    Generates an animated, ultra-premium retro terminal SVG.
+    Includes a sweeping scanline, custom cyber grid, rolling waveform animation,
+    system diagnostic panel, and high-fidelity Unicode ASCII art.
     """
-    # Format system diagnostic time
-    current_time = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
-    
-    # Render ASCII art logo safely for XML
+    # Clean ASCII art logo (WIRED NAVI)
     ascii_art = r"""
-   _  _  __   _  _  ____   ___    _  _   __   _  _  ____
-  ( \/ )/  \ ( \/ )(_  _) / __)  ( \( ) /__\ ( \/ )(_  _)
-   \  /(  O ) \  /  _)(_ ( (__    )  ( /(__)\ \  /   )(  
-    \/  \__/   \/  (____) \___)  (_)\_)(__)(__) \/   (__)
-    """
-    # Clean ASCII art lines
+██╗    ██╗██╗██████╗ ███████╗██████╗     ███╗   ██╗█████╗ ██╗   ██╗██╗
+██║    ██║██║██╔══██╗██╔════╝██╔══██╗    ████╗  ██║██╔══██╗██║   ██║██║
+██║ █╗ ██║██║██████╔╝█████╗  ██║  ██║    ██╔██╗ ██║███████║██║   ██║██║
+██║███╗██║██║██╔══██╗██╔══╝  ██║  ██║    ██║╚██╗██║██╔══██║╚██╗ ██╔╝██║
+╚███╔███╔╝██║██║  ██║███████╗██████╔╝    ██║ ╚████║██║  ██║ ╚████╔╝ ██║
+ ╚══╝╚══╝ ╚═╝╚═╝  ╚═╝╚══════╝╚═════╝     ╚═╝  ╚═══╝╚═╝  ╚═╝  ╚═══╝  ╚═╝"""
+
     ascii_lines = [line for line in ascii_art.split("\n") if line.strip()]
     ascii_svg_lines = ""
-    y_start = 110
+    y_start = 100
     for idx, line in enumerate(ascii_lines):
-        # Escape any special XML characters
         escaped_line = line.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
-        ascii_svg_lines += f'<text x="50" y="{y_start + idx*16}" fill="{THEME["border_active"]}" font-family="monospace" font-size="12" font-weight="bold">{escaped_line}</text>\n'
+        ascii_svg_lines += f'<text x="50" y="{y_start + idx*13}" fill="{THEME["border_active"]}" font-family="monospace" font-size="9" font-weight="bold" xml:space="preserve">{escaped_line}</text>\n'
 
-    # Prepare stats representation
+    # Skill modules block
     skills = [
-        {"lang": "Java", "level": 90, "color": THEME["cyan"]},
-        {"lang": "Python", "level": 85, "color": THEME["pink"]},
-        {"lang": "Linux / Bash", "level": 80, "color": THEME["gold"]},
-        {"lang": "Rust", "level": 60, "color": THEME["border_active"]}
+        {"lang": "Java Core", "level": 90, "color": THEME["cyan"]},
+        {"lang": "Python Automation", "level": 85, "color": THEME["pink"]},
+        {"lang": "Linux & Bash", "level": 80, "color": THEME["gold"]},
+        {"lang": "Systems / C++", "level": 70, "color": THEME["border_active"]}
     ]
     
     skills_svg = ""
@@ -57,8 +57,8 @@ def generate_terminal_svg(username, stats):
         empty_blocks = 10 - filled_blocks
         bar = "■" * filled_blocks + "□" * empty_blocks
         skills_svg += f"""
-        <text x="50" y="{skills_y + idx*25}" fill="{THEME["fg"]}" font-family="monospace" font-size="14">
-            <tspan fill="{THEME["gray"]}">&gt; </tspan>{skill["lang"].ljust(15)}: 
+        <text x="50" y="{skills_y + idx*22}" fill="{THEME["fg"]}" font-family="monospace" font-size="13">
+            <tspan fill="{THEME["gray"]}">&gt; </tspan>{skill["lang"].ljust(18)}: 
             <tspan fill="{skill["color"]}">{bar}</tspan> {skill["level"]}%
         </text>
         """
@@ -94,19 +94,12 @@ def generate_terminal_svg(username, stats):
             animation: blink 1s infinite;
             fill: {THEME["cursor"]};
         }}
-        @keyframes scanline-anim {{
-            0% {{ transform: translateY(0); }}
-            100% {{ transform: translateY(8px); }}
-        }}
-        .scanline-pattern-rect {{
-            animation: scanline-anim 4s linear infinite;
-        }}
     </style>
 
     <defs>
         <!-- CRT Glow Filter -->
         <filter id="crt-glow" x="-10%" y="-10%" width="120%" height="120%">
-            <feGaussianBlur stdDeviation="1.5" result="blur" />
+            <feGaussianBlur stdDeviation="2" result="blur" />
             <feMerge>
                 <feMergeNode in="blur" />
                 <feMergeNode in="SourceGraphic" />
@@ -114,17 +107,30 @@ def generate_terminal_svg(username, stats):
         </filter>
         
         <!-- Scanline Pattern -->
-        <pattern id="scanline-pattern" width="820" height="8" patternUnits="userSpaceOnUse">
-            <rect width="820" height="4" fill="#000" />
-            <rect y="4" width="820" height="4" fill="transparent" />
+        <pattern id="scanline-pattern" width="820" height="6" patternUnits="userSpaceOnUse">
+            <rect width="820" height="3" fill="#000" />
+            <rect y="3" width="820" height="3" fill="transparent" />
+        </pattern>
+        
+        <!-- Matrix Grid Pattern -->
+        <pattern id="matrix-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="{THEME["border_inactive"]}" stroke-width="0.5" opacity="0.2" />
         </pattern>
     </defs>
 
     <!-- Terminal Window Frame -->
     <rect class="terminal-bg" width="820" height="480" rx="8" />
     
+    <!-- Matrix Grid Layout -->
+    <rect width="820" height="480" fill="url(#matrix-grid)" rx="8" />
+    
     <!-- CRT Effect Scanlines -->
     <rect class="scanlines" width="820" height="480" rx="8" pointer-events="none" />
+    
+    <!-- Sweeping Laser Scanline (CRT feel) -->
+    <rect x="2" y="35" width="816" height="2" fill="{THEME["cyan"]}" opacity="0.4" filter="url(#crt-glow)">
+        <animate attributeName="y" from="35" to="475" dur="7s" repeatCount="indefinite" />
+    </rect>
     
     <!-- Header Bar -->
     <rect x="0" y="0" width="820" height="35" rx="8" fill="{THEME["border_inactive"]}" />
@@ -136,17 +142,17 @@ def generate_terminal_svg(username, stats):
     <!-- Header Title -->
     <text x="410" y="22" class="title-text" text-anchor="middle" font-weight="bold">Wired-Navi0x1F@NAVI-Terminal:~ (Protocol: Copula-0x1F)</text>
     
-    <!-- System Diagnostics -->
+    <!-- System Diagnostics Block -->
     <g class="console-text glow">
         <!-- Diagnostic Block (Right Side) -->
-        <rect x="520" y="70" width="250" height="135" rx="4" fill="{THEME["bg"]}" stroke="{THEME["border_inactive"]}" stroke-width="1.5" />
-        <text x="535" y="95" fill="{THEME["cyan"]}" font-family="monospace" font-size="12" font-weight="bold">[SYSTEM DIAGNOSTICS]</text>
-        <text x="535" y="120" fill="{THEME["fg"]}" font-family="monospace" font-size="11">NODE: Wired-Navi0x1F</text>
-        <text x="535" y="140" fill="{THEME["fg"]}" font-family="monospace" font-size="11">COGNITIVE SYNC: 98.4%</text>
-        <text x="535" y="160" fill="{THEME["fg"]}" font-family="monospace" font-size="11">WIRED CONNECT: SYNCED</text>
-        <text x="535" y="180" fill="{THEME["fg"]}" font-family="monospace" font-size="10" fill-opacity="0.7">UPTIME: 1048596s</text>
+        <rect x="525" y="70" width="245" height="135" rx="4" fill="{THEME["bg"]}" stroke="{THEME["border_inactive"]}" stroke-width="1.5" />
+        <text x="540" y="95" fill="{THEME["cyan"]}" font-family="monospace" font-size="12" font-weight="bold">[SYSTEM DIAGNOSTICS]</text>
+        <text x="540" y="120" fill="{THEME["fg"]}" font-family="monospace" font-size="11">NODE: Wired-Navi0x1F</text>
+        <text x="540" y="140" fill="{THEME["fg"]}" font-family="monospace" font-size="11">COGNITIVE SYNC: 98.4%</text>
+        <text x="540" y="160" fill="{THEME["fg"]}" font-family="monospace" font-size="11">WIRED CONNECT: SYNCED</text>
+        <text x="540" y="180" fill="{THEME["fg"]}" font-family="monospace" font-size="10" fill-opacity="0.7">UPTIME: 1048596s</text>
         
-        <!-- Welcome Messages (Left Side) -->
+        <!-- Welcome Messages -->
         <text x="50" y="75" fill="{THEME["cyan"]}" font-family="monospace" font-size="14" font-weight="bold">&gt; Initializing NAVI-OS v7.25...</text>
         
         <!-- ASCII Logo -->
@@ -156,23 +162,33 @@ def generate_terminal_svg(username, stats):
         <line x1="50" y1="205" x2="770" y2="205" stroke="{THEME["border_inactive"]}" stroke-width="1.5" stroke-dasharray="5 5" />
         
         <!-- Skills Header -->
-        <text x="50" y="225" fill="{THEME["gold"]}" font-family="monospace" font-size="14" font-weight="bold">&gt;_ core_modules_loaded</text>
+        <text x="50" y="215" fill="{THEME["gold"]}" font-family="monospace" font-size="13" font-weight="bold">&gt;_ system_parameters_loaded</text>
         
         <!-- Skills/Languages List -->
         {skills_svg}
         
         <!-- Terminal Prompt & Command Line -->
-        <text x="50" y="355" fill="{THEME["fg"]}" font-family="monospace" font-size="14">
+        <text x="50" y="325" fill="{THEME["fg"]}" font-family="monospace" font-size="13">
             <tspan fill="{THEME["cyan"]}">Wired-Navi0x1F@wired</tspan>:<tspan fill="{THEME["pink"]}">~</tspan>$ cat thoughts.txt
         </text>
         
         <!-- thoughts.txt output -->
-        <text x="50" y="385" fill="{THEME["gray"]}" font-family="monospace" font-size="13" font-style="italic">
+        <text x="50" y="350" fill="{THEME["gray"]}" font-family="monospace" font-size="12" font-style="italic">
             &quot;No matter where you are, everyone is always connected.&quot;
         </text>
-        <text x="50" y="405" fill="{THEME["gray"]}" font-family="monospace" font-size="13" font-style="italic">
+        <text x="50" y="368" fill="{THEME["gray"]}" font-family="monospace" font-size="12" font-style="italic">
             &quot;There is no barrier between the Wired and the Real.&quot;
         </text>
+        
+        <!-- Oscilloscope "Hum of the Wired" Waveform Animation -->
+        <g>
+            <path d="M 0 410 C 50 380, 100 440, 150 410 C 200 380, 250 440, 300 410 C 350 380, 400 440, 450 410 C 500 380, 550 440, 600 410 C 650 380, 700 440, 750 410 C 800 380, 850 440, 900 410 C 950 380, 1000 440, 1050 410" fill="none" stroke="{THEME["cyan"]}" stroke-width="1.5" opacity="0.4">
+                <animateTransform attributeName="transform" type="translate" from="0,0" to="-300,0" dur="4s" repeatCount="indefinite" />
+            </path>
+            <path d="M 0 410 C 60 430, 120 390, 180 410 C 240 430, 300 390, 360 410 C 420 430, 480 390, 540 410 C 600 430, 660 390, 720 410 C 780 430, 840 390, 900 410 C 960 430, 1020 390, 1080 410" fill="none" stroke="{THEME["pink"]}" stroke-width="1" opacity="0.25">
+                <animateTransform attributeName="transform" type="translate" from="0,0" to="-360,0" dur="6s" repeatCount="indefinite" />
+            </path>
+        </g>
         
         <!-- Blinking Prompt -->
         <text x="50" y="445" fill="{THEME["fg"]}" font-family="monospace" font-size="14">
@@ -187,12 +203,10 @@ def generate_terminal_svg(username, stats):
 
 def generate_divergence_meter_svg():
     """
-    Generates a Steins;Gate Divergence Meter SVG using glowing Nixie Tubes.
-    Visualizes the Steins;Gate World Line divergence target: 1.048596%.
+    Generates a ultra-premium Steins;Gate Divergence Meter SVG using glowing Nixie Tubes.
+    Features metallic chassis, detailed tube grids, filaments, and deep warmth glows.
     """
     digits = ["1", ".", "0", "4", "8", "5", "9", "6"]
-    
-    # Custom Nixie Tube representation
     nixie_tubes = ""
     tube_width = 65
     tube_gap = 12
@@ -201,48 +215,54 @@ def generate_divergence_meter_svg():
     for idx, digit in enumerate(digits):
         x = start_x + idx * (tube_width + tube_gap)
         
-        # Decide if it's a dot or a digit
         if digit == ".":
             nixie_tubes += f"""
             <!-- Nixie Dot Tube -->
             <g transform="translate({x}, 0)">
-                <!-- Glass Outer Tube -->
+                <!-- Glass Outer Envelope -->
                 <rect x="20" y="25" width="25" height="100" rx="12.5" fill="none" stroke="{THEME["border_inactive"]}" stroke-width="1.5" opacity="0.8" />
-                <rect x="22" y="27" width="21" height="96" rx="10.5" fill="url(#glass-gradient)" opacity="0.1" />
+                <rect x="22" y="27" width="21" height="96" rx="10.5" fill="url(#glass-gradient)" opacity="0.12" />
                 <!-- Glowing Nixie Dot -->
-                <circle cx="32" cy="105" r="4" fill="{THEME["gold"]}" filter="url(#nixie-glow)" />
-                <circle cx="32" cy="105" r="2" fill="#fff" />
+                <circle cx="32" cy="105" r="4.5" fill="{THEME["orange"]}" filter="url(#nixie-glow)" />
+                <circle cx="32" cy="105" r="2.5" fill="{THEME["light_orange"]}" />
+                <circle cx="32" cy="105" r="1" fill="#ffffff" />
             </g>
             """
         else:
             nixie_tubes += f"""
             <!-- Nixie Digit Tube for '{digit}' -->
             <g transform="translate({x}, 0)">
-                <!-- Back Grid Metal Mesh (Nixie characteristic) -->
-                <rect x="5" y="15" width="55" height="120" rx="10" fill="url(#grid-mesh)" opacity="0.25" stroke="{THEME["gray"]}" stroke-width="0.5" />
+                <!-- Back Grid Metal Mesh -->
+                <rect x="5" y="15" width="55" height="120" rx="10" fill="url(#grid-mesh)" opacity="0.3" stroke="{THEME["gray"]}" stroke-width="0.5" />
                 
                 <!-- Glass Envelope -->
                 <rect x="2" y="10" width="61" height="130" rx="15" fill="none" stroke="{THEME["border_inactive"]}" stroke-width="1.5" opacity="0.8" />
-                <rect x="5" y="13" width="55" height="124" rx="12" fill="url(#glass-gradient)" opacity="0.1" />
+                <rect x="5" y="13" width="55" height="124" rx="12" fill="url(#glass-gradient)" opacity="0.12" />
                 
-                <!-- Inactive digits background silhouette (gives a realistic Nixie feel) -->
-                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#ff5500" opacity="0.04">8</text>
+                <!-- Inner metal support wires -->
+                <line x1="12" y1="15" x2="12" y2="135" stroke="#331b40" stroke-width="0.8" opacity="0.7" />
+                <line x1="52" y1="15" x2="52" y2="135" stroke="#331b40" stroke-width="0.8" opacity="0.7" />
                 
-                <!-- Active Glowing Digit -->
-                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="{THEME["gold"]}" filter="url(#nixie-glow)">{digit}</text>
-                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#fff" opacity="0.8">{digit}</text>
+                <!-- Inactive digits background silhouette -->
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="{THEME["orange"]}" opacity="0.04">8</text>
                 
-                <!-- Base Mount -->
-                <rect x="2" y="135" width="61" height="12" rx="2" fill="#1f1130" stroke="{THEME["border_inactive"]}" stroke-width="1" />
+                <!-- Active Glowing Digit (Filament layered glows) -->
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="{THEME["orange"]}" filter="url(#nixie-glow)">{digit}</text>
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="{THEME["light_orange"]}" filter="url(#nixie-glow-inner)" opacity="0.9">{digit}</text>
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#ffffff" opacity="0.85">{digit}</text>
+                
+                <!-- Tube Base Mount -->
+                <rect x="2" y="135" width="61" height="12" rx="2" fill="#150a21" stroke="{THEME["border_inactive"]}" stroke-width="1" />
+                <rect x="8" y="137" width="49" height="2" fill="{THEME["border_inactive"]}" opacity="0.4" />
             </g>
             """
 
     svg_content = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 170" width="100%" height="auto">
     <style>
         .meter-bg {{
-            fill: #08030d;
+            fill: #06020a;
             stroke: {THEME["border_inactive"]};
-            stroke-width: 2;
+            stroke-width: 2.5;
         }}
         .label-text {{
             fill: {THEME["gray"]};
@@ -256,10 +276,10 @@ def generate_divergence_meter_svg():
     </style>
     
     <defs>
-        <!-- Nixie Glow (High Intensity Warm Amber) -->
+        <!-- Nixie Filament Glow Filters -->
         <filter id="nixie-glow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="3.5" result="blur1" />
-            <feGaussianBlur stdDeviation="8" result="blur2" />
+            <feGaussianBlur stdDeviation="4.5" result="blur1" />
+            <feGaussianBlur stdDeviation="9.0" result="blur2" />
             <feMerge>
                 <feMergeNode in="blur2" />
                 <feMergeNode in="blur1" />
@@ -267,11 +287,19 @@ def generate_divergence_meter_svg():
             </feMerge>
         </filter>
         
-        <!-- Panel Subtle Glow -->
+        <filter id="nixie-glow-inner" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="1.5" result="blur" />
+            <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+            </feMerge>
+        </filter>
+        
+        <!-- Panel Glow -->
         <filter id="panel-glow" x="-10%" y="-10%" width="120%" height="120%">
-            <feGaussianBlur stdDeviation="10" result="blur" />
+            <feGaussianBlur stdDeviation="12" result="blur" />
             <feComponentTransfer in="blur" result="glow">
-                <feFuncA type="linear" slope="0.3"/>
+                <feFuncA type="linear" slope="0.35"/>
             </feComponentTransfer>
             <feMerge>
                 <feMergeNode in="glow" />
@@ -281,26 +309,29 @@ def generate_divergence_meter_svg():
 
         <!-- Glass Reflection Gradient -->
         <linearGradient id="glass-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.3"/>
-            <stop offset="25%" stop-color="#ffffff" stop-opacity="0.05"/>
+            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.35"/>
+            <stop offset="20%" stop-color="#ffffff" stop-opacity="0.08"/>
             <stop offset="50%" stop-color="#ffffff" stop-opacity="0.0"/>
-            <stop offset="85%" stop-color="#ffffff" stop-opacity="0.05"/>
-            <stop offset="100%" stop-color="#ffffff" stop-opacity="0.25"/>
+            <stop offset="80%" stop-color="#ffffff" stop-opacity="0.08"/>
+            <stop offset="100%" stop-color="#ffffff" stop-opacity="0.3"/>
         </linearGradient>
 
         <!-- Metal Grid Mesh Pattern -->
-        <pattern id="grid-mesh" width="4" height="4" patternUnits="userSpaceOnUse">
-            <line x1="0" y1="0" x2="4" y2="0" stroke="#ff5500" stroke-width="0.3" opacity="0.3"/>
-            <line x1="0" y1="0" x2="0" y2="4" stroke="#ff5500" stroke-width="0.3" opacity="0.3"/>
+        <pattern id="grid-mesh" width="3" height="3" patternUnits="userSpaceOnUse">
+            <line x1="0" y1="0" x2="3" y2="0" stroke="{THEME["orange"]}" stroke-width="0.25" opacity="0.35"/>
+            <line x1="0" y1="0" x2="0" y2="3" stroke="{THEME["orange"]}" stroke-width="0.25" opacity="0.35"/>
         </pattern>
     </defs>
 
     <!-- Meter Back Panel Chassis -->
     <rect class="meter-bg" width="680" height="170" rx="6" />
     
+    <!-- Metallic Bezel Lines -->
+    <rect x="5" y="5" width="670" height="160" rx="4" fill="none" stroke="{THEME["border_inactive"]}" stroke-width="1" opacity="0.4" />
+    
     <!-- Vent grills (retro details) -->
-    <rect x="40" y="6" width="600" height="4" rx="2" fill="#000" opacity="0.6"/>
-    <rect x="40" y="160" width="600" height="4" rx="2" fill="#000" opacity="0.6"/>
+    <rect x="40" y="8" width="600" height="3" rx="1.5" fill="#000000" opacity="0.8"/>
+    <rect x="40" y="159" width="600" height="3" rx="1.5" fill="#000000" opacity="0.8"/>
     
     <!-- Nixie Tubes Group -->
     <g class="divergence-glow" transform="translate(10, 5)">
@@ -318,8 +349,6 @@ def main():
     username = "Wired-Navi0x1F"
     stats = {}
     
-    # Try fetching Github Stats if running on CI or token is set
-    # (Just basic configuration; default layout relies on beautiful SVG generation)
     print("Generating retro terminal card...")
     terminal_svg = generate_terminal_svg(username, stats)
     with open("terminal.svg", "w", encoding="utf-8") as f:
