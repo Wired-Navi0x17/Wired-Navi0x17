@@ -1,275 +1,147 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 510" width="100%" height="auto">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 510" height="auto">
     <style>
-        .terminal-bg {
-            fill: #0c0810;
-        }
-        .scanlines {
-            fill: url(#scanline-pattern);
-            opacity: 0.18;
-        }
-        .title-text {
-            fill: #eeddfc;
-            font-family: 'JetBrains Mono', 'Courier New', monospace;
-            font-size: 13px;
-        }
-        .console-text {
-            font-family: 'JetBrains Mono', 'Courier New', monospace;
-            font-size: 14px;
-            text-shadow: 0 0 3px rgba(192, 132, 252, 0.45);
-        }
-        .header-glow {
-            text-shadow: 0 0 4px rgba(0, 240, 255, 0.6);
-        }
-        .lain-skin {
-            stroke: #eeddfc;
-            stroke-width: 1.4;
-            fill: none;
-            opacity: 0.85;
-            filter: url(#neon-glow-filter);
-        }
-        .lain-hair {
-            stroke: #8c6e5e;
-            stroke-width: 1.6;
-            fill: none;
-            opacity: 0.95;
-            filter: url(#neon-glow-filter);
-        }
-        .lain-glasses {
-            stroke: #d0d5dd;
-            stroke-width: 1.8;
-            fill: none;
-            opacity: 0.95;
-            filter: url(#neon-glow-filter);
-        }
-        .lain-collar {
-            stroke: #ff66cc;
-            stroke-width: 1.6;
-            fill: none;
-            opacity: 0.9;
-            filter: url(#neon-glow-filter);
-        }
         @keyframes blink {
-            0%, 49% { opacity: 1; }
-            50%, 100% { opacity: 0; }
+
+            0%,
+            49% {
+                opacity: 1
+            }
+
+            50%,
+            to {
+                opacity: 0
+            }
         }
-        .cursor {
-            animation: blink 1s infinite;
-            fill: #b392ac;
+
+        .prefix__header-glow {
+            text-shadow: 0 0 4px rgba(0, 240, 255, .6)
         }
     </style>
-
     <defs>
-        <!-- Glow Filters for Vector Art -->
-        <filter id="neon-glow-filter" x="-30%" y="-30%" width="160%" height="160%">
-            <feGaussianBlur stdDeviation="2.5" result="blur" />
-            <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-            </feMerge>
-        </filter>
-        <filter id="neon-glow-filter-cyan" x="-30%" y="-30%" width="160%" height="160%">
-            <feGaussianBlur stdDeviation="2.5" result="blur" />
-            <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-            </feMerge>
-        </filter>
-
-        <!-- Scanline Pattern -->
-        <pattern id="scanline-pattern" width="850" height="6" patternUnits="userSpaceOnUse">
-            <rect width="850" height="3" fill="#000" />
-            <rect y="3" width="850" height="3" fill="transparent" />
-        </pattern>
-        
-        <!-- Diagonal Cyber Grid -->
-        <pattern id="cyber-grid" width="30" height="30" patternUnits="userSpaceOnUse">
-            <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#311840" stroke-width="0.7" opacity="0.15" />
-        </pattern>
-
-        <!-- Glass Reflection Gradient -->
-        <linearGradient id="glass-reflection" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.12"/>
-            <stop offset="30%" stop-color="#ffffff" stop-opacity="0.04"/>
-            <stop offset="31%" stop-color="#ffffff" stop-opacity="0.0"/>
-            <stop offset="100%" stop-color="#ffffff" stop-opacity="0.0"/>
+        <linearGradient id="prefix__glass-reflection" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#fff" stop-opacity=".12" />
+            <stop offset="30%" stop-color="#fff" stop-opacity=".04" />
+            <stop offset="31%" stop-color="#fff" stop-opacity="0" />
+            <stop offset="100%" stop-color="#fff" stop-opacity="0" />
         </linearGradient>
-
-        <!-- Curvature Inner Radial Shadow -->
-        <radialGradient id="screen-curve" cx="50%" cy="50%" r="50%">
-            <stop offset="80%" stop-color="#000000" stop-opacity="0.0"/>
-            <stop offset="95%" stop-color="#000000" stop-opacity="0.4"/>
-            <stop offset="100%" stop-color="#000000" stop-opacity="0.75"/>
+        <linearGradient id="prefix__bezel-metallic" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#2d153d" />
+            <stop offset="50%" stop-color="#150820" />
+            <stop offset="100%" stop-color="#09030d" />
+        </linearGradient>
+        <pattern id="prefix__scanline-pattern" width="850" height="6" patternUnits="userSpaceOnUse">
+            <path d="M0 0h850v3H0z" />
+            <path fill="transparent" d="M0 3h850v3H0z" />
+        </pattern>
+        <pattern id="prefix__cyber-grid" width="30" height="30" patternUnits="userSpaceOnUse">
+            <path d="M30 0H0v30" fill="none" stroke="#311840" stroke-width=".7" opacity=".15" />
+        </pattern>
+        <radialGradient id="prefix__screen-curve" cx="50%" cy="50%" r="50%">
+            <stop offset="80%" stop-opacity="0" />
+            <stop offset="95%" stop-opacity=".4" />
+            <stop offset="100%" stop-opacity=".75" />
         </radialGradient>
-
-        <!-- Bezel Metallic Border -->
-        <linearGradient id="bezel-metallic" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#2d153d"/>
-            <stop offset="50%" stop-color="#150820"/>
-            <stop offset="100%" stop-color="#09030d"/>
-        </linearGradient>
     </defs>
-
-    <!-- Bezel Monitor Frame (3D Casing) -->
-    <rect x="0" y="0" width="850" height="510" rx="14" fill="url(#bezel-metallic)" stroke="#b392ac" stroke-width="1.2" />
-    <!-- Bezel Highlight line -->
-    <rect x="6" y="6" width="838" height="498" rx="10" fill="none" stroke="#522a6b" stroke-width="1.5" opacity="0.6" />
-
-    <!-- Screen Bezel Cutout -->
-    <rect x="14" y="14" width="822" height="482" rx="8" class="terminal-bg" />
-    
-    <!-- Immersive Background Silhouette: Telephone Pole and Powerlines (Lain visual essence) -->
-    <g opacity="0.2">
-        <!-- Power Pole -->
-        <line x1="720" y1="14" x2="720" y2="496" stroke="#251233" stroke-width="8" />
-        <line x1="640" y1="100" x2="800" y2="100" stroke="#251233" stroke-width="4" />
-        <line x1="660" y1="180" x2="780" y2="180" stroke="#251233" stroke-width="3" />
-        <!-- Diagonal wires -->
-        <path d="M 0 120 Q 400 280, 720 180" fill="none" stroke="#311840" stroke-width="1.2" />
-        <path d="M 0 160 Q 400 320, 720 180" fill="none" stroke="#311840" stroke-width="1.2" />
-        <path d="M 0 80 Q 350 200, 720 100" fill="none" stroke="#311840" stroke-width="1.5" />
-        <path d="M 0 40 Q 350 160, 720 100" fill="none" stroke="#311840" stroke-width="1.5" />
+    <rect width="850" height="510" rx="14" fill="url(#prefix__bezel-metallic)" stroke="#c084fc" />
+    <rect x="6" y="6" width="838" height="498" rx="10" fill="none" stroke="#522a6b" stroke-width="1.5" opacity=".6" />
+    <rect x="14" y="14" width="822" height="482" rx="8" fill="#0b0512" />
+    <g opacity=".32">
+        <path stroke="#251233" stroke-width="8" d="M720 14v482" />
+        <path stroke="#251233" stroke-width="4" d="M640 100h160" />
+        <path stroke="#251233" stroke-width="3" d="M660 180h120" />
+        <path d="M0 120q400 160 720 60M0 160q400 160 720 20" fill="none" stroke="#311840" stroke-width="1.2" />
+        <path d="M0 80q350 120 720 20M0 40q350 120 720 60" fill="none" stroke="#311840" stroke-width="1.5" />
+        <path stroke="#311840" stroke-width="1.5" d="M720 100l116 40" />
+        <path stroke="#311840" stroke-width="1.2" d="M720 180l116 30" />
     </g>
-
-    <!-- Diagonal Cyber Grid -->
-    <rect x="14" y="14" width="822" height="482" fill="url(#cyber-grid)" rx="8" />
-    
-    <!-- CRT Effect Scanlines -->
-    <rect x="14" y="14" width="822" height="482" class="scanlines" rx="8" pointer-events="none" />
-    
-    <!-- Sweeping Laser Scanline (CRT electron gun sweep) -->
-    <rect x="15" y="35" width="820" height="2" fill="#a5c2d8" opacity="0.25" pointer-events="none">
+    <rect x="14" y="14" width="822" height="482" fill="url(#prefix__cyber-grid)" rx="8" />
+    <rect x="14" y="14" width="822" height="482" rx="8" pointer-events="none" fill="url(#prefix__scanline-pattern)"
+        opacity=".18" />
+    <path fill="#00f0ff" opacity=".3" pointer-events="none" d="M15 35h820v2H15z">
         <animate attributeName="y" from="35" to="490" dur="8s" repeatCount="indefinite" />
-    </rect>
-    
-    <!-- Header Bar inside screen -->
+    </path>
     <rect x="14" y="14" width="822" height="35" rx="8" fill="#311840" />
-    <!-- Window buttons -->
-    <circle cx="34" cy="32" r="5" fill="#ff66cc" />
-    <circle cx="50" cy="32" r="5" fill="#dfb15b" />
-    <circle cx="66" cy="32" r="5" fill="#a5c2d8" />
-    
-    <!-- Header Title -->
-    <text x="425" y="36" class="title-text" text-anchor="middle" font-weight="bold">Wired-Navi0x1F@NAVI-Terminal:~ (Protocol: Layer_07_Active)</text>
-    
-    <!-- Vector Art of Lain with Glasses (lainPfp.jpg wireframe representation) -->
-    <g transform="translate(180, 20)">
-        <!-- Face Contour -->
-        <path class="lain-skin" d="M 400 180 C 400 270, 420 310, 460 325 C 500 310, 520 270, 520 180" />
-        
-        <!-- Hair Outline (Signature Bob) -->
-        <path class="lain-hair" d="M 370 180 C 360 120, 400 70, 460 70 C 520 70, 560 120, 550 180 C 550 230, 530 250, 530 280 C 530 290, 540 300, 545 320" />
-        <path class="lain-hair" d="M 370 180 C 375 220, 390 240, 395 270" />
-        
-        <!-- Left Side Bangs & signature long strand with hairband -->
-        <path class="lain-hair" d="M 390 120 C 385 150, 390 200, 390 250 C 390 270, 385 320, 395 360 C 400 380, 410 400, 405 440" />
-        
-        <!-- Glasses (Silver Rims) -->
-        <path class="lain-glasses" d="M 412 195 L 452 203 L 452 220 L 412 212 Z" /> <!-- Left Rim -->
-        <path class="lain-glasses" d="M 468 206 L 508 214 L 508 231 L 468 223 Z" /> <!-- Right Rim -->
-        <path class="lain-glasses" d="M 452 207 Q 460 209, 468 211" /> <!-- Bridge -->
-        <path class="lain-glasses" d="M 412 197 C 400 190, 395 180, 390 178" /> <!-- Left Temple -->
-        <path class="lain-glasses" d="M 508 216 C 520 210, 525 200, 530 198" /> <!-- Right Temple -->
-        
-        <!-- Eyes (Quiet expression behind glasses) -->
-        <path class="lain-skin" d="M 422 205 Q 432 202, 442 207" />
-        <path class="lain-skin" d="M 478 214 Q 488 211, 498 216" />
-        <circle cx="432" cy="209" r="2" fill="#b392ac" />
-        <circle cx="488" cy="218" r="2" fill="#b392ac" />
-        
-        <!-- Mouth & Nose -->
-        <path class="lain-skin" d="M 460 248 L 464 250" /> <!-- Nose -->
-        <path class="lain-skin" d="M 455 285 Q 460 288, 465 285" /> <!-- Mouth -->
-        
-        <!-- Neck & Halter Top Collar -->
-        <path class="lain-skin" d="M 440 320 L 440 360 C 430 380, 420 400, 410 430" /> <!-- Neck Left -->
-        <path class="lain-skin" d="M 480 318 L 480 360 C 490 380, 500 400, 510 430" /> <!-- Neck Right -->
-        <path class="lain-collar" d="M 432 360 Q 460 370, 488 360 C 495 380, 520 440, 530 460 M 428 360 C 420 380, 395 440, 385 460" /> <!-- Collar / Dress -->
-    </g>
-
-    <!-- System Diagnostics Block -->
-    <g class="console-text">
-        <!-- Diagnostic Block (Right Side) -->
-        <rect x="525" y="70" width="280" height="110" rx="4" fill="#0c0810" stroke="#311840" stroke-width="1.5" />
-        <text x="540" y="92" fill="#a5c2d8" font-family="monospace" font-size="11" font-weight="bold" class="header-glow">[SYSTEM DIAGNOSTICS]</text>
-        <text x="540" y="112" fill="#eeddfc" font-family="monospace" font-size="10.5">NODE: Wired-Navi0x1F</text>
-        <text x="540" y="130" fill="#eeddfc" font-family="monospace" font-size="10.5">ACTIVE MODULES: 10</text>
-        <text x="540" y="148" fill="#eeddfc" font-family="monospace" font-size="10.5">SYNC RATE: 98.2%</text>
-        <text x="540" y="166" fill="#eeddfc" font-family="monospace" font-size="9.5" fill-opacity="0.7">LAST SYNC: 2026-07-14</text>
-        
-        <!-- Welcome Messages -->
-        <text x="50" y="75" fill="#a5c2d8" font-family="monospace" font-size="13" font-weight="bold" class="header-glow">&gt; Initializing NAVI-OS v7.25...</text>
-        
-        <!-- ASCII Logo -->
-        <text x="50" y="85" fill="#b392ac" font-family="monospace" font-size="8.5" font-weight="bold" xml:space="preserve">██╗    ██╗██╗██████╗ ███████╗██████╗</text>
-<text x="50" y="97" fill="#b392ac" font-family="monospace" font-size="8.5" font-weight="bold" xml:space="preserve">██║    ██║██║██╔══██╗██╔════╝██╔══██╗</text>
-<text x="50" y="109" fill="#b392ac" font-family="monospace" font-size="8.5" font-weight="bold" xml:space="preserve">██║ █╗ ██║██║██████╔╝█████╗  ██║  ██║</text>
-<text x="50" y="121" fill="#b392ac" font-family="monospace" font-size="8.5" font-weight="bold" xml:space="preserve">██║███╗██║██║██╔══██╗██╔══╝  ██║  ██║</text>
-<text x="50" y="133" fill="#b392ac" font-family="monospace" font-size="8.5" font-weight="bold" xml:space="preserve">╚███╔███╔╝██║██║  ██║███████╗██████╔╝</text>
-<text x="50" y="145" fill="#b392ac" font-family="monospace" font-size="8.5" font-weight="bold" xml:space="preserve"> ╚══╝╚══╝ ╚═╝╚═╝  ╚═╝╚══════╝╚═════╝</text>
-
-        
-        <!-- Divider -->
-        <line x1="50" y1="200" x2="500" y2="200" stroke="#311840" stroke-width="1.5" stroke-dasharray="5 5" />
-        
-        <!-- Skills Header -->
-        <text x="50" y="210" fill="#dfb15b" font-family="monospace" font-size="12" font-weight="bold">&gt;_ core_modules_loaded</text>
-        
-        <!-- Skills/Languages List -->
-        
-        <text x="50" y="215" fill="#eeddfc" font-family="monospace" font-size="12">
-            <tspan fill="#5d4370">&gt; </tspan><tspan font-weight="bold">Python / PyTorch    </tspan> 
-            <tspan fill="#5d4370">[</tspan><tspan fill="#a5c2d8">■■■■■■■■■□</tspan><tspan fill="#5d4370">]</tspan>
+    <circle cx="34" cy="32" r="5" fill="#f6c" />
+    <circle cx="50" cy="32" r="5" fill="#eab308" />
+    <circle cx="66" cy="32" r="5" fill="#00f0ff" /><text x="425" y="36" text-anchor="middle" font-weight="bold"
+        fill="#eeddfc" font-family="'JetBrains Mono','Courier New',monospace"
+        font-size="13">Wired-Navi0x1F@NAVI-Terminal:~ (Protocol: Layer_07_Active)</text>
+    <g style="text-shadow:0 0 3px rgba(192,132,252,.45)" font-family="'JetBrains Mono','Courier New',monospace"
+        font-size="14">
+        <rect x="540" y="70" width="265" height="135" rx="4" fill="#0b0512" stroke="#311840" stroke-width="1.5" /><text
+            x="555" y="95" fill="#00f0ff" font-family="monospace" font-size="12" font-weight="bold"
+            class="prefix__header-glow">[SYSTEM DIAGNOSTICS]</text><text x="555" y="120" fill="#eeddfc"
+            font-family="monospace" font-size="11">NODE: Wired-Navi0x1F</text><text x="555" y="140" fill="#eeddfc"
+            font-family="monospace" font-size="11">ACTIVE MODULES: 8</text><text x="555" y="160" fill="#eeddfc"
+            font-family="monospace" font-size="11">SYNC RATE: 98.2%</text><text x="555" y="180" fill="#eeddfc"
+            font-family="monospace" font-size="10" fill-opacity=".7">LAST SYNC: 2026-07-10</text><text x="50" y="75"
+            fill="#00f0ff" font-family="monospace" font-size="13" font-weight="bold" class="prefix__header-glow">&gt;
+            Initializing NAVI-OS v7.25...</text><text x="50" y="90" fill="#c084fc" font-family="monospace"
+            font-size="8.5" font-weight="bold">██╗ ██╗██╗██████╗ ███████╗██████╗ ███╗ ██╗█████╗ ██╗ ██╗██╗</text><text
+            x="50" y="102" fill="#c084fc" font-family="monospace" font-size="8.5" font-weight="bold">██║
+            ██║██║██╔══██╗██╔════╝██╔══██╗ ████╗ ██║██╔══██╗██║ ██║██║</text><text x="50" y="114" fill="#c084fc"
+            font-family="monospace" font-size="8.5" font-weight="bold">██║ █╗ ██║██║██████╔╝█████╗ ██║ ██║ ██╔██╗
+            ██║███████║██║ ██║██║</text><text x="50" y="126" fill="#c084fc" font-family="monospace" font-size="8.5"
+            font-weight="bold">██║███╗██║██║██╔══██╗██╔══╝ ██║ ██║ ██║╚██╗██║██╔══██║╚██╗ ██╔╝██║</text><text x="50"
+            y="138" fill="#c084fc" font-family="monospace" font-size="8.5" font-weight="bold">╚███╔███╔╝██║██║
+            ██║███████╗██████╔╝ ██║ ╚████║██║ ██║ ╚████╔╝ ██║</text><text x="50" y="150" fill="#c084fc"
+            font-family="monospace" font-size="8.5" font-weight="bold">╚══╝╚══╝ ╚═╝╚═╝ ╚═╝╚══════╝╚═════╝ ╚═╝ ╚═══╝╚═╝
+            ╚═╝ ╚═══╝ ╚══╝</text>
+        <path stroke="#311840" stroke-width="1.5" stroke-dasharray="5 5" d="M50 210h740" /><text x="50" y="220"
+            fill="#eab308" font-family="monospace" font-size="12" font-weight="bold">&gt;_
+            core_modules_loaded</text><text x="50" y="225" fill="#eeddfc" font-family="monospace" font-size="12">
+            <tspan fill="#5d4370">&gt; </tspan>
+            <tspan font-weight="bold">Python / PyTorch </tspan>
+            <tspan fill="#5d4370">[</tspan>
+            <tspan fill="#00f0ff">■■■■■■■■■□</tspan>
+            <tspan fill="#5d4370">]</tspan>
             <tspan fill="#5d4370" font-size="10.5"> // ML Models, TensorFlow</tspan>
-        </text>
-        
-        <text x="50" y="238" fill="#eeddfc" font-family="monospace" font-size="12">
-            <tspan fill="#5d4370">&gt; </tspan><tspan font-weight="bold">C / C++ Systems     </tspan> 
-            <tspan fill="#5d4370">[</tspan><tspan fill="#dfb15b">■■■■■■■■□□</tspan><tspan fill="#5d4370">]</tspan>
+        </text><text x="50" y="248" fill="#eeddfc" font-family="monospace" font-size="12">
+            <tspan fill="#5d4370">&gt; </tspan>
+            <tspan font-weight="bold">C / C++ Systems </tspan>
+            <tspan fill="#5d4370">[</tspan>
+            <tspan fill="#eab308">■■■■■■■■□□</tspan>
+            <tspan fill="#5d4370">]</tspan>
             <tspan fill="#5d4370" font-size="10.5"> // Algorithms, Hardware</tspan>
-        </text>
-        
-        <text x="50" y="261" fill="#eeddfc" font-family="monospace" font-size="12">
-            <tspan fill="#5d4370">&gt; </tspan><tspan font-weight="bold">Web (Three.js/Flask)</tspan> 
-            <tspan fill="#5d4370">[</tspan><tspan fill="#ff66cc">■■■■■■■■□□</tspan><tspan fill="#5d4370">]</tspan>
+        </text><text x="50" y="271" fill="#eeddfc" font-family="monospace" font-size="12">
+            <tspan fill="#5d4370">&gt; </tspan>
+            <tspan font-weight="bold">Web (Three.js/Flask)</tspan>
+            <tspan fill="#5d4370">[</tspan>
+            <tspan fill="#f6c">■■■■■■■■□□</tspan>
+            <tspan fill="#5d4370">]</tspan>
             <tspan fill="#5d4370" font-size="10.5"> // Interactive 3D Graphics</tspan>
+        </text><text x="50" y="294" fill="#eeddfc" font-family="monospace" font-size="12">
+            <tspan fill="#5d4370">&gt; </tspan>
+            <tspan font-weight="bold">ROS2 / Robotics </tspan>
+            <tspan fill="#5d4370">[</tspan>
+            <tspan fill="#c084fc">■■■■■■■□□□</tspan>
+            <tspan fill="#5d4370">]</tspan>
+            <tspan fill="#5d4370" font-size="10.5"> // Simulation, Trajectories</tspan>
+        </text><text x="50" y="335" fill="#00f0ff" font-family="monospace" font-size="12" font-weight="bold"
+            class="prefix__header-glow">&gt;_ connected_nodes</text><text x="50" y="354" fill="#eeddfc"
+            font-family="monospace" font-size="12">
+            <tspan fill="#5d4370">&gt; </tspan>Website: <tspan fill="#00f0ff">https://pr0t0lain.dpdns.org</tspan>
+        </text><text x="50" y="372" fill="#eeddfc" font-family="monospace" font-size="12">
+            <tspan fill="#5d4370">&gt; </tspan>LinkedIn: <tspan fill="#00f0ff">
+                https://in.linkedin.com/in/haru-l41n-pr0t0</tspan>
         </text>
-        
-        <text x="50" y="284" fill="#eeddfc" font-family="monospace" font-size="12">
-            <tspan fill="#5d4370">&gt; </tspan><tspan font-weight="bold">Java / Linux Systems</tspan> 
-            <tspan fill="#5d4370">[</tspan><tspan fill="#eeddfc">■■■■■■■□□□</tspan><tspan fill="#5d4370">]</tspan>
-            <tspan fill="#5d4370" font-size="10.5"> // Protocol Kernels, Dotfiles</tspan>
-        </text>
-        
-        
-        <!-- Connected Nodes Section -->
-        <text x="50" y="325" fill="#a5c2d8" font-family="monospace" font-size="12" font-weight="bold" class="header-glow">&gt;_ connected_nodes</text>
-        <text x="50" y="344" fill="#eeddfc" font-family="monospace" font-size="12">
-            <tspan fill="#5d4370">&gt; </tspan>Website: <tspan fill="#a5c2d8">https://pr0t0lain.dpdns.org</tspan>
-        </text>
-        <text x="50" y="362" fill="#eeddfc" font-family="monospace" font-size="12">
-            <tspan fill="#5d4370">&gt; </tspan>LinkedIn: <tspan fill="#a5c2d8">https://in.linkedin.com/in/haru-l41n-pr0t0</tspan>
-        </text>
-        
-        <!-- Oscilloscope Waveform Animation -->
-        <g>
-            <path d="M 0 410 C 50 380, 100 440, 150 410 C 200 380, 250 440, 300 410 C 350 380, 400 440, 450 410 C 500 380, 550 440, 600 410 C 650 380, 700 440, 750 410" fill="none" stroke="#a5c2d8" stroke-width="1.5" opacity="0.3">
-                <animateTransform attributeName="transform" type="translate" from="0,0" to="-300,0" dur="4.5s" repeatCount="indefinite" />
+        <g fill="none">
+            <path d="M0 420c50-30 100 30 150 0s100 30 150 0 100 30 150 0 100 30 150 0 100 30 150 0 100 30 150 0"
+                stroke="#00f0ff" stroke-width="1.5" opacity=".3">
+                <animateTransform attributeName="transform" type="translate" from="0,0" to="-300,0" dur="4.5s"
+                    repeatCount="indefinite" />
             </path>
-            <path d="M 0 410 C 60 430, 120 390, 180 410 C 240 430, 300 390, 360 410 C 420 430, 480 390, 540 410 C 600 430, 660 390, 720 410" fill="none" stroke="#ff66cc" stroke-width="1" opacity="0.2">
-                <animateTransform attributeName="transform" type="translate" from="0,0" to="-360,0" dur="6.5s" repeatCount="indefinite" />
+            <path d="M0 420c60 20 120-20 180 0s120-20 180 0 120-20 180 0 120-20 180 0 120-20 180 0" stroke="#f6c"
+                opacity=".2">
+                <animateTransform attributeName="transform" type="translate" from="0,0" to="-360,0" dur="6.5s"
+                    repeatCount="indefinite" />
             </path>
-        </g>
-        
-        <!-- Blinking Prompt -->
-        <text x="50" y="465" fill="#eeddfc" font-family="monospace" font-size="13">
-            <tspan fill="#a5c2d8">Wired-Navi0x1F@wired</tspan>:<tspan fill="#ff66cc">~</tspan>$ <tspan fill="#eeddfc">close_world --open-next</tspan>
+        </g><text x="50" y="465" fill="#eeddfc" font-family="monospace" font-size="13">
+            <tspan fill="#00f0ff">Wired-Navi0x1F@wired</tspan>:<tspan fill="#f6c">~</tspan>$ <tspan>close_world
+                --open-next</tspan>
         </text>
-        <rect x="424" y="452" width="8" height="15" class="cursor" />
+        <path style="animation:blink 1s infinite" fill="#c084fc" d="M424 452h8v15h-8z" />
     </g>
-
-    <!-- Curvature shadow overlay -->
-    <rect x="14" y="14" width="822" height="482" fill="url(#screen-curve)" rx="8" pointer-events="none" />
-
-    <!-- Glass Reflection glare overlay -->
-    <rect x="14" y="14" width="822" height="482" fill="url(#glass-reflection)" rx="8" pointer-events="none" />
+    <rect x="14" y="14" width="822" height="482" fill="url(#prefix__screen-curve)" rx="8" pointer-events="none" />
+    <rect x="14" y="14" width="822" height="482" fill="url(#prefix__glass-reflection)" rx="8" pointer-events="none" />
 </svg>
