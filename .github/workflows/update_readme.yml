@@ -8,6 +8,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -18,22 +20,21 @@ jobs:
           python-version: '3.x'
 
       - name: Generate Profile README and SVGs
-        run: |
-          pip install requests
-          python build.py
+        run: python build.py
 
-      - name: Generate github-contribution-grid-snake.svg
+      - name: Generate Contribution Snake SVG
         uses: Platane/snk/svg-only@v3
         with:
-          github_user_name: ${{ github.repository_owner }}
+          github_user_name: Wired-Navi0x1F
           outputs: |
             github-contribution-grid-snake.svg
-            github-contribution-grid-snake-dark.svg?palette=github-dark&color_snake=%23d19a7e&color_dots=%230e080c,%233b202c,%235d394a,%23d19a7e,%23faede6
+            github-contribution-grid-snake-dark.svg?palette=github-dark
 
       - name: Commit and push changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add README.md terminal.svg divergence_meter.svg github-contribution-grid-snake.svg github-contribution-grid-snake-dark.svg
-          git commit -m "update: sync NAVI terminal parameters, divergence rates, and snake grid" || echo "No changes to commit"
+          git commit -m "update: sync NAVI terminal parameters, divergence rates, and contribution snake" || echo "No changes to commit"
           git push
+
