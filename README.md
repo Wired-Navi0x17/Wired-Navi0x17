@@ -2,7 +2,7 @@
 
 <div align="center">
   <picture>
-    <img src="terminal.svg?v=7" width="850" alt="Lain-themed NAVI terminal showing system parameters and technical skills" style="max-width: 100%; height: auto;" />
+    <img src="terminal.svg?v=8" width="850" alt="Lain-themed NAVI terminal showing system parameters and technical skills" style="max-width: 100%; height: auto;" />
   </picture>
 </div>
 
@@ -10,7 +10,7 @@
 
 <div align="center">
   <picture>
-    <img src="divergence_meter.svg?v=7" width="680" alt="Steins;Gate Nixie Tube World Line Divergence Meter displaying 1.048596%" style="max-width: 100%; height: auto;" />
+    <img src="divergence_meter.svg?v=8" width="680" alt="Steins;Gate Nixie Tube World Line Divergence Meter displaying 1.048596%" style="max-width: 100%; height: auto;" />
   </picture>
 </div>
 
@@ -63,8 +63,8 @@ I am a **Computer Science & Engineering (CSE)** student at **RV University** (Be
 
 <div align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="github-contribution-grid-snake-dark.svg?v=7" />
-    <img src="github-contribution-grid-snake.svg?v=7" alt="NAVI Grid Contribution Snake Game" width="850" style="max-width: 100%; height: auto;" />
+    <source media="(prefers-color-scheme: dark)" srcset="github-contribution-grid-snake-dark.svg?v=8" />
+    <img src="github-contribution-grid-snake.svg?v=8" alt="NAVI Grid Contribution Snake Game" width="850" style="max-width: 100%; height: auto;" />
   </picture>
 </div>
 
@@ -121,7 +121,7 @@ I am a **Computer Science & Engineering (CSE)** student at **RV University** (Be
 ---
 
 <div align="center">
-  <p align="center" style="font-family: monospace; color: #755964; font-size: 11px;">
+  <p align="center" style="font-family: monospace; color: #5d4370; font-size: 11px;">
     WIRED PROTOCOL INITIATED // IP STATE: SECURE // CLOSE THE WORLD, OPEN THE NEXT.
   </p>
 </div>

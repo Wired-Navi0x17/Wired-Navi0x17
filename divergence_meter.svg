@@ -2,11 +2,11 @@
     <style>
         .meter-bg {
             fill: #06020a;
-            stroke: #3b202c;
+            stroke: #311840;
             stroke-width: 2.5;
         }
         .label-text {
-            fill: #755964;
+            fill: #5d4370;
             font-family: 'JetBrains Mono', 'Courier New', monospace;
             font-size: 9px;
             letter-spacing: 2px;
@@ -17,7 +17,7 @@
     </style>
     
     <defs>
-        <!-- Nixie Glow Filters -->
+        <!-- Nixie Filament Glow Filters -->
         <filter id="nixie-glow" x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur stdDeviation="4.5" result="blur1" />
             <feGaussianBlur stdDeviation="9.0" result="blur2" />
@@ -48,7 +48,7 @@
             </feMerge>
         </filter>
 
-        <!-- Glass Reflection -->
+        <!-- Glass Reflection Gradient -->
         <linearGradient id="glass-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stop-color="#ffffff" stop-opacity="0.35"/>
             <stop offset="20%" stop-color="#ffffff" stop-opacity="0.08"/>
@@ -57,10 +57,10 @@
             <stop offset="100%" stop-color="#ffffff" stop-opacity="0.3"/>
         </linearGradient>
 
-        <!-- Grid Mesh -->
+        <!-- Metal Grid Mesh Pattern -->
         <pattern id="grid-mesh" width="3" height="3" patternUnits="userSpaceOnUse">
-            <line x1="0" y1="0" x2="3" y2="0" stroke="#e05828" stroke-width="0.25" opacity="0.35"/>
-            <line x1="0" y1="0" x2="0" y2="3" stroke="#e05828" stroke-width="0.25" opacity="0.35"/>
+            <line x1="0" y1="0" x2="3" y2="0" stroke="#ff5500" stroke-width="0.25" opacity="0.35"/>
+            <line x1="0" y1="0" x2="0" y2="3" stroke="#ff5500" stroke-width="0.25" opacity="0.35"/>
         </pattern>
     </defs>
 
@@ -68,11 +68,7 @@
     <rect class="meter-bg" width="680" height="170" rx="6" />
     
     <!-- Metallic Bezel Lines -->
-    <rect x="5" y="5" width="670" height="160" rx="4" fill="none" stroke="#3b202c" stroke-width="1" opacity="0.4" />
-    
-    <!-- Vent grills -->
-    <rect x="40" y="8" width="600" height="3" rx="1.5" fill="#000000" opacity="0.8"/>
-    <rect x="40" y="159" width="600" height="3" rx="1.5" fill="#000000" opacity="0.8"/>
+    <rect x="5" y="5" width="670" height="160" rx="4" fill="none" stroke="#311840" stroke-width="1" opacity="0.4" />
     
     <!-- Nixie Tubes Group -->
     <g class="divergence-glow" transform="translate(10, 5)">
@@ -80,194 +76,194 @@
             <!-- Nixie Digit Tube for '1' -->
             <g transform="translate(40, 0)">
                 <!-- Back Grid Metal Mesh -->
-                <rect x="5" y="15" width="55" height="120" rx="10" fill="url(#grid-mesh)" opacity="0.3" stroke="#755964" stroke-width="0.5" />
+                <rect x="5" y="15" width="55" height="120" rx="10" fill="url(#grid-mesh)" opacity="0.3" stroke="#5d4370" stroke-width="0.5" />
                 
                 <!-- Glass Envelope -->
-                <rect x="2" y="10" width="61" height="130" rx="15" fill="none" stroke="#3b202c" stroke-width="1.5" opacity="0.8" />
+                <rect x="2" y="10" width="61" height="130" rx="15" fill="none" stroke="#311840" stroke-width="1.5" opacity="0.8" />
                 <rect x="5" y="13" width="55" height="124" rx="12" fill="url(#glass-gradient)" opacity="0.12" />
                 
-                <!-- Inner support wires -->
+                <!-- Inner metal support wires -->
                 <line x1="12" y1="15" x2="12" y2="135" stroke="#331b40" stroke-width="0.8" opacity="0.7" />
                 <line x1="52" y1="15" x2="52" y2="135" stroke="#331b40" stroke-width="0.8" opacity="0.7" />
                 
-                <!-- Inactive digits silhouette -->
-                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#e05828" opacity="0.04">8</text>
+                <!-- Inactive digits background silhouette -->
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#ff5500" opacity="0.04">8</text>
                 
                 <!-- Active Glowing Digit -->
-                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#e05828" filter="url(#nixie-glow)">1</text>
-                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#f7b594" filter="url(#nixie-glow-inner)" opacity="0.9">1</text>
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#ff5500" filter="url(#nixie-glow)">1</text>
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#ffcc66" filter="url(#nixie-glow-inner)" opacity="0.9">1</text>
                 <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#ffffff" opacity="0.85">1</text>
                 
-                <!-- Tube Base -->
-                <rect x="2" y="135" width="61" height="12" rx="2" fill="#150a21" stroke="#3b202c" stroke-width="1" />
-                <rect x="8" y="137" width="49" height="2" fill="#3b202c" opacity="0.4" />
+                <!-- Tube Base Mount -->
+                <rect x="2" y="135" width="61" height="12" rx="2" fill="#150a21" stroke="#311840" stroke-width="1" />
+                <rect x="8" y="137" width="49" height="2" fill="#311840" opacity="0.4" />
             </g>
             
             <!-- Nixie Dot Tube -->
             <g transform="translate(117, 0)">
-                <!-- Glass Envelope -->
-                <rect x="20" y="25" width="25" height="100" rx="12.5" fill="none" stroke="#3b202c" stroke-width="1.5" opacity="0.8" />
+                <!-- Glass Outer Envelope -->
+                <rect x="20" y="25" width="25" height="100" rx="12.5" fill="none" stroke="#311840" stroke-width="1.5" opacity="0.8" />
                 <rect x="22" y="27" width="21" height="96" rx="10.5" fill="url(#glass-gradient)" opacity="0.12" />
                 <!-- Glowing Nixie Dot -->
-                <circle cx="32" cy="105" r="4.5" fill="#e05828" filter="url(#nixie-glow)" />
-                <circle cx="32" cy="105" r="2.5" fill="#f7b594" />
+                <circle cx="32" cy="105" r="4.5" fill="#ff5500" filter="url(#nixie-glow)" />
+                <circle cx="32" cy="105" r="2.5" fill="#ffcc66" />
                 <circle cx="32" cy="105" r="1" fill="#ffffff" />
             </g>
             
             <!-- Nixie Digit Tube for '0' -->
             <g transform="translate(194, 0)">
                 <!-- Back Grid Metal Mesh -->
-                <rect x="5" y="15" width="55" height="120" rx="10" fill="url(#grid-mesh)" opacity="0.3" stroke="#755964" stroke-width="0.5" />
+                <rect x="5" y="15" width="55" height="120" rx="10" fill="url(#grid-mesh)" opacity="0.3" stroke="#5d4370" stroke-width="0.5" />
                 
                 <!-- Glass Envelope -->
-                <rect x="2" y="10" width="61" height="130" rx="15" fill="none" stroke="#3b202c" stroke-width="1.5" opacity="0.8" />
+                <rect x="2" y="10" width="61" height="130" rx="15" fill="none" stroke="#311840" stroke-width="1.5" opacity="0.8" />
                 <rect x="5" y="13" width="55" height="124" rx="12" fill="url(#glass-gradient)" opacity="0.12" />
                 
-                <!-- Inner support wires -->
+                <!-- Inner metal support wires -->
                 <line x1="12" y1="15" x2="12" y2="135" stroke="#331b40" stroke-width="0.8" opacity="0.7" />
                 <line x1="52" y1="15" x2="52" y2="135" stroke="#331b40" stroke-width="0.8" opacity="0.7" />
                 
-                <!-- Inactive digits silhouette -->
-                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#e05828" opacity="0.04">8</text>
+                <!-- Inactive digits background silhouette -->
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#ff5500" opacity="0.04">8</text>
                 
                 <!-- Active Glowing Digit -->
-                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#e05828" filter="url(#nixie-glow)">0</text>
-                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#f7b594" filter="url(#nixie-glow-inner)" opacity="0.9">0</text>
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#ff5500" filter="url(#nixie-glow)">0</text>
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#ffcc66" filter="url(#nixie-glow-inner)" opacity="0.9">0</text>
                 <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#ffffff" opacity="0.85">0</text>
                 
-                <!-- Tube Base -->
-                <rect x="2" y="135" width="61" height="12" rx="2" fill="#150a21" stroke="#3b202c" stroke-width="1" />
-                <rect x="8" y="137" width="49" height="2" fill="#3b202c" opacity="0.4" />
+                <!-- Tube Base Mount -->
+                <rect x="2" y="135" width="61" height="12" rx="2" fill="#150a21" stroke="#311840" stroke-width="1" />
+                <rect x="8" y="137" width="49" height="2" fill="#311840" opacity="0.4" />
             </g>
             
             <!-- Nixie Digit Tube for '4' -->
             <g transform="translate(271, 0)">
                 <!-- Back Grid Metal Mesh -->
-                <rect x="5" y="15" width="55" height="120" rx="10" fill="url(#grid-mesh)" opacity="0.3" stroke="#755964" stroke-width="0.5" />
+                <rect x="5" y="15" width="55" height="120" rx="10" fill="url(#grid-mesh)" opacity="0.3" stroke="#5d4370" stroke-width="0.5" />
                 
                 <!-- Glass Envelope -->
-                <rect x="2" y="10" width="61" height="130" rx="15" fill="none" stroke="#3b202c" stroke-width="1.5" opacity="0.8" />
+                <rect x="2" y="10" width="61" height="130" rx="15" fill="none" stroke="#311840" stroke-width="1.5" opacity="0.8" />
                 <rect x="5" y="13" width="55" height="124" rx="12" fill="url(#glass-gradient)" opacity="0.12" />
                 
-                <!-- Inner support wires -->
+                <!-- Inner metal support wires -->
                 <line x1="12" y1="15" x2="12" y2="135" stroke="#331b40" stroke-width="0.8" opacity="0.7" />
                 <line x1="52" y1="15" x2="52" y2="135" stroke="#331b40" stroke-width="0.8" opacity="0.7" />
                 
-                <!-- Inactive digits silhouette -->
-                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#e05828" opacity="0.04">8</text>
+                <!-- Inactive digits background silhouette -->
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#ff5500" opacity="0.04">8</text>
                 
                 <!-- Active Glowing Digit -->
-                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#e05828" filter="url(#nixie-glow)">4</text>
-                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#f7b594" filter="url(#nixie-glow-inner)" opacity="0.9">4</text>
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#ff5500" filter="url(#nixie-glow)">4</text>
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#ffcc66" filter="url(#nixie-glow-inner)" opacity="0.9">4</text>
                 <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#ffffff" opacity="0.85">4</text>
                 
-                <!-- Tube Base -->
-                <rect x="2" y="135" width="61" height="12" rx="2" fill="#150a21" stroke="#3b202c" stroke-width="1" />
-                <rect x="8" y="137" width="49" height="2" fill="#3b202c" opacity="0.4" />
+                <!-- Tube Base Mount -->
+                <rect x="2" y="135" width="61" height="12" rx="2" fill="#150a21" stroke="#311840" stroke-width="1" />
+                <rect x="8" y="137" width="49" height="2" fill="#311840" opacity="0.4" />
             </g>
             
             <!-- Nixie Digit Tube for '8' -->
             <g transform="translate(348, 0)">
                 <!-- Back Grid Metal Mesh -->
-                <rect x="5" y="15" width="55" height="120" rx="10" fill="url(#grid-mesh)" opacity="0.3" stroke="#755964" stroke-width="0.5" />
+                <rect x="5" y="15" width="55" height="120" rx="10" fill="url(#grid-mesh)" opacity="0.3" stroke="#5d4370" stroke-width="0.5" />
                 
                 <!-- Glass Envelope -->
-                <rect x="2" y="10" width="61" height="130" rx="15" fill="none" stroke="#3b202c" stroke-width="1.5" opacity="0.8" />
+                <rect x="2" y="10" width="61" height="130" rx="15" fill="none" stroke="#311840" stroke-width="1.5" opacity="0.8" />
                 <rect x="5" y="13" width="55" height="124" rx="12" fill="url(#glass-gradient)" opacity="0.12" />
                 
-                <!-- Inner support wires -->
+                <!-- Inner metal support wires -->
                 <line x1="12" y1="15" x2="12" y2="135" stroke="#331b40" stroke-width="0.8" opacity="0.7" />
                 <line x1="52" y1="15" x2="52" y2="135" stroke="#331b40" stroke-width="0.8" opacity="0.7" />
                 
-                <!-- Inactive digits silhouette -->
-                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#e05828" opacity="0.04">8</text>
+                <!-- Inactive digits background silhouette -->
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#ff5500" opacity="0.04">8</text>
                 
                 <!-- Active Glowing Digit -->
-                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#e05828" filter="url(#nixie-glow)">8</text>
-                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#f7b594" filter="url(#nixie-glow-inner)" opacity="0.9">8</text>
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#ff5500" filter="url(#nixie-glow)">8</text>
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#ffcc66" filter="url(#nixie-glow-inner)" opacity="0.9">8</text>
                 <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#ffffff" opacity="0.85">8</text>
                 
-                <!-- Tube Base -->
-                <rect x="2" y="135" width="61" height="12" rx="2" fill="#150a21" stroke="#3b202c" stroke-width="1" />
-                <rect x="8" y="137" width="49" height="2" fill="#3b202c" opacity="0.4" />
+                <!-- Tube Base Mount -->
+                <rect x="2" y="135" width="61" height="12" rx="2" fill="#150a21" stroke="#311840" stroke-width="1" />
+                <rect x="8" y="137" width="49" height="2" fill="#311840" opacity="0.4" />
             </g>
             
             <!-- Nixie Digit Tube for '5' -->
             <g transform="translate(425, 0)">
                 <!-- Back Grid Metal Mesh -->
-                <rect x="5" y="15" width="55" height="120" rx="10" fill="url(#grid-mesh)" opacity="0.3" stroke="#755964" stroke-width="0.5" />
+                <rect x="5" y="15" width="55" height="120" rx="10" fill="url(#grid-mesh)" opacity="0.3" stroke="#5d4370" stroke-width="0.5" />
                 
                 <!-- Glass Envelope -->
-                <rect x="2" y="10" width="61" height="130" rx="15" fill="none" stroke="#3b202c" stroke-width="1.5" opacity="0.8" />
+                <rect x="2" y="10" width="61" height="130" rx="15" fill="none" stroke="#311840" stroke-width="1.5" opacity="0.8" />
                 <rect x="5" y="13" width="55" height="124" rx="12" fill="url(#glass-gradient)" opacity="0.12" />
                 
-                <!-- Inner support wires -->
+                <!-- Inner metal support wires -->
                 <line x1="12" y1="15" x2="12" y2="135" stroke="#331b40" stroke-width="0.8" opacity="0.7" />
                 <line x1="52" y1="15" x2="52" y2="135" stroke="#331b40" stroke-width="0.8" opacity="0.7" />
                 
-                <!-- Inactive digits silhouette -->
-                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#e05828" opacity="0.04">8</text>
+                <!-- Inactive digits background silhouette -->
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#ff5500" opacity="0.04">8</text>
                 
                 <!-- Active Glowing Digit -->
-                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#e05828" filter="url(#nixie-glow)">5</text>
-                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#f7b594" filter="url(#nixie-glow-inner)" opacity="0.9">5</text>
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#ff5500" filter="url(#nixie-glow)">5</text>
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#ffcc66" filter="url(#nixie-glow-inner)" opacity="0.9">5</text>
                 <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#ffffff" opacity="0.85">5</text>
                 
-                <!-- Tube Base -->
-                <rect x="2" y="135" width="61" height="12" rx="2" fill="#150a21" stroke="#3b202c" stroke-width="1" />
-                <rect x="8" y="137" width="49" height="2" fill="#3b202c" opacity="0.4" />
+                <!-- Tube Base Mount -->
+                <rect x="2" y="135" width="61" height="12" rx="2" fill="#150a21" stroke="#311840" stroke-width="1" />
+                <rect x="8" y="137" width="49" height="2" fill="#311840" opacity="0.4" />
             </g>
             
             <!-- Nixie Digit Tube for '9' -->
             <g transform="translate(502, 0)">
                 <!-- Back Grid Metal Mesh -->
-                <rect x="5" y="15" width="55" height="120" rx="10" fill="url(#grid-mesh)" opacity="0.3" stroke="#755964" stroke-width="0.5" />
+                <rect x="5" y="15" width="55" height="120" rx="10" fill="url(#grid-mesh)" opacity="0.3" stroke="#5d4370" stroke-width="0.5" />
                 
                 <!-- Glass Envelope -->
-                <rect x="2" y="10" width="61" height="130" rx="15" fill="none" stroke="#3b202c" stroke-width="1.5" opacity="0.8" />
+                <rect x="2" y="10" width="61" height="130" rx="15" fill="none" stroke="#311840" stroke-width="1.5" opacity="0.8" />
                 <rect x="5" y="13" width="55" height="124" rx="12" fill="url(#glass-gradient)" opacity="0.12" />
                 
-                <!-- Inner support wires -->
+                <!-- Inner metal support wires -->
                 <line x1="12" y1="15" x2="12" y2="135" stroke="#331b40" stroke-width="0.8" opacity="0.7" />
                 <line x1="52" y1="15" x2="52" y2="135" stroke="#331b40" stroke-width="0.8" opacity="0.7" />
                 
-                <!-- Inactive digits silhouette -->
-                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#e05828" opacity="0.04">8</text>
+                <!-- Inactive digits background silhouette -->
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#ff5500" opacity="0.04">8</text>
                 
                 <!-- Active Glowing Digit -->
-                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#e05828" filter="url(#nixie-glow)">9</text>
-                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#f7b594" filter="url(#nixie-glow-inner)" opacity="0.9">9</text>
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#ff5500" filter="url(#nixie-glow)">9</text>
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#ffcc66" filter="url(#nixie-glow-inner)" opacity="0.9">9</text>
                 <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#ffffff" opacity="0.85">9</text>
                 
-                <!-- Tube Base -->
-                <rect x="2" y="135" width="61" height="12" rx="2" fill="#150a21" stroke="#3b202c" stroke-width="1" />
-                <rect x="8" y="137" width="49" height="2" fill="#3b202c" opacity="0.4" />
+                <!-- Tube Base Mount -->
+                <rect x="2" y="135" width="61" height="12" rx="2" fill="#150a21" stroke="#311840" stroke-width="1" />
+                <rect x="8" y="137" width="49" height="2" fill="#311840" opacity="0.4" />
             </g>
             
             <!-- Nixie Digit Tube for '6' -->
             <g transform="translate(579, 0)">
                 <!-- Back Grid Metal Mesh -->
-                <rect x="5" y="15" width="55" height="120" rx="10" fill="url(#grid-mesh)" opacity="0.3" stroke="#755964" stroke-width="0.5" />
+                <rect x="5" y="15" width="55" height="120" rx="10" fill="url(#grid-mesh)" opacity="0.3" stroke="#5d4370" stroke-width="0.5" />
                 
                 <!-- Glass Envelope -->
-                <rect x="2" y="10" width="61" height="130" rx="15" fill="none" stroke="#3b202c" stroke-width="1.5" opacity="0.8" />
+                <rect x="2" y="10" width="61" height="130" rx="15" fill="none" stroke="#311840" stroke-width="1.5" opacity="0.8" />
                 <rect x="5" y="13" width="55" height="124" rx="12" fill="url(#glass-gradient)" opacity="0.12" />
                 
-                <!-- Inner support wires -->
+                <!-- Inner metal support wires -->
                 <line x1="12" y1="15" x2="12" y2="135" stroke="#331b40" stroke-width="0.8" opacity="0.7" />
                 <line x1="52" y1="15" x2="52" y2="135" stroke="#331b40" stroke-width="0.8" opacity="0.7" />
                 
-                <!-- Inactive digits silhouette -->
-                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#e05828" opacity="0.04">8</text>
+                <!-- Inactive digits background silhouette -->
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#ff5500" opacity="0.04">8</text>
                 
                 <!-- Active Glowing Digit -->
-                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#e05828" filter="url(#nixie-glow)">6</text>
-                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#f7b594" filter="url(#nixie-glow-inner)" opacity="0.9">6</text>
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#ff5500" filter="url(#nixie-glow)">6</text>
+                <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#ffcc66" filter="url(#nixie-glow-inner)" opacity="0.9">6</text>
                 <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#ffffff" opacity="0.85">6</text>
                 
-                <!-- Tube Base -->
-                <rect x="2" y="135" width="61" height="12" rx="2" fill="#150a21" stroke="#3b202c" stroke-width="1" />
-                <rect x="8" y="137" width="49" height="2" fill="#3b202c" opacity="0.4" />
+                <!-- Tube Base Mount -->
+                <rect x="2" y="135" width="61" height="12" rx="2" fill="#150a21" stroke="#311840" stroke-width="1" />
+                <rect x="8" y="137" width="49" height="2" fill="#311840" opacity="0.4" />
             </g>
             
     </g>
