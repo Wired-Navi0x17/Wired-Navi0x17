@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 510" width="100%" height="auto">
     <style>
         .terminal-bg {
-            fill: #0b0512;
+            fill: #0c0810;
         }
         .scanlines {
             fill: url(#scanline-pattern);
@@ -20,19 +20,33 @@
         .header-glow {
             text-shadow: 0 0 4px rgba(0, 240, 255, 0.6);
         }
-        .lain-glow {
-            stroke: #c084fc;
-            stroke-width: 1.5;
+        .lain-skin {
+            stroke: #eeddfc;
+            stroke-width: 1.4;
             fill: none;
             opacity: 0.85;
             filter: url(#neon-glow-filter);
         }
-        .lain-glow-accent {
-            stroke: #00f0ff;
-            stroke-width: 1.5;
+        .lain-hair {
+            stroke: #8c6e5e;
+            stroke-width: 1.6;
+            fill: none;
+            opacity: 0.95;
+            filter: url(#neon-glow-filter);
+        }
+        .lain-glasses {
+            stroke: #d0d5dd;
+            stroke-width: 1.8;
+            fill: none;
+            opacity: 0.95;
+            filter: url(#neon-glow-filter);
+        }
+        .lain-collar {
+            stroke: #ff66cc;
+            stroke-width: 1.6;
             fill: none;
             opacity: 0.9;
-            filter: url(#neon-glow-filter-cyan);
+            filter: url(#neon-glow-filter);
         }
         @keyframes blink {
             0%, 49% { opacity: 1; }
@@ -40,7 +54,7 @@
         }
         .cursor {
             animation: blink 1s infinite;
-            fill: #c084fc;
+            fill: #b392ac;
         }
     </style>
 
@@ -96,7 +110,7 @@
     </defs>
 
     <!-- Bezel Monitor Frame (3D Casing) -->
-    <rect x="0" y="0" width="850" height="510" rx="14" fill="url(#bezel-metallic)" stroke="#c084fc" stroke-width="1.2" />
+    <rect x="0" y="0" width="850" height="510" rx="14" fill="url(#bezel-metallic)" stroke="#b392ac" stroke-width="1.2" />
     <!-- Bezel Highlight line -->
     <rect x="6" y="6" width="838" height="498" rx="10" fill="none" stroke="#522a6b" stroke-width="1.5" opacity="0.6" />
 
@@ -123,7 +137,7 @@
     <rect x="14" y="14" width="822" height="482" class="scanlines" rx="8" pointer-events="none" />
     
     <!-- Sweeping Laser Scanline (CRT electron gun sweep) -->
-    <rect x="15" y="35" width="820" height="2" fill="#00f0ff" opacity="0.25" pointer-events="none">
+    <rect x="15" y="35" width="820" height="2" fill="#a5c2d8" opacity="0.25" pointer-events="none">
         <animate attributeName="y" from="35" to="490" dur="8s" repeatCount="indefinite" />
     </rect>
     
@@ -131,8 +145,8 @@
     <rect x="14" y="14" width="822" height="35" rx="8" fill="#311840" />
     <!-- Window buttons -->
     <circle cx="34" cy="32" r="5" fill="#ff66cc" />
-    <circle cx="50" cy="32" r="5" fill="#eab308" />
-    <circle cx="66" cy="32" r="5" fill="#00f0ff" />
+    <circle cx="50" cy="32" r="5" fill="#dfb15b" />
+    <circle cx="66" cy="32" r="5" fill="#a5c2d8" />
     
     <!-- Header Title -->
     <text x="425" y="36" class="title-text" text-anchor="middle" font-weight="bold">Wired-Navi0x1F@NAVI-Terminal:~ (Protocol: Layer_07_Active)</text>
@@ -140,77 +154,77 @@
     <!-- Vector Art of Lain with Glasses (lainPfp.jpg wireframe representation) -->
     <g transform="translate(180, 20)">
         <!-- Face Contour -->
-        <path class="lain-glow" d="M 400 180 C 400 270, 420 310, 460 325 C 500 310, 520 270, 520 180" />
+        <path class="lain-skin" d="M 400 180 C 400 270, 420 310, 460 325 C 500 310, 520 270, 520 180" />
         
         <!-- Hair Outline (Signature Bob) -->
-        <path class="lain-glow" d="M 370 180 C 360 120, 400 70, 460 70 C 520 70, 560 120, 550 180 C 550 230, 530 250, 530 280 C 530 290, 540 300, 545 320" />
-        <path class="lain-glow" d="M 370 180 C 375 220, 390 240, 395 270" />
+        <path class="lain-hair" d="M 370 180 C 360 120, 400 70, 460 70 C 520 70, 560 120, 550 180 C 550 230, 530 250, 530 280 C 530 290, 540 300, 545 320" />
+        <path class="lain-hair" d="M 370 180 C 375 220, 390 240, 395 270" />
         
         <!-- Left Side Bangs & signature long strand with hairband -->
-        <path class="lain-glow-accent" d="M 390 120 C 385 150, 390 200, 390 250 C 390 270, 385 320, 395 360 C 400 380, 410 400, 405 440" />
+        <path class="lain-hair" d="M 390 120 C 385 150, 390 200, 390 250 C 390 270, 385 320, 395 360 C 400 380, 410 400, 405 440" />
         
         <!-- Glasses (Silver Rims) -->
-        <path class="lain-glow-accent" d="M 412 195 L 452 203 L 452 220 L 412 212 Z" /> <!-- Left Rim -->
-        <path class="lain-glow-accent" d="M 468 206 L 508 214 L 508 231 L 468 223 Z" /> <!-- Right Rim -->
-        <path class="lain-glow-accent" d="M 452 207 Q 460 209, 468 211" /> <!-- Bridge -->
-        <path class="lain-glow-accent" d="M 412 197 C 400 190, 395 180, 390 178" /> <!-- Left Temple -->
-        <path class="lain-glow-accent" d="M 508 216 C 520 210, 525 200, 530 198" /> <!-- Right Temple -->
+        <path class="lain-glasses" d="M 412 195 L 452 203 L 452 220 L 412 212 Z" /> <!-- Left Rim -->
+        <path class="lain-glasses" d="M 468 206 L 508 214 L 508 231 L 468 223 Z" /> <!-- Right Rim -->
+        <path class="lain-glasses" d="M 452 207 Q 460 209, 468 211" /> <!-- Bridge -->
+        <path class="lain-glasses" d="M 412 197 C 400 190, 395 180, 390 178" /> <!-- Left Temple -->
+        <path class="lain-glasses" d="M 508 216 C 520 210, 525 200, 530 198" /> <!-- Right Temple -->
         
         <!-- Eyes (Quiet expression behind glasses) -->
-        <path class="lain-glow" d="M 422 205 Q 432 202, 442 207" />
-        <path class="lain-glow" d="M 478 214 Q 488 211, 498 216" />
-        <circle cx="432" cy="209" r="2" fill="#c084fc" />
-        <circle cx="488" cy="218" r="2" fill="#c084fc" />
+        <path class="lain-skin" d="M 422 205 Q 432 202, 442 207" />
+        <path class="lain-skin" d="M 478 214 Q 488 211, 498 216" />
+        <circle cx="432" cy="209" r="2" fill="#b392ac" />
+        <circle cx="488" cy="218" r="2" fill="#b392ac" />
         
         <!-- Mouth & Nose -->
-        <path class="lain-glow" d="M 460 248 L 464 250" /> <!-- Nose -->
-        <path class="lain-glow" d="M 455 285 Q 460 288, 465 285" /> <!-- Mouth -->
+        <path class="lain-skin" d="M 460 248 L 464 250" /> <!-- Nose -->
+        <path class="lain-skin" d="M 455 285 Q 460 288, 465 285" /> <!-- Mouth -->
         
         <!-- Neck & Halter Top Collar -->
-        <path class="lain-glow" d="M 440 320 L 440 360 C 430 380, 420 400, 410 430" /> <!-- Neck Left -->
-        <path class="lain-glow" d="M 480 318 L 480 360 C 490 380, 500 400, 510 430" /> <!-- Neck Right -->
-        <path class="lain-glow-accent" d="M 432 360 Q 460 370, 488 360 C 495 380, 520 440, 530 460 M 428 360 C 420 380, 395 440, 385 460" /> <!-- Collar / Dress -->
+        <path class="lain-skin" d="M 440 320 L 440 360 C 430 380, 420 400, 410 430" /> <!-- Neck Left -->
+        <path class="lain-skin" d="M 480 318 L 480 360 C 490 380, 500 400, 510 430" /> <!-- Neck Right -->
+        <path class="lain-collar" d="M 432 360 Q 460 370, 488 360 C 495 380, 520 440, 530 460 M 428 360 C 420 380, 395 440, 385 460" /> <!-- Collar / Dress -->
     </g>
 
     <!-- System Diagnostics Block -->
     <g class="console-text">
         <!-- Diagnostic Block (Right Side) -->
-        <rect x="525" y="70" width="280" height="110" rx="4" fill="#0b0512" stroke="#311840" stroke-width="1.5" />
-        <text x="540" y="92" fill="#00f0ff" font-family="monospace" font-size="11" font-weight="bold" class="header-glow">[SYSTEM DIAGNOSTICS]</text>
+        <rect x="525" y="70" width="280" height="110" rx="4" fill="#0c0810" stroke="#311840" stroke-width="1.5" />
+        <text x="540" y="92" fill="#a5c2d8" font-family="monospace" font-size="11" font-weight="bold" class="header-glow">[SYSTEM DIAGNOSTICS]</text>
         <text x="540" y="112" fill="#eeddfc" font-family="monospace" font-size="10.5">NODE: Wired-Navi0x1F</text>
         <text x="540" y="130" fill="#eeddfc" font-family="monospace" font-size="10.5">ACTIVE MODULES: 10</text>
         <text x="540" y="148" fill="#eeddfc" font-family="monospace" font-size="10.5">SYNC RATE: 98.2%</text>
         <text x="540" y="166" fill="#eeddfc" font-family="monospace" font-size="9.5" fill-opacity="0.7">LAST SYNC: 2026-07-14</text>
         
         <!-- Welcome Messages -->
-        <text x="50" y="75" fill="#00f0ff" font-family="monospace" font-size="13" font-weight="bold" class="header-glow">&gt; Initializing NAVI-OS v7.25...</text>
+        <text x="50" y="75" fill="#a5c2d8" font-family="monospace" font-size="13" font-weight="bold" class="header-glow">&gt; Initializing NAVI-OS v7.25...</text>
         
         <!-- ASCII Logo -->
-        <text x="50" y="85" fill="#c084fc" font-family="monospace" font-size="8.5" font-weight="bold" xml:space="preserve">██╗    ██╗██╗██████╗ ███████╗██████╗</text>
-<text x="50" y="97" fill="#c084fc" font-family="monospace" font-size="8.5" font-weight="bold" xml:space="preserve">██║    ██║██║██╔══██╗██╔════╝██╔══██╗</text>
-<text x="50" y="109" fill="#c084fc" font-family="monospace" font-size="8.5" font-weight="bold" xml:space="preserve">██║ █╗ ██║██║██████╔╝█████╗  ██║  ██║</text>
-<text x="50" y="121" fill="#c084fc" font-family="monospace" font-size="8.5" font-weight="bold" xml:space="preserve">██║███╗██║██║██╔══██╗██╔══╝  ██║  ██║</text>
-<text x="50" y="133" fill="#c084fc" font-family="monospace" font-size="8.5" font-weight="bold" xml:space="preserve">╚███╔███╔╝██║██║  ██║███████╗██████╔╝</text>
-<text x="50" y="145" fill="#c084fc" font-family="monospace" font-size="8.5" font-weight="bold" xml:space="preserve"> ╚══╝╚══╝ ╚═╝╚═╝  ╚═╝╚══════╝╚═════╝</text>
+        <text x="50" y="85" fill="#b392ac" font-family="monospace" font-size="8.5" font-weight="bold" xml:space="preserve">██╗    ██╗██╗██████╗ ███████╗██████╗</text>
+<text x="50" y="97" fill="#b392ac" font-family="monospace" font-size="8.5" font-weight="bold" xml:space="preserve">██║    ██║██║██╔══██╗██╔════╝██╔══██╗</text>
+<text x="50" y="109" fill="#b392ac" font-family="monospace" font-size="8.5" font-weight="bold" xml:space="preserve">██║ █╗ ██║██║██████╔╝█████╗  ██║  ██║</text>
+<text x="50" y="121" fill="#b392ac" font-family="monospace" font-size="8.5" font-weight="bold" xml:space="preserve">██║███╗██║██║██╔══██╗██╔══╝  ██║  ██║</text>
+<text x="50" y="133" fill="#b392ac" font-family="monospace" font-size="8.5" font-weight="bold" xml:space="preserve">╚███╔███╔╝██║██║  ██║███████╗██████╔╝</text>
+<text x="50" y="145" fill="#b392ac" font-family="monospace" font-size="8.5" font-weight="bold" xml:space="preserve"> ╚══╝╚══╝ ╚═╝╚═╝  ╚═╝╚══════╝╚═════╝</text>
 
         
         <!-- Divider -->
         <line x1="50" y1="200" x2="500" y2="200" stroke="#311840" stroke-width="1.5" stroke-dasharray="5 5" />
         
         <!-- Skills Header -->
-        <text x="50" y="210" fill="#eab308" font-family="monospace" font-size="12" font-weight="bold">&gt;_ core_modules_loaded</text>
+        <text x="50" y="210" fill="#dfb15b" font-family="monospace" font-size="12" font-weight="bold">&gt;_ core_modules_loaded</text>
         
         <!-- Skills/Languages List -->
         
         <text x="50" y="215" fill="#eeddfc" font-family="monospace" font-size="12">
             <tspan fill="#5d4370">&gt; </tspan><tspan font-weight="bold">Python / PyTorch    </tspan> 
-            <tspan fill="#5d4370">[</tspan><tspan fill="#00f0ff">■■■■■■■■■□</tspan><tspan fill="#5d4370">]</tspan>
+            <tspan fill="#5d4370">[</tspan><tspan fill="#a5c2d8">■■■■■■■■■□</tspan><tspan fill="#5d4370">]</tspan>
             <tspan fill="#5d4370" font-size="10.5"> // ML Models, TensorFlow</tspan>
         </text>
         
         <text x="50" y="238" fill="#eeddfc" font-family="monospace" font-size="12">
             <tspan fill="#5d4370">&gt; </tspan><tspan font-weight="bold">C / C++ Systems     </tspan> 
-            <tspan fill="#5d4370">[</tspan><tspan fill="#eab308">■■■■■■■■□□</tspan><tspan fill="#5d4370">]</tspan>
+            <tspan fill="#5d4370">[</tspan><tspan fill="#dfb15b">■■■■■■■■□□</tspan><tspan fill="#5d4370">]</tspan>
             <tspan fill="#5d4370" font-size="10.5"> // Algorithms, Hardware</tspan>
         </text>
         
@@ -221,24 +235,24 @@
         </text>
         
         <text x="50" y="284" fill="#eeddfc" font-family="monospace" font-size="12">
-            <tspan fill="#5d4370">&gt; </tspan><tspan font-weight="bold">ROS2 / Robotics     </tspan> 
+            <tspan fill="#5d4370">&gt; </tspan><tspan font-weight="bold">Java / Linux Systems</tspan> 
             <tspan fill="#5d4370">[</tspan><tspan fill="#eeddfc">■■■■■■■□□□</tspan><tspan fill="#5d4370">]</tspan>
-            <tspan fill="#5d4370" font-size="10.5"> // Simulation, Trajectories</tspan>
+            <tspan fill="#5d4370" font-size="10.5"> // Protocol Kernels, Dotfiles</tspan>
         </text>
         
         
         <!-- Connected Nodes Section -->
-        <text x="50" y="325" fill="#00f0ff" font-family="monospace" font-size="12" font-weight="bold" class="header-glow">&gt;_ connected_nodes</text>
+        <text x="50" y="325" fill="#a5c2d8" font-family="monospace" font-size="12" font-weight="bold" class="header-glow">&gt;_ connected_nodes</text>
         <text x="50" y="344" fill="#eeddfc" font-family="monospace" font-size="12">
-            <tspan fill="#5d4370">&gt; </tspan>Website: <tspan fill="#00f0ff">https://pr0t0lain.dpdns.org</tspan>
+            <tspan fill="#5d4370">&gt; </tspan>Website: <tspan fill="#a5c2d8">https://pr0t0lain.dpdns.org</tspan>
         </text>
         <text x="50" y="362" fill="#eeddfc" font-family="monospace" font-size="12">
-            <tspan fill="#5d4370">&gt; </tspan>LinkedIn: <tspan fill="#00f0ff">https://in.linkedin.com/in/haru-l41n-pr0t0</tspan>
+            <tspan fill="#5d4370">&gt; </tspan>LinkedIn: <tspan fill="#a5c2d8">https://in.linkedin.com/in/haru-l41n-pr0t0</tspan>
         </text>
         
         <!-- Oscilloscope Waveform Animation -->
         <g>
-            <path d="M 0 410 C 50 380, 100 440, 150 410 C 200 380, 250 440, 300 410 C 350 380, 400 440, 450 410 C 500 380, 550 440, 600 410 C 650 380, 700 440, 750 410" fill="none" stroke="#00f0ff" stroke-width="1.5" opacity="0.3">
+            <path d="M 0 410 C 50 380, 100 440, 150 410 C 200 380, 250 440, 300 410 C 350 380, 400 440, 450 410 C 500 380, 550 440, 600 410 C 650 380, 700 440, 750 410" fill="none" stroke="#a5c2d8" stroke-width="1.5" opacity="0.3">
                 <animateTransform attributeName="transform" type="translate" from="0,0" to="-300,0" dur="4.5s" repeatCount="indefinite" />
             </path>
             <path d="M 0 410 C 60 430, 120 390, 180 410 C 240 430, 300 390, 360 410 C 420 430, 480 390, 540 410 C 600 430, 660 390, 720 410" fill="none" stroke="#ff66cc" stroke-width="1" opacity="0.2">
@@ -248,7 +262,7 @@
         
         <!-- Blinking Prompt -->
         <text x="50" y="465" fill="#eeddfc" font-family="monospace" font-size="13">
-            <tspan fill="#00f0ff">Wired-Navi0x1F@wired</tspan>:<tspan fill="#ff66cc">~</tspan>$ <tspan fill="#eeddfc">close_world --open-next</tspan>
+            <tspan fill="#a5c2d8">Wired-Navi0x1F@wired</tspan>:<tspan fill="#ff66cc">~</tspan>$ <tspan fill="#eeddfc">close_world --open-next</tspan>
         </text>
         <rect x="424" y="452" width="8" height="15" class="cursor" />
     </g>

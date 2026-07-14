@@ -5,15 +5,15 @@ import datetime
 import json
 import requests
 
-# Restoring the highly successful, vibrant purple and neon-cyan theme
+# Theme parameters matching lainPfp.jpg (bronze-brown hair, silver-rimmed glasses, dark halter top)
 THEME = {
-    "bg": "#0b0512",               # Deepest dark violet
-    "fg": "#eeddfc",               # Bright soft lavender
-    "border_active": "#c084fc",    # Purplish pink
+    "bg": "#0c0810",               # Deepest dark violet-black
+    "fg": "#eeddfc",               # Bright soft lavender/cream
+    "border_active": "#b392ac",    # Soft lavender/silver active accent
     "border_inactive": "#311840",  # Muted deep purple
-    "cyan": "#00f0ff",             # Neon Cyan
-    "cursor": "#c084fc",           # Purplish pink
-    "gold": "#eab308",             # Warm gold
+    "cyan": "#a5c2d8",             # Slate blue/silver (glasses glint)
+    "cursor": "#b392ac",           # Soft lavender cursor
+    "gold": "#dfb15b",             # Warm gold
     "pink": "#ff66cc",             # Magenta pink
     "gray": "#5d4370",             # Dark muted purple/gray
     "orange": "#ff5500",           # Nixie Orange
@@ -81,12 +81,12 @@ def generate_terminal_svg(username, stats):
         escaped_line = line.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
         ascii_svg_lines += f'<text x="50" y="{y_start + idx*12}" fill="{THEME["border_active"]}" font-family="monospace" font-size="8.5" font-weight="bold" xml:space="preserve">{escaped_line}</text>\n'
 
-    # Technical Skills matching user resume
+    # Technical Skills matching user resume (excluding ROS2)
     skills = [
         {"name": "Python / PyTorch", "desc": "ML Models, TensorFlow", "level": 90, "color": THEME["cyan"]},
         {"name": "C / C++ Systems", "desc": "Algorithms, Hardware", "level": 80, "color": THEME["gold"]},
         {"name": "Web (Three.js/Flask)", "desc": "Interactive 3D Graphics", "level": 85, "color": THEME["pink"]},
-        {"name": "ROS2 / Robotics", "desc": "Simulation, Trajectories", "level": 75, "color": THEME["fg"]}
+        {"name": "Java / Linux Systems", "desc": "Protocol Kernels, Dotfiles", "level": 75, "color": THEME["fg"]}
     ]
     
     skills_svg = ""
@@ -125,19 +125,33 @@ def generate_terminal_svg(username, stats):
         .header-glow {{
             text-shadow: 0 0 4px rgba(0, 240, 255, 0.6);
         }}
-        .lain-glow {{
-            stroke: {THEME["border_active"]};
-            stroke-width: 1.5;
+        .lain-skin {{
+            stroke: {THEME["fg"]};
+            stroke-width: 1.4;
             fill: none;
             opacity: 0.85;
             filter: url(#neon-glow-filter);
         }}
-        .lain-glow-accent {{
-            stroke: {THEME["cyan"]};
-            stroke-width: 1.5;
+        .lain-hair {{
+            stroke: #8c6e5e;
+            stroke-width: 1.6;
+            fill: none;
+            opacity: 0.95;
+            filter: url(#neon-glow-filter);
+        }}
+        .lain-glasses {{
+            stroke: #d0d5dd;
+            stroke-width: 1.8;
+            fill: none;
+            opacity: 0.95;
+            filter: url(#neon-glow-filter);
+        }}
+        .lain-collar {{
+            stroke: {THEME["pink"]};
+            stroke-width: 1.6;
             fill: none;
             opacity: 0.9;
-            filter: url(#neon-glow-filter-cyan);
+            filter: url(#neon-glow-filter);
         }}
         @keyframes blink {{
             0%, 49% {{ opacity: 1; }}
@@ -245,36 +259,36 @@ def generate_terminal_svg(username, stats):
     <!-- Vector Art of Lain with Glasses (lainPfp.jpg wireframe representation) -->
     <g transform="translate(180, 20)">
         <!-- Face Contour -->
-        <path class="lain-glow" d="M 400 180 C 400 270, 420 310, 460 325 C 500 310, 520 270, 520 180" />
+        <path class="lain-skin" d="M 400 180 C 400 270, 420 310, 460 325 C 500 310, 520 270, 520 180" />
         
         <!-- Hair Outline (Signature Bob) -->
-        <path class="lain-glow" d="M 370 180 C 360 120, 400 70, 460 70 C 520 70, 560 120, 550 180 C 550 230, 530 250, 530 280 C 530 290, 540 300, 545 320" />
-        <path class="lain-glow" d="M 370 180 C 375 220, 390 240, 395 270" />
+        <path class="lain-hair" d="M 370 180 C 360 120, 400 70, 460 70 C 520 70, 560 120, 550 180 C 550 230, 530 250, 530 280 C 530 290, 540 300, 545 320" />
+        <path class="lain-hair" d="M 370 180 C 375 220, 390 240, 395 270" />
         
         <!-- Left Side Bangs & signature long strand with hairband -->
-        <path class="lain-glow-accent" d="M 390 120 C 385 150, 390 200, 390 250 C 390 270, 385 320, 395 360 C 400 380, 410 400, 405 440" />
+        <path class="lain-hair" d="M 390 120 C 385 150, 390 200, 390 250 C 390 270, 385 320, 395 360 C 400 380, 410 400, 405 440" />
         
         <!-- Glasses (Silver Rims) -->
-        <path class="lain-glow-accent" d="M 412 195 L 452 203 L 452 220 L 412 212 Z" /> <!-- Left Rim -->
-        <path class="lain-glow-accent" d="M 468 206 L 508 214 L 508 231 L 468 223 Z" /> <!-- Right Rim -->
-        <path class="lain-glow-accent" d="M 452 207 Q 460 209, 468 211" /> <!-- Bridge -->
-        <path class="lain-glow-accent" d="M 412 197 C 400 190, 395 180, 390 178" /> <!-- Left Temple -->
-        <path class="lain-glow-accent" d="M 508 216 C 520 210, 525 200, 530 198" /> <!-- Right Temple -->
+        <path class="lain-glasses" d="M 412 195 L 452 203 L 452 220 L 412 212 Z" /> <!-- Left Rim -->
+        <path class="lain-glasses" d="M 468 206 L 508 214 L 508 231 L 468 223 Z" /> <!-- Right Rim -->
+        <path class="lain-glasses" d="M 452 207 Q 460 209, 468 211" /> <!-- Bridge -->
+        <path class="lain-glasses" d="M 412 197 C 400 190, 395 180, 390 178" /> <!-- Left Temple -->
+        <path class="lain-glasses" d="M 508 216 C 520 210, 525 200, 530 198" /> <!-- Right Temple -->
         
         <!-- Eyes (Quiet expression behind glasses) -->
-        <path class="lain-glow" d="M 422 205 Q 432 202, 442 207" />
-        <path class="lain-glow" d="M 478 214 Q 488 211, 498 216" />
+        <path class="lain-skin" d="M 422 205 Q 432 202, 442 207" />
+        <path class="lain-skin" d="M 478 214 Q 488 211, 498 216" />
         <circle cx="432" cy="209" r="2" fill="{THEME["border_active"]}" />
         <circle cx="488" cy="218" r="2" fill="{THEME["border_active"]}" />
         
         <!-- Mouth & Nose -->
-        <path class="lain-glow" d="M 460 248 L 464 250" /> <!-- Nose -->
-        <path class="lain-glow" d="M 455 285 Q 460 288, 465 285" /> <!-- Mouth -->
+        <path class="lain-skin" d="M 460 248 L 464 250" /> <!-- Nose -->
+        <path class="lain-skin" d="M 455 285 Q 460 288, 465 285" /> <!-- Mouth -->
         
         <!-- Neck & Halter Top Collar -->
-        <path class="lain-glow" d="M 440 320 L 440 360 C 430 380, 420 400, 410 430" /> <!-- Neck Left -->
-        <path class="lain-glow" d="M 480 318 L 480 360 C 490 380, 500 400, 510 430" /> <!-- Neck Right -->
-        <path class="lain-glow-accent" d="M 432 360 Q 460 370, 488 360 C 495 380, 520 440, 530 460 M 428 360 C 420 380, 395 440, 385 460" /> <!-- Collar / Dress -->
+        <path class="lain-skin" d="M 440 320 L 440 360 C 430 380, 420 400, 410 430" /> <!-- Neck Left -->
+        <path class="lain-skin" d="M 480 318 L 480 360 C 490 380, 500 400, 510 430" /> <!-- Neck Right -->
+        <path class="lain-collar" d="M 432 360 Q 460 370, 488 360 C 495 380, 520 440, 530 460 M 428 360 C 420 380, 395 440, 385 460" /> <!-- Collar / Dress -->
     </g>
 
     <!-- System Diagnostics Block -->
@@ -495,11 +509,27 @@ def main():
 
     print("Generating README.md...")
     # Generate the Markdown file structure with clean layout, exact resume facts, and lightbox click prevention
-    readme_content = f"""# 🌐 Harshul Kala // Wired-Navi0x1F
+    readme_content = f"""# 🌐 Wired-Navi0x1F
 
 <div align="center">
-  <!-- Professional, high-contrast waving header matching Lain's palette -->
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:120e16,50:8c6e5e,100:cfa5df&height=180&section=header&text=Harshul%20Kala&fontColor=ffffff&fontSize=45&animation=fadeIn&fontAlignY=35&desc=AI/ML%20&%20Systems%20Engineer%20//%20Wired%20Node%20Navi0x1F&descAlignY=55&descSize=16" width="100%" alt="Harshul Kala's Header" />
+  <!-- Waving Gradient Banner matching Lain's palette -->
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:120e16,50:8c6e5e,100:cfa5df&height=180&section=header&text=Wired-Navi0x1F&fontColor=eeddfc&fontSize=45&animation=fadeIn&fontAlignY=35&desc=Close%20the%20world,%20open%20the%20nExt%20//%20Layer%2007%20Wired%20Node&descAlignY=55&descSize=16" width="100%" alt="Wired Header" />
+</div>
+
+<br />
+
+<div align="center">
+  <picture>
+    <img src="terminal.svg?v=9" width="850" alt="Lain-themed NAVI terminal showing system parameters and technical skills" style="max-width: 100%; height: auto;" />
+  </picture>
+</div>
+
+<br />
+
+<div align="center">
+  <picture>
+    <img src="divergence_meter.svg?v=9" width="680" alt="Steins;Gate Nixie Tube World Line Divergence Meter displaying 1.048596%" style="max-width: 100%; height: auto;" />
+  </picture>
 </div>
 
 <br />
@@ -508,13 +538,9 @@ def main():
   <a href="https://pr0t0lain.dpdns.org" target="_blank" rel="noopener noreferrer">
     <img src="https://img.shields.io/badge/🌐_NODE_DOMAIN-pr0t0lain.dpdns.org-00f0ff?style=for-the-badge&logo=internet-explorer&logoColor=ffffff&labelColor=150a21" alt="Website Link" />
   </a>
-  &nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;&nbsp;
   <a href="https://in.linkedin.com/in/haru-l41n-pr0t0" target="_blank" rel="noopener noreferrer">
     <img src="https://img.shields.io/badge/💼_GUILD_LINK-linkedin.com/in/haru--l41n--pr0t0-ff66cc?style=for-the-badge&logo=linkedin&logoColor=ffffff&labelColor=150a21" alt="LinkedIn Link" />
-  </a>
-  &nbsp;&nbsp;
-  <a href="mailto:harshulkala14@gmail.com">
-    <img src="https://img.shields.io/badge/✉️_EMAIL-harshulkala14@gmail.com-ffaa66?style=for-the-badge&logo=gmail&logoColor=ffffff&labelColor=150a21" alt="Email Link" />
   </a>
 </div>
 
@@ -522,162 +548,100 @@ def main():
 
 ## ─── 📡 BIOLOGICAL NODE PARAMETERS (ABOUT ME) ───
 
-<img src="lainPfp.jpg" width="160" align="right" style="border-radius: 8px; border: 2px solid {THEME["border_active"]}; margin-left: 15px;" alt="Lain Iwakura Avatar with silver-rimmed glasses" />
+I am a Computer Science & Engineering student specializing in Artificial Intelligence, Machine Learning, and low-level system logic. I design and build secure environments where neural algorithms interface with physical data layers.
 
-I am a **Computer Science & Engineering (CSE)** student at **RV University** (Bengaluru, India) specializing in **Artificial Intelligence, Machine Learning, and Systems Engineering**. I build robust software where intelligent neural networks interface with physical and web data layers.
-
-*   🔭 **Current Project & Research:** Developing **Synapse Notes**, a dynamic knowledge base with **Three.js** 3D force-directed node-link graphs, and **Bayesian MPC Predictive Agents** using GMM heads and **ROS2**.
-*   💬 **Areas of Interest:** Deep learning robustness, multi-agent simulation, autonomous control, and Linux terminal customization (ricing).
-*   ✉️ **Get in touch:** Reach out directly at [harshulkala14@gmail.com](mailto:harshulkala14@gmail.com).
-
----
-
-### ⏳ System Operational Timeline (Education & Timeline)
-
--   🎓 **B.Tech (Hons.) in Artificial Intelligence & Machine Learning**
-    *   *RV University, Bengaluru, India* (Sep 2025 – Present)
-    *   *Class Representative (Sep 2025 – Apr 2026)*
--   🏫 **Class XII (Science & Maths)**
-    *   *R S Memorial International School, Jodhpur, Rajasthan* (2024 – 2025)
--   🏫 **Class X**
-    *   *Delhi Public School, Jodhpur, Rajasthan* (2022 – 2023)
+*   💬 **Areas of Interest & System Nodes:**
+    *   **Deep Learning & Predictive Systems:** GMM-based trajectory prediction, uncertainty estimation (Monte Carlo dropout), and explainable AI pipelines.
+    *   **3D Graphics & Data Visualization:** Node-link force-directed graphs, Three.js/WebGL network mapping, and dynamic knowledge interfaces.
+    *   **Systems Customization & Ricing:** Hyprland window manager configurations, shell scripting, Linux kernel optimization, and retro terminal aesthetics.
+    *   **Software Architecture:** Lightweight Python microservices, Java system protocol modules, and automated CI/CD synchronization nodes.
 
 ---
 
-### 🧠 CORE SYSTEM SPECS (TECHNICAL EXPERTISE)
+### 🧠 CORE SYSTEM SPECS (TECH STACK)
 
-| Layer | Technologies & Tools |
-| :--- | :--- |
-| **Programming Languages** | `Python`, `C`, `C++`, `HTML5`, `CSS3`, `JavaScript` |
-| **Frameworks & ML Libraries** | `PyTorch`, `TensorFlow`, `Pandas`, `NumPy`, `FastAPI`, `Flask`, `Three.js` |
-| **Tools & Environments** | `Linux`, `ROS2`, `Git`, `GitHub`, `VS Code`, `Jupyter` |
-| **Languages & Communication** | `English` (Fluent), `Hindi` (Native) |
+*   **Programming Languages:** `Python`, `C`, `C++`, `HTML5`, `CSS3`, `JavaScript`
+*   **Frameworks & Libraries:** `TensorFlow`, `PyTorch`, `Pandas`, `NumPy`, `FastAPI`, `Flask`, `Three.js`
+*   **Tools & Environments:** `Git`, `GitHub`, `Linux`, `VS Code`, `Jupyter`
 
 ---
 
 ### 🕸️ ACTIVE PROJECT NODES (FEATURED PROJECTS)
 
-#### ⚡ [Synapse Notes Web Application](https://github.com/Wired-Navi0x1F/synapse-notes)
-*A dynamic markdown-based knowledge management web app featuring 3D node-link relationship mapping.*
-*   **Key Implementations:** Engineered guest authentication, secure archive vaulting, markdown rendering, and "The Wired" (an interactive **Three.js** 3D node network visualizer graphing connections between notes).
-*   **Administration:** Developed an admin dashboard supporting activity logging, moderation workflows, and database backup management.
-*   **Tech Stack:** `Flask`, `MySQL`, `JavaScript`, `Three.js`, `Python`
-*   **Links:** [💻 Code Repository](https://github.com/Wired-Navi0x1F/synapse-notes)
-
-#### 🚘 [Bayesian MPC Predictive Agent](https://github.com/Wired-Navi0x1F/Enigmaa)
-*Trajectory prediction and active safety-shield agent for autonomous vehicles.*
-*   **Key Implementations:** Developed a GMM-based trajectory prediction neural model and Monte Carlo dropout for uncertainty estimation. Built Hard Shield AEB (Automatic Emergency Braking) modules for collision prevention at intersections and two-way roads.
-*   **Simulation & Explainability:** Deployed **ROS2** communication nodes for vehicle simulation workflows and applied Integrated Gradients techniques for decision explainability.
-*   **Tech Stack:** `PyTorch`, `highway-env`, `Gymnasium`, `ROS2`, `Python`
-*   **Links:** [💻 Code Repository](https://github.com/Wired-Navi0x1F/Enigmaa)
+*   ⚡ **[Synapse Notes Web Application](https://github.com/Wired-Navi0x1F/synapse-notes)**
+    *   *A markdown-based note editing system with live preview and 3D relationship mapping.*
+    *   **Features:** Developed guest authentication, archive vaulting, markdown rendering, and "The Wired" (an interactive **Three.js** 3D note relationship graph).
+    *   **Technologies:** Flask, MySQL, JavaScript, Three.js, Python.
+*   🚘 **[Bayesian MPC Predictive Agent](https://github.com/Wired-Navi0x1F/Enigmaa)**
+    *   *Trajectory prediction and active collision prevention agent for autonomous vehicles.*
+    *   **Features:** Implemented a GMM-based Bayesian trajectory prediction model, Monte Carlo dropout, and Hard Shield AEB safety modules.
+    *   **Technologies:** PyTorch, highway-env, Gymnasium, Python.
 
 ---
 
-### 🏆 SYSTEM DIAGNOSTIC RECORDS (ACHIEVEMENTS & CERTIFICATIONS)
-
-*   🥉 **3rd Place Winner** – *INNOVATEX 26 Hackathon* (RV University)
-*   🏅 **Workshop Certification** – *Game Development*, Techfest IIT Bombay
-*   🚀 **Participant** – *24-hour Innovitus 2026 Hackathon* (RUDRA Club)
-*   🎓 **Harvard CS50** – *Understanding Technology program* Certification
-*   🎨 **Udemy Certification** – *Pixel Art Master Course* (23.5 hours)
-*   🤖 **GeeksforGeeks Certification** – *Complete TensorFlow Course*
-*   🐍 **DMATICS Certification** – *Python Programming Training*
-
----
-
-### 📊 GITHUB ANALYTICS (TRUST SIGNALS)
+### 🕹️ CONSOLE CONTRIBUTION MATRIX (SNAKE GAME)
 
 <div align="center">
-  <table border="0" cellpadding="0" cellspacing="5">
-    <tr>
-      <td>
-        <img src="https://github-readme-stats.vercel.app/api?username=Wired-Navi0x1F&show_icons=true&theme=tokyonight&bg_color=0b0512&title_color=c084fc&text_color=eeddfc&icon_color=00f0ff&border_color=311840" height="170" alt="Harshul's GitHub Stats Dashboard" />
-      </td>
-      <td>
-        <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Wired-Navi0x1F&layout=compact&theme=tokyonight&bg_color=0b0512&title_color=c084fc&text_color=eeddfc&icon_color=00f0ff&border_color=311840" height="170" alt="Harshul's Top Coding Languages" />
-      </td>
-    </tr>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="github-contribution-grid-snake-dark.svg?v=9" />
+    <img src="github-contribution-grid-snake.svg?v=9" alt="NAVI Grid Contribution Snake Game" width="850" style="max-width: 100%; height: auto;" />
+  </picture>
+</div>
+
+---
+
+### 🕸️ THE WIRED WEBRING (OCTO RING)
+
+<div align="center">
+  <table border="0" cellpadding="10" cellspacing="0" style="border: 2.5px solid #311840; border-radius: 8px; background: #0b0512; max-width: 420px; width: 100%;">
+    <tbody>
+      <tr>
+        <td align="center">
+          <a href="https://octo-ring.com/"><img src="https://octo-ring.com/static/img/widget/top.png" width="100%" alt="Octo Ring logo" align="top"></a>
+          <br />
+          <a href="https://octo-ring.com/p/Wired-Navi0x1F/prev"><img src="https://octo-ring.com/static/img/widget/prev.png" width="32%" alt="previous" align="top" title="previous profile"></a>
+          <a href="https://octo-ring.com/p/Wired-Navi0x1F/random"><img src="https://octo-ring.com/static/img/widget/random.png" width="32%" alt="random" align="top" title="random profile"></a>
+          <a href="https://octo-ring.com/p/Wired-Navi0x1F/next"><img src="https://octo-ring.com/static/img/widget/next.png" width="32%" alt="next" align="top" title="next profile"></a>
+          <br />
+          <a href="https://octo-ring.com/"><img src="https://octo-ring.com/static/img/widget/bottom.png" width="100%" alt="check out other GitHub profiles in the Octo Ring" align="top"></a>
+        </td>
+      </tr>
+      <tr>
+        <td align="center" style="font-family: monospace; font-size: 13px; padding-top: 10px;">
+          <a href="https://octo-ring.com/p/Wired-Navi0x1F/prev" style="color: #ff66cc; text-decoration: none; font-weight: bold;">&larr; Prev</a>
+          <span style="color: #5d4370;"> | </span>
+          <a href="https://octo-ring.com" style="color: #eeddfc; text-decoration: none; font-weight: bold;">Octo Ring Hub</a>
+          <span style="color: #5d4370;"> | </span>
+          <a href="https://octo-ring.com/p/Wired-Navi0x1F/random" style="color: #eab308; text-decoration: none;">🎲 Random</a>
+          <span style="color: #5d4370;"> | </span>
+          <a href="https://octo-ring.com/p/Wired-Navi0x1F/next" style="color: #ff66cc; text-decoration: none; font-weight: bold;">Next &rarr;</a>
+        </td>
+      </tr>
+    </tbody>
   </table>
 </div>
 
 ---
 
-<details>
-  <summary><strong>🕹️ ACCESS THE WIRED (Interactive Retro Console & Webring)</strong></summary>
-  
-  <br />
+### ⚙️ SYSTEM STATE (`/dev/status`)
 
-  <div align="center">
-    <h4>📡 NAVI SYSTEM MONITOR CORE</h4>
-    <picture>
-      <img src="terminal.svg" width="820" alt="NAVI Terminal System Status Card showing system diagnostic telemetry" style="border-radius: 8px; border: 2.5px solid {THEME["border_inactive"]};" />
-    </picture>
-  </div>
-
-  <br />
-
-  <div align="center">
-    <h4>🕰️ Nixie Divergence Meter</h4>
-    <picture>
-      <img src="divergence_meter.svg" width="680" alt="Steins;Gate Nixie Tube Divergence Meter displaying target rate 1.048596%" style="border-radius: 8px;" />
-    </picture>
-  </div>
-
-  <br />
-
-  <div align="center">
-    <h4>🐍 CONSOLE CONTRIBUTION MATRIX</h4>
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="github-contribution-grid-snake-dark.svg" />
-      <img src="github-contribution-grid-snake.svg" alt="Animated Snake Game Contributions Grid mapping repository commits" width="820" style="max-width: 100%; height: auto; border-radius: 8px;" />
-    </picture>
-  </div>
-
-  <br />
-
-  <div align="center">
-    <h4>🕸️ THE WIRED WEBRING (OCTO RING)</h4>
-    <table border="0" cellpadding="10" cellspacing="0" style="border: 2.5px solid {THEME["border_inactive"]}; border-radius: 8px; background: {THEME["bg"]}; max-width: 420px; width: 100%;">
-      <tbody>
-        <tr>
-          <td align="center">
-            <a href="https://octo-ring.com/"><img src="https://octo-ring.com/static/img/widget/top.png" width="100%" alt="Octo Ring logo" align="top"></a>
-            <br />
-            <a href="https://octo-ring.com/p/Wired-Navi0x1F/prev"><img src="https://octo-ring.com/static/img/widget/prev.png" width="32%" alt="previous" align="top" title="previous profile"></a>
-            <a href="https://octo-ring.com/p/Wired-Navi0x1F/random"><img src="https://octo-ring.com/static/img/widget/random.png" width="32%" alt="random" align="top" title="random profile"></a>
-            <a href="https://octo-ring.com/p/Wired-Navi0x1F/next"><img src="https://octo-ring.com/static/img/widget/next.png" width="32%" alt="next" align="top" title="next profile"></a>
-            <br />
-            <a href="https://octo-ring.com/"><img src="https://octo-ring.com/static/img/widget/bottom.png" width="100%" alt="check out other GitHub profiles in the Octo Ring" align="top"></a>
-          </td>
-        </tr>
-        <tr>
-          <td align="center" style="font-family: monospace; font-size: 13px; padding-top: 10px;">
-            <a href="https://octo-ring.com/p/Wired-Navi0x1F/prev" style="color: {THEME["pink"]}; text-decoration: none; font-weight: bold;">&larr; Prev</a>
-            <span style="color: {THEME["gray"]};"> | </span>
-            <a href="https://octo-ring.com" style="color: {THEME["fg"]}; text-decoration: none; font-weight: bold;">Octo Ring Hub</a>
-            <span style="color: {THEME["gray"]};"> | </span>
-            <a href="https://octo-ring.com/p/Wired-Navi0x1F/random" style="color: {THEME["gold"]}; text-decoration: none;">🎲 Random</a>
-            <span style="color: {THEME["gray"]};"> | </span>
-            <a href="https://octo-ring.com/p/Wired-Navi0x1F/next" style="color: {THEME["pink"]}; text-decoration: none; font-weight: bold;">Next &rarr;</a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  
-  <br />
-</details>
-
-<br />
+```
+[SYSTEM PARAMETERS]
+> CURRENT_PROJECT:  Synapse Notes (Flask + MySQL + Three.js 3D graph)
+> CURRENT_RESEARCH: Bayesian MPC Predictive Agent (PyTorch)
+> COMPILER_TARGET:  Real-time trajectory prediction with GMM and Monte Carlo dropout
+```
 
 ---
+
+### 🎙️ Transmission Received
 
 <table width="100%" border="0" cellspacing="0" cellpadding="10" style="border: none;">
   <tr>
     <td width="30%" align="center" valign="middle" style="border: none;">
-      <img src="lain-wired.gif" width="180" alt="Lain connected to the Wired animation" style="border-radius: 4px;" />
+      <img src="lain-wired.gif" width="180" alt="Lain connected to the Wired" style="border-radius: 4px;" />
     </td>
-    <td width="70%" valign="middle" style="border: none; font-family: monospace; line-height: 1.6; color: {THEME["fg"]};">
+    <td width="70%" valign="middle" style="border: none; font-family: monospace; line-height: 1.6; color: #eeddfc;">
       <p><i>"No matter where you are, everyone is always connected. Even if you die, your consciousness remains in the Wired."</i><br>
       <strong>— Serial Experiments Lain</strong></p>
       <br />
@@ -686,6 +650,14 @@ I am a **Computer Science & Engineering (CSE)** student at **RV University** (Be
     </td>
   </tr>
 </table>
+
+---
+
+<div align="center">
+  <p align="center" style="font-family: monospace; color: {THEME["gray"]}; font-size: 11px;">
+    WIRED PROTOCOL INITIATED // IP STATE: SECURE // CLOSE THE WORLD, OPEN THE NEXT.
+  </p>
+</div>
 """
     
     with open("README.md", "w", encoding="utf-8") as f:
