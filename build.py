@@ -5,25 +5,24 @@ import datetime
 import json
 import requests
 
-# Default configuration matching the user's terminal theme
+# Theme matching the warm, muted, and sophisticated color palette of lainPfp.jpg
 THEME = {
-    "bg": "#0b0512",               # Deepest dark violet
-    "fg": "#eeddfc",               # Bright soft lavender
-    "border_active": "#c084fc",    # Purplish pink
-    "border_inactive": "#311840",  # Muted deep purple
-    "cyan": "#00f0ff",             # Neon Cyan
-    "cursor": "#c084fc",           # Purplish pink
-    "gold": "#eab308",             # Warm gold
-    "pink": "#ff66cc",             # Magenta pink
-    "gray": "#5d4370",             # Dark muted purple/gray
-    "orange": "#ff5500",           # Nixie Orange
-    "light_orange": "#ffcc66"      # Nixie Filament
+    "bg": "#0e080c",               # Deep dark warm brown-black (aubergine/charcoal)
+    "fg": "#faede6",               # Warm skin/cream color
+    "border_active": "#d19a7e",    # Warm peach/tan hair color
+    "border_inactive": "#3b202c",  # Deep muted burgundy/purple-brown
+    "cyan": "#7bb6cc",             # Soft steel-blue/cyan glasses refraction
+    "cursor": "#d19a7e",           # Warm tan
+    "gold": "#dfab77",             # Warm sandy gold
+    "pink": "#e58b88",             # Muted rose-pink
+    "gray": "#755964",             # Medium warm purple-grey (comments)
+    "orange": "#e05828",           # Nixie warm red-orange
+    "light_orange": "#f7b594"      # Nixie soft inner glow
 }
 
 def fetch_github_stats(username):
     """
     Fetches real public metadata from GitHub API for dynamic display.
-    Includes rate-limit fallbacks to keep the build resilient.
     """
     headers = {}
     token = os.environ.get("GITHUB_TOKEN")
@@ -39,35 +38,31 @@ def fetch_github_stats(username):
     }
     
     try:
-        # Fetch user profile data
         user_res = requests.get(f"https://api.github.com/users/{username}", headers=headers, timeout=5)
         if user_res.status_code == 200:
             user_data = user_res.json()
             stats["repos"] = user_data.get("public_repos", stats["repos"])
             stats["followers"] = user_data.get("followers", stats["followers"])
             
-        # Fetch repos to count stars
         repos_res = requests.get(f"https://api.github.com/users/{username}/repos?per_page=100", headers=headers, timeout=5)
         if repos_res.status_code == 200:
             repos_data = repos_res.json()
             total_stars = sum(repo.get("stargazers_count", 0) for repo in repos_data)
             stats["stars"] = total_stars
             
-        # Dynamic calculation of cognitive sync rate based on current UTC hour
         hour = datetime.datetime.now(datetime.timezone.utc).hour
-        sync_val = 94.0 + (hour * 0.2)
+        sync_val = 95.0 + (hour * 0.2)
         stats["sync_pct"] = f"{sync_val:.1f}%"
         
     except Exception as e:
-        print(f"Error fetching GitHub stats: {e}. Falling back to default metrics.", file=sys.stderr)
+        print(f"Error fetching GitHub stats: {e}.", file=sys.stderr)
         
     return stats
 
 def generate_terminal_svg(username, stats):
     """
-    Generates a highly immersive, 3D CRT-style terminal SVG with deep Serial Experiments Lain visual cues.
-    Includes background powerline silhouettes, spherical screen curvature shadow,
-    glass glare, scanline sweep, and clean technical alignment for professional visibility.
+    Generates a highly immersive, 3D CRT-style terminal SVG aligned with the warm,
+    refined colors of the lainPfp.jpg image.
     """
     # Clean ASCII art logo (WIRED NAVI)
     ascii_art = r"""
@@ -85,12 +80,12 @@ def generate_terminal_svg(username, stats):
         escaped_line = line.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
         ascii_svg_lines += f'<text x="50" y="{y_start + idx*12}" fill="{THEME["border_active"]}" font-family="monospace" font-size="8.5" font-weight="bold" xml:space="preserve">{escaped_line}</text>\n'
 
-    # Technical Skills matching the user's actual profile (no Java, aligned with PDF)
+    # Technical Skills matching user resume (colors customized for pfp palette)
     skills = [
         {"name": "Python / PyTorch", "desc": "ML Models, TensorFlow", "level": 90, "color": THEME["cyan"]},
         {"name": "C / C++ Systems", "desc": "Algorithms, Hardware", "level": 80, "color": THEME["gold"]},
         {"name": "Web (Three.js/Flask)", "desc": "Interactive 3D Graphics", "level": 85, "color": THEME["pink"]},
-        {"name": "ROS2 / Robotics", "desc": "Simulation, Trajectories", "level": 75, "color": THEME["border_active"]}
+        {"name": "ROS2 / Robotics", "desc": "Simulation, Trajectories", "level": 75, "color": THEME["fg"]}
     ]
     
     skills_svg = ""
@@ -114,7 +109,7 @@ def generate_terminal_svg(username, stats):
         }}
         .scanlines {{
             fill: url(#scanline-pattern);
-            opacity: 0.18;
+            opacity: 0.15;
         }}
         .title-text {{
             fill: {THEME["fg"]};
@@ -124,10 +119,10 @@ def generate_terminal_svg(username, stats):
         .console-text {{
             font-family: 'JetBrains Mono', 'Courier New', monospace;
             font-size: 14px;
-            text-shadow: 0 0 3px rgba(192, 132, 252, 0.45);
+            text-shadow: 0 0 3px rgba(209, 154, 126, 0.45);
         }}
         .header-glow {{
-            text-shadow: 0 0 4px rgba(0, 240, 255, 0.6);
+            text-shadow: 0 0 4px rgba(209, 154, 126, 0.6);
         }}
         @keyframes blink {{
             0%, 49% {{ opacity: 1; }}
@@ -148,13 +143,13 @@ def generate_terminal_svg(username, stats):
         
         <!-- Diagonal Cyber Grid -->
         <pattern id="cyber-grid" width="30" height="30" patternUnits="userSpaceOnUse">
-            <path d="M 30 0 L 0 0 0 30" fill="none" stroke="{THEME["border_inactive"]}" stroke-width="0.7" opacity="0.15" />
+            <path d="M 30 0 L 0 0 0 30" fill="none" stroke="{THEME["border_inactive"]}" stroke-width="0.7" opacity="0.2" />
         </pattern>
 
         <!-- Glass Reflection Gradient -->
         <linearGradient id="glass-reflection" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.12"/>
-            <stop offset="30%" stop-color="#ffffff" stop-opacity="0.04"/>
+            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.1"/>
+            <stop offset="30%" stop-color="#ffffff" stop-opacity="0.03"/>
             <stop offset="31%" stop-color="#ffffff" stop-opacity="0.0"/>
             <stop offset="100%" stop-color="#ffffff" stop-opacity="0.0"/>
         </linearGradient>
@@ -168,26 +163,26 @@ def generate_terminal_svg(username, stats):
 
         <!-- Bezel Metallic Border -->
         <linearGradient id="bezel-metallic" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#2d153d"/>
-            <stop offset="50%" stop-color="#150820"/>
-            <stop offset="100%" stop-color="#09030d"/>
+            <stop offset="0%" stop-color="#3b202c"/>
+            <stop offset="50%" stop-color="#211019"/>
+            <stop offset="100%" stop-color="#0f070b"/>
         </linearGradient>
     </defs>
 
     <!-- Bezel Monitor Frame (3D Casing) -->
-    <rect x="0" y="0" width="850" height="510" rx="14" fill="url(#bezel-metallic)" stroke="{THEME["border_active"]}" stroke-width="1" />
+    <rect x="0" y="0" width="850" height="510" rx="14" fill="url(#bezel-metallic)" stroke="{THEME["border_active"]}" stroke-width="1.2" />
     <!-- Bezel Highlight line -->
-    <rect x="6" y="6" width="838" height="498" rx="10" fill="none" stroke="#522a6b" stroke-width="1.5" opacity="0.6" />
+    <rect x="6" y="6" width="838" height="498" rx="10" fill="none" stroke="#5d394a" stroke-width="1.5" opacity="0.6" />
 
     <!-- Screen Bezel Cutout -->
     <rect x="14" y="14" width="822" height="482" rx="8" class="terminal-bg" />
     
     <!-- Immersive Background Silhouette: Telephone Pole and Powerlines (Lain visual essence) -->
-    <g opacity="0.32">
+    <g opacity="0.28">
         <!-- Power Pole -->
-        <line x1="720" y1="14" x2="720" y2="496" stroke="#251233" stroke-width="8" />
-        <line x1="640" y1="100" x2="800" y2="100" stroke="#251233" stroke-width="4" />
-        <line x1="660" y1="180" x2="780" y2="180" stroke="#251233" stroke-width="3" />
+        <line x1="720" y1="14" x2="720" y2="496" stroke="#2b1722" stroke-width="8" />
+        <line x1="640" y1="100" x2="800" y2="100" stroke="#2b1722" stroke-width="4" />
+        <line x1="660" y1="180" x2="780" y2="180" stroke="#2b1722" stroke-width="3" />
         <!-- Diagonal wires -->
         <path d="M 0 120 Q 400 280, 720 180" fill="none" stroke="{THEME["border_inactive"]}" stroke-width="1.2" />
         <path d="M 0 160 Q 400 320, 720 180" fill="none" stroke="{THEME["border_inactive"]}" stroke-width="1.2" />
@@ -205,7 +200,7 @@ def generate_terminal_svg(username, stats):
     <rect x="14" y="14" width="822" height="482" class="scanlines" rx="8" pointer-events="none" />
     
     <!-- Sweeping Laser Scanline (CRT electron gun sweep) -->
-    <rect x="15" y="35" width="820" height="2" fill="{THEME["cyan"]}" opacity="0.3" pointer-events="none">
+    <rect x="15" y="35" width="820" height="2" fill="{THEME["cyan"]}" opacity="0.25" pointer-events="none">
         <animate attributeName="y" from="35" to="490" dur="8s" repeatCount="indefinite" />
     </rect>
     
@@ -223,14 +218,14 @@ def generate_terminal_svg(username, stats):
     <g class="console-text">
         <!-- Diagnostic Block (Right Side) -->
         <rect x="540" y="70" width="265" height="135" rx="4" fill="{THEME["bg"]}" stroke="{THEME["border_inactive"]}" stroke-width="1.5" />
-        <text x="555" y="95" fill="{THEME["cyan"]}" font-family="monospace" font-size="12" font-weight="bold" class="header-glow">[SYSTEM DIAGNOSTICS]</text>
+        <text x="555" y="95" fill="{THEME["border_active"]}" font-family="monospace" font-size="12" font-weight="bold" class="header-glow">[SYSTEM DIAGNOSTICS]</text>
         <text x="555" y="120" fill="{THEME["fg"]}" font-family="monospace" font-size="11">NODE: {username}</text>
         <text x="555" y="140" fill="{THEME["fg"]}" font-family="monospace" font-size="11">ACTIVE MODULES: {stats["repos"]}</text>
         <text x="555" y="160" fill="{THEME["fg"]}" font-family="monospace" font-size="11">SYNC RATE: {stats["sync_pct"]}</text>
         <text x="555" y="180" fill="{THEME["fg"]}" font-family="monospace" font-size="10" fill-opacity="0.7">LAST SYNC: {stats["last_sync"].split()[0]}</text>
         
         <!-- Welcome Messages -->
-        <text x="50" y="75" fill="{THEME["cyan"]}" font-family="monospace" font-size="13" font-weight="bold" class="header-glow">&gt; Initializing NAVI-OS v7.25...</text>
+        <text x="50" y="75" fill="{THEME["border_active"]}" font-family="monospace" font-size="13" font-weight="bold" class="header-glow">&gt; Initializing NAVI-OS v7.25...</text>
         
         <!-- ASCII Logo -->
         {ascii_svg_lines}
@@ -247,18 +242,18 @@ def generate_terminal_svg(username, stats):
         <!-- Connected Nodes Section -->
         <text x="50" y="335" fill="{THEME["cyan"]}" font-family="monospace" font-size="12" font-weight="bold" class="header-glow">&gt;_ connected_nodes</text>
         <text x="50" y="354" fill="{THEME["fg"]}" font-family="monospace" font-size="12">
-            <tspan fill="{THEME["gray"]}">&gt; </tspan>Website: <tspan fill="{THEME["cyan"]}">https://pr0t0lain.dpdns.org</tspan>
+            <tspan fill="{THEME["gray"]}">&gt; </tspan>Website: <tspan fill="{THEME["border_active"]}">https://pr0t0lain.dpdns.org</tspan>
         </text>
         <text x="50" y="372" fill="{THEME["fg"]}" font-family="monospace" font-size="12">
-            <tspan fill="{THEME["gray"]}">&gt; </tspan>LinkedIn: <tspan fill="{THEME["cyan"]}">https://in.linkedin.com/in/haru-l41n-pr0t0</tspan>
+            <tspan fill="{THEME["gray"]}">&gt; </tspan>LinkedIn: <tspan fill="{THEME["border_active"]}">https://in.linkedin.com/in/haru-l41n-pr0t0</tspan>
         </text>
         
         <!-- Oscilloscope Waveform Animation -->
         <g>
-            <path d="M 0 420 C 50 390, 100 450, 150 420 C 200 390, 250 450, 300 420 C 350 390, 400 450, 450 420 C 500 390, 550 450, 600 420 C 650 390, 700 450, 750 420 C 800 390, 850 450, 900 420" fill="none" stroke="{THEME["cyan"]}" stroke-width="1.5" opacity="0.3">
+            <path d="M 0 420 C 50 390, 100 450, 150 420 C 200 390, 250 450, 300 420 C 350 390, 400 450, 450 420 C 500 390, 550 450, 600 420 C 650 390, 700 450, 750 420 C 800 390, 850 450, 900 420" fill="none" stroke="{THEME["border_active"]}" stroke-width="1.5" opacity="0.35">
                 <animateTransform attributeName="transform" type="translate" from="0,0" to="-300,0" dur="4.5s" repeatCount="indefinite" />
             </path>
-            <path d="M 0 420 C 60 440, 120 400, 180 420 C 240 440, 300 400, 360 420 C 420 440, 480 400, 540 420 C 600 440, 660 400, 720 420 C 780 440, 840 400, 900 420" fill="none" stroke="{THEME["pink"]}" stroke-width="1" opacity="0.2">
+            <path d="M 0 420 C 60 440, 120 400, 180 420 C 240 440, 300 400, 360 420 C 420 440, 480 400, 540 420 C 600 440, 660 400, 720 420 C 780 440, 840 400, 900 420" fill="none" stroke="{THEME["pink"]}" stroke-width="1" opacity="0.25">
                 <animateTransform attributeName="transform" type="translate" from="0,0" to="-360,0" dur="6.5s" repeatCount="indefinite" />
             </path>
         </g>
@@ -270,7 +265,7 @@ def generate_terminal_svg(username, stats):
         <rect x="424" y="452" width="8" height="15" class="cursor" />
     </g>
 
-    <!-- Curvature shadow overlay (Spherical screen effect) -->
+    <!-- Curvature shadow overlay -->
     <rect x="14" y="14" width="822" height="482" fill="url(#screen-curve)" rx="8" pointer-events="none" />
 
     <!-- Glass Reflection glare overlay -->
@@ -283,7 +278,7 @@ def generate_terminal_svg(username, stats):
 def generate_divergence_meter_svg():
     """
     Generates a high-fidelity Steins;Gate Divergence Meter SVG using glowing Nixie Tubes.
-    Includes detailed chassis, filaments, warmth glows, and a clear label identifying the worldline.
+    Updated with warm, orange filaments and deep chassis colors.
     """
     digits = ["1", ".", "0", "4", "8", "5", "9", "6"]
     nixie_tubes = ""
@@ -298,7 +293,7 @@ def generate_divergence_meter_svg():
             nixie_tubes += f"""
             <!-- Nixie Dot Tube -->
             <g transform="translate({x}, 0)">
-                <!-- Glass Outer Envelope -->
+                <!-- Glass Envelope -->
                 <rect x="20" y="25" width="25" height="100" rx="12.5" fill="none" stroke="{THEME["border_inactive"]}" stroke-width="1.5" opacity="0.8" />
                 <rect x="22" y="27" width="21" height="96" rx="10.5" fill="url(#glass-gradient)" opacity="0.12" />
                 <!-- Glowing Nixie Dot -->
@@ -318,19 +313,19 @@ def generate_divergence_meter_svg():
                 <rect x="2" y="10" width="61" height="130" rx="15" fill="none" stroke="{THEME["border_inactive"]}" stroke-width="1.5" opacity="0.8" />
                 <rect x="5" y="13" width="55" height="124" rx="12" fill="url(#glass-gradient)" opacity="0.12" />
                 
-                <!-- Inner metal support wires -->
+                <!-- Inner support wires -->
                 <line x1="12" y1="15" x2="12" y2="135" stroke="#331b40" stroke-width="0.8" opacity="0.7" />
                 <line x1="52" y1="15" x2="52" y2="135" stroke="#331b40" stroke-width="0.8" opacity="0.7" />
                 
-                <!-- Inactive digits background silhouette -->
+                <!-- Inactive digits silhouette -->
                 <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="{THEME["orange"]}" opacity="0.04">8</text>
                 
-                <!-- Active Glowing Digit (Filament layered glows) -->
+                <!-- Active Glowing Digit -->
                 <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="{THEME["orange"]}" filter="url(#nixie-glow)">{digit}</text>
                 <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="{THEME["light_orange"]}" filter="url(#nixie-glow-inner)" opacity="0.9">{digit}</text>
                 <text x="32" y="92" text-anchor="middle" font-family="'Courier New', monospace" font-size="75" font-weight="bold" fill="#ffffff" opacity="0.85">{digit}</text>
                 
-                <!-- Tube Base Mount -->
+                <!-- Tube Base -->
                 <rect x="2" y="135" width="61" height="12" rx="2" fill="#150a21" stroke="{THEME["border_inactive"]}" stroke-width="1" />
                 <rect x="8" y="137" width="49" height="2" fill="{THEME["border_inactive"]}" opacity="0.4" />
             </g>
@@ -355,7 +350,7 @@ def generate_divergence_meter_svg():
     </style>
     
     <defs>
-        <!-- Nixie Filament Glow Filters -->
+        <!-- Nixie Glow Filters -->
         <filter id="nixie-glow" x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur stdDeviation="4.5" result="blur1" />
             <feGaussianBlur stdDeviation="9.0" result="blur2" />
@@ -386,7 +381,7 @@ def generate_divergence_meter_svg():
             </feMerge>
         </filter>
 
-        <!-- Glass Reflection Gradient -->
+        <!-- Glass Reflection -->
         <linearGradient id="glass-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stop-color="#ffffff" stop-opacity="0.35"/>
             <stop offset="20%" stop-color="#ffffff" stop-opacity="0.08"/>
@@ -395,7 +390,7 @@ def generate_divergence_meter_svg():
             <stop offset="100%" stop-color="#ffffff" stop-opacity="0.3"/>
         </linearGradient>
 
-        <!-- Metal Grid Mesh Pattern -->
+        <!-- Grid Mesh -->
         <pattern id="grid-mesh" width="3" height="3" patternUnits="userSpaceOnUse">
             <line x1="0" y1="0" x2="3" y2="0" stroke="{THEME["orange"]}" stroke-width="0.25" opacity="0.35"/>
             <line x1="0" y1="0" x2="0" y2="3" stroke="{THEME["orange"]}" stroke-width="0.25" opacity="0.35"/>
@@ -417,7 +412,7 @@ def generate_divergence_meter_svg():
         {nixie_tubes}
     </g>
     
-    <!-- Panel label (Steins;Gate worldline context) -->
+    <!-- Panel label -->
     <text x="640" y="152" class="label-text" text-anchor="end">TARGET DIVERGENCE: 1.048596% // STEINS;GATE WORLD LINE METER</text>
 </svg>
 """
@@ -446,7 +441,7 @@ def main():
 
 <div align="center">
   <picture>
-    <img src="terminal.svg?v=6" width="850" alt="Lain-themed NAVI terminal showing system parameters and technical skills" style="max-width: 100%; height: auto;" />
+    <img src="terminal.svg?v=7" width="850" alt="Lain-themed NAVI terminal showing system parameters and technical skills" style="max-width: 100%; height: auto;" />
   </picture>
 </div>
 
@@ -454,7 +449,7 @@ def main():
 
 <div align="center">
   <picture>
-    <img src="divergence_meter.svg?v=6" width="680" alt="Steins;Gate Nixie Tube World Line Divergence Meter displaying 1.048596%" style="max-width: 100%; height: auto;" />
+    <img src="divergence_meter.svg?v=7" width="680" alt="Steins;Gate Nixie Tube World Line Divergence Meter displaying 1.048596%" style="max-width: 100%; height: auto;" />
   </picture>
 </div>
 
@@ -500,6 +495,37 @@ I am a **Computer Science & Engineering (CSE)** student at **RV University** (Be
     *   *Trajectory prediction and active collision prevention agent for autonomous vehicles.*
     *   **Features:** Implemented a GMM-based Bayesian trajectory prediction model, Monte Carlo dropout, Hard Shield AEB safety modules, and **ROS2** vehicle simulation control workflows.
     *   **Technologies:** PyTorch, highway-env, Gymnasium, ROS2.
+
+---
+
+### 🕹️ CONSOLE CONTRIBUTION MATRIX (SNAKE GAME)
+
+<div align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="github-contribution-grid-snake-dark.svg?v=7" />
+    <img src="github-contribution-grid-snake.svg?v=7" alt="NAVI Grid Contribution Snake Game" width="850" style="max-width: 100%; height: auto;" />
+  </picture>
+</div>
+
+---
+
+### 🕸️ THE WIRED WEBRING (OCTO RING)
+
+<div align="center">
+  <table>
+    <tbody>
+      <tr>
+        <td>
+          <a href="https://octo-ring.com/"><img src="https://octo-ring.com/static/img/widget/top.png" width="99%" alt="Octo Ring logo" align="top"></a><br>
+          <a href="https://octo-ring.com/p/Wired-Navi0x1F/prev"><img src="https://octo-ring.com/static/img/widget/prev.png" width="33%" alt="previous" align="top" title="previous profile"></a>
+          <a href="https://octo-ring.com/p/Wired-Navi0x1F/random"><img src="https://octo-ring.com/static/img/widget/random.png" width="33%" alt="random" align="top" title="random profile"></a>
+          <a href="https://octo-ring.com/p/Wired-Navi0x1F/next"><img src="https://octo-ring.com/static/img/widget/next.png" width="33%" alt="next" align="top" title="next profile"></a><br>
+          <a href="https://octo-ring.com/"><img src="https://octo-ring.com/static/img/widget/bottom.png" width="99%" alt="check out other GitHub profiles in the Octo Ring" align="top"></a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ---
 

@@ -2,7 +2,7 @@
 
 <div align="center">
   <picture>
-    <img src="terminal.svg?v=6" width="850" alt="Lain-themed NAVI terminal showing system parameters and technical skills" style="max-width: 100%; height: auto;" />
+    <img src="terminal.svg?v=7" width="850" alt="Lain-themed NAVI terminal showing system parameters and technical skills" style="max-width: 100%; height: auto;" />
   </picture>
 </div>
 
@@ -10,7 +10,7 @@
 
 <div align="center">
   <picture>
-    <img src="divergence_meter.svg?v=6" width="680" alt="Steins;Gate Nixie Tube World Line Divergence Meter displaying 1.048596%" style="max-width: 100%; height: auto;" />
+    <img src="divergence_meter.svg?v=7" width="680" alt="Steins;Gate Nixie Tube World Line Divergence Meter displaying 1.048596%" style="max-width: 100%; height: auto;" />
   </picture>
 </div>
 
@@ -59,6 +59,37 @@ I am a **Computer Science & Engineering (CSE)** student at **RV University** (Be
 
 ---
 
+### 🕹️ CONSOLE CONTRIBUTION MATRIX (SNAKE GAME)
+
+<div align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="github-contribution-grid-snake-dark.svg?v=7" />
+    <img src="github-contribution-grid-snake.svg?v=7" alt="NAVI Grid Contribution Snake Game" width="850" style="max-width: 100%; height: auto;" />
+  </picture>
+</div>
+
+---
+
+### 🕸️ THE WIRED WEBRING (OCTO RING)
+
+<div align="center">
+  <table>
+    <tbody>
+      <tr>
+        <td>
+          <a href="https://octo-ring.com/"><img src="https://octo-ring.com/static/img/widget/top.png" width="99%" alt="Octo Ring logo" align="top"></a><br>
+          <a href="https://octo-ring.com/p/Wired-Navi0x1F/prev"><img src="https://octo-ring.com/static/img/widget/prev.png" width="33%" alt="previous" align="top" title="previous profile"></a>
+          <a href="https://octo-ring.com/p/Wired-Navi0x1F/random"><img src="https://octo-ring.com/static/img/widget/random.png" width="33%" alt="random" align="top" title="random profile"></a>
+          <a href="https://octo-ring.com/p/Wired-Navi0x1F/next"><img src="https://octo-ring.com/static/img/widget/next.png" width="33%" alt="next" align="top" title="next profile"></a><br>
+          <a href="https://octo-ring.com/"><img src="https://octo-ring.com/static/img/widget/bottom.png" width="99%" alt="check out other GitHub profiles in the Octo Ring" align="top"></a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+---
+
 ### ⚙️ SYSTEM STATE (`/dev/status`)
 
 ```
@@ -90,7 +121,7 @@ I am a **Computer Science & Engineering (CSE)** student at **RV University** (Be
 ---
 
 <div align="center">
-  <p align="center" style="font-family: monospace; color: #5d4370; font-size: 11px;">
+  <p align="center" style="font-family: monospace; color: #755964; font-size: 11px;">
     WIRED PROTOCOL INITIATED // IP STATE: SECURE // CLOSE THE WORLD, OPEN THE NEXT.
   </p>
 </div>
