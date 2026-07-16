@@ -61,12 +61,14 @@ I am a **Computer Science & Engineering (CSE)** student at **RV University** (Be
 
 ### ⚙️ SYSTEM STATE (`/dev/status`)
 
+<!--SYSTEM_STATE:START-->
 ```
 [SYSTEM PARAMETERS]
 > CURRENT_PROJECT:  Synapse Notes (Flask + MySQL + Three.js 3D graph)
 > CURRENT_RESEARCH: Bayesian MPC Predictive Agent (PyTorch + ROS2)
 > COMPILER_TARGET:  Real-time trajectory prediction with GMM and Monte Carlo dropout
 ```
+<!--SYSTEM_STATE:END-->
 
 ---
 

@@ -1,0 +1,4 @@
+current_project: "Synapse Notes (Flask + MySQL + Three.js 3D graph)"
+current_research: "Bayesian MPC Predictive Agent (PyTorch + ROS2)"
+compiler_target: "Real-time trajectory prediction with GMM and Monte Carlo dropout"
+sync_rate: 98.2

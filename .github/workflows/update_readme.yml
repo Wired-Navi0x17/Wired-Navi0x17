@@ -1,6 +1,9 @@
 name: Update Retro Profile README
 
 on:
+  push:
+    paths:
+      - 'status.yml'
   schedule:
     - cron: '0 0 * * *' # Runs daily at midnight UTC
   workflow_dispatch:      # Allows manual trigger

@@ -59,143 +59,120 @@ def fetch_github_stats(username):
         
     return stats
 
-def generate_terminal_svg(username, stats):
+def load_status_yml(filepath):
     """
-    Reads the minified terminal SVG from the filesystem.
+    Parses status.yml to load user status parameters.
     """
+    data = {}
+    if not os.path.exists(filepath):
+        return data
+    with open(filepath, "r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+            if ":" in line:
+                key, val = line.split(":", 1)
+                val = val.strip()
+                if (val.startswith('"') and val.endswith('"')) or (val.startswith("'") and val.endswith("'")):
+                    val = val[1:-1]
+                data[key.strip()] = val
+    return data
+
+
+def update_terminal_svg(stats):
+    """
+    Updates telemetry parameters inside terminal.svg inline.
+    """
+    if not os.path.exists("terminal.svg"):
+        print("terminal.svg not found. Skipping inline update.")
+        return
+        
     with open("terminal.svg", "r", encoding="utf-8") as f:
-        return f.read()
+        svg_content = f.read()
+
+    import re
+    # Update public repos
+    svg_content = re.sub(
+        r"ACTIVE MODULES:\s*\d+",
+        f"ACTIVE MODULES: {stats['repos']}",
+        svg_content
+    )
+    # Update sync percentage
+    svg_content = re.sub(
+        r"SYNC RATE:\s*\d+(\.\d+)?%",
+        f"SYNC RATE: {stats['sync_pct']}",
+        svg_content
+    )
+    # Update last sync timestamp (keeping it clean with only date YYYY-MM-DD)
+    date_str = stats['last_sync'].split()[0]
+    svg_content = re.sub(
+        r"LAST SYNC:\s*\d{4}-\d{2}-\d{2}",
+        f"LAST SYNC: {date_str}",
+        svg_content
+    )
+
+    with open("terminal.svg", "w", encoding="utf-8") as f:
+        f.write(svg_content)
+    print("Updated terminal.svg telemetry.")
 
 
-def generate_divergence_meter_svg():
+def update_readme_system_state(status):
     """
-    Reads the Nixie Divergence Meter SVG from the filesystem.
+    Updates the /dev/status block inside README.md dynamically between markers.
     """
-    with open("divergence_meter.svg", "r", encoding="utf-8") as f:
-        return f.read()
+    if not os.path.exists("README.md"):
+        print("README.md not found. Skipping inline update.")
+        return
 
+    with open("README.md", "r", encoding="utf-8") as f:
+        readme_content = f.read()
+
+    start_marker = "<!--SYSTEM_STATE:START-->"
+    end_marker = "<!--SYSTEM_STATE:END-->"
+
+    if start_marker in readme_content and end_marker in readme_content:
+        new_block = f"""[SYSTEM PARAMETERS]
+> CURRENT_PROJECT:  {status.get('current_project', '')}
+> CURRENT_RESEARCH: {status.get('current_research', '')}
+> COMPILER_TARGET:  {status.get('compiler_target', '')}"""
+
+        import re
+        readme_content = re.sub(
+            f"{re.escape(start_marker)}.*?{re.escape(end_marker)}",
+            f"{start_marker}\n```\n{new_block}\n```\n{end_marker}",
+            readme_content,
+            flags=re.DOTALL
+        )
+
+        with open("README.md", "w", encoding="utf-8") as f:
+            f.write(readme_content)
+        print("Updated README.md /dev/status parameters.")
+    else:
+        print("Markers not found in README.md. Skipping.")
 
 
 def main():
     username = "Wired-Navi0x1F"
     
+    print("Loading status parameters from status.yml...")
+    status = load_status_yml("status.yml")
+    
     print("Fetching live data from GitHub API...")
     stats = fetch_github_stats(username)
     
-    print("Generating retro terminal card...")
-    terminal_svg = generate_terminal_svg(username, stats)
-    with open("terminal.svg", "w", encoding="utf-8") as f:
-        f.write(terminal_svg)
+    # If custom sync rate is set in status.yml, override the dynamic sync rate
+    if "sync_rate" in status:
+        stats["sync_pct"] = f"{status['sync_rate']}%"
         
-    print("Generating Nixie Divergence Meter...")
-    divergence_svg = generate_divergence_meter_svg()
-    with open("divergence_meter.svg", "w", encoding="utf-8") as f:
-        f.write(divergence_svg)
+    print("Updating terminal.svg telemetry...")
+    update_terminal_svg(stats)
+        
+    print("Updating README.md system state...")
+    update_readme_system_state(status)
 
-    print("Generating README.md...")
-    # Generate the Markdown file structure with clean layout, exact resume facts, and lightbox click prevention
-    readme_content = f"""# 🌐 Wired-Navi0x1F
+    print("Success! Profile dynamic files updated.")
 
-<div align="center">
-  <picture>
-    <img src="terminal.svg?v=6" width="850" alt="Lain-themed NAVI terminal showing system parameters and technical skills" style="max-width: 100%; height: auto;" />
-  </picture>
-</div>
-
-<br />
-
-<div align="center">
-  <picture>
-    <img src="divergence_meter.svg?v=6" width="680" alt="Steins;Gate Nixie Tube World Line Divergence Meter displaying 1.048596%" style="max-width: 100%; height: auto;" />
-  </picture>
-</div>
-
-<br />
-
-<div align="center">
-  <a href="https://pr0t0lain.dpdns.org" target="_blank" rel="noopener noreferrer">
-    <img src="https://img.shields.io/badge/🌐_NODE_DOMAIN-pr0t0lain.dpdns.org-00f0ff?style=for-the-badge&logo=internet-explorer&logoColor=ffffff&labelColor=150a21" alt="Website Link" />
-  </a>
-  &nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="https://in.linkedin.com/in/haru-l41n-pr0t0" target="_blank" rel="noopener noreferrer">
-    <img src="https://img.shields.io/badge/💼_GUILD_LINK-linkedin.com/in/haru--l41n--pr0t0-ff66cc?style=for-the-badge&logo=linkedin&logoColor=ffffff&labelColor=150a21" alt="LinkedIn Link" />
-  </a>
-</div>
-
-<br />
-
-## ─── 📡 BIOLOGICAL NODE PARAMETERS (ABOUT ME) ───
-
-I am a **Computer Science & Engineering (CSE)** student at **RV University** (Bengaluru, India), specializing in Artificial Intelligence, Machine Learning, and low-level system logic. I build systems where neural algorithms interface with physical data layers.
-
-*   🔭 **Current Project & Research:** Developing **Synapse Notes**, a dynamic markdown-based knowledge management web app featuring **Three.js** 3D force-directed node-link graph mapping.
-*   🤖 **Predictive Agent Systems:** Engineering **Bayesian MPC Predictive Agents** for autonomous driving environments, implementing trajectory prediction GMM heads, Monte Carlo dropout, and **ROS2** control workflows.
-*   🦾 **Academic Pursuits:** Pursuing my B.Tech (Hons.) in Artificial Intelligence & Machine Learning (2025 – Present), specializing in AI robustness, data structures, and real-time inference.
-
----
-
-### 🧠 CORE SYSTEM SPECS (TECH STACK)
-
-*   **Programming Languages:** `Python`, `C`, `C++`, `HTML5`, `CSS3`, `JavaScript`
-*   **Frameworks & Libraries:** `TensorFlow`, `PyTorch`, `Pandas`, `NumPy`, `FastAPI`, `Flask`, `Three.js`
-*   **Tools & Environments:** `Git`, `GitHub`, `Linux`, `ROS2`, `VS Code`, `Jupyter`
-
----
-
-### 🕸️ ACTIVE PROJECT NODES (FEATURED PROJECTS)
-
-*   ⚡ **[Synapse Notes Web Application](https://github.com/Wired-Navi0x1F/synapse-notes)**
-    *   *A markdown-based note editing system with live preview and 3D relationship mapping.*
-    *   **Features:** Developed guest authentication, archive vaulting, markdown rendering, and "The Wired" (an interactive **Three.js** 3D note network mapping notes' relationships).
-    *   **Technologies:** Flask, MySQL, JavaScript, Three.js, Python.
-*   🚘 **[Bayesian MPC Predictive Agent](https://github.com/Wired-Navi0x1F/Enigmaa)**
-    *   *Trajectory prediction and active collision prevention agent for autonomous vehicles.*
-    *   **Features:** Implemented a GMM-based Bayesian trajectory prediction model, Monte Carlo dropout, Hard Shield AEB safety modules, and **ROS2** vehicle simulation control workflows.
-    *   **Technologies:** PyTorch, highway-env, Gymnasium, ROS2.
-
----
-
-### ⚙️ SYSTEM STATE (`/dev/status`)
-
-```
-[SYSTEM PARAMETERS]
-> CURRENT_PROJECT:  Synapse Notes (Flask + MySQL + Three.js 3D graph)
-> CURRENT_RESEARCH: Bayesian MPC Predictive Agent (PyTorch + ROS2)
-> COMPILER_TARGET:  Real-time trajectory prediction with GMM and Monte Carlo dropout
-```
-
----
-
-### 🎙️ Transmission Received
-
-<table width="100%" border="0" cellspacing="0" cellpadding="10" style="border: none;">
-  <tr>
-    <td width="30%" align="center" valign="middle" style="border: none;">
-      <img src="lain-wired.gif" width="180" alt="Lain connected to the Wired" style="border-radius: 4px;" />
-    </td>
-    <td width="70%" valign="middle" style="border: none; font-family: monospace; line-height: 1.6;">
-      <p><i>"No matter where you are, everyone is always connected. Even if you die, your consciousness remains in the Wired."</i><br>
-      <strong>— Serial Experiments Lain</strong></p>
-      <br>
-      <p><i>"This is the choice of Steins;Gate. The world line can be rewritten. El Psy Kongroo."</i><br>
-      <strong>— Okabe Rintaro (Steins;Gate)</strong></p>
-    </td>
-  </tr>
-</table>
-
----
-
-<div align="center">
-  <p align="center" style="font-family: monospace; color: #5d4370; font-size: 11px;">
-    WIRED PROTOCOL INITIATED // IP STATE: SECURE // CLOSE THE WORLD, OPEN THE NEXT.
-  </p>
-</div>
-"""
-    
-    with open("README.md", "w", encoding="utf-8") as f:
-        f.write(readme_content)
-
-    print("Success! Profile files generated.")
 
 if __name__ == "__main__":
     main()
