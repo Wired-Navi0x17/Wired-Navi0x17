@@ -100,6 +100,15 @@ I am a **Computer Science & Engineering (CSE)** student at **RV University** (Be
 
 ---
 
+<p align="center">
+    <a href="https://octo-ring.com/p/Wired-Navi0x1F/prev">&larr;</a>
+    <a class="cactus-link" href="https://octo-ring.com">Octo Ring</a>
+    <a href="https://octo-ring.com/p/Wired-Navi0x1F/random">🎲</a>
+    <a href="https://octo-ring.com/p/Wired-Navi0x1F/next">&rarr;</a>
+</p>
+
+---
+
 <div align="center">
   <p align="center" style="font-family: monospace; color: #5d4370; font-size: 11px;">
     WIRED PROTOCOL INITIATED // IP STATE: SECURE // CLOSE THE WORLD, OPEN THE NEXT.
