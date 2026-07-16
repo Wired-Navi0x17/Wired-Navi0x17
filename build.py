@@ -147,13 +147,37 @@ def update_readme_system_state(status):
     end_marker = "<!--SYSTEM_STATE:END-->"
 
     if start_marker in readme_content and end_marker in readme_content:
+        import subprocess
+
+        # Get OS dynamically
+        try:
+            os_name = subprocess.check_output("grep PRETTY_NAME /etc/os-release | cut -d'\"' -f2", shell=True, text=True).strip()
+        except Exception:
+            os_name = "CachyOS"
+
+        # Get Kernel dynamically
+        try:
+            kernel_name = subprocess.check_output("uname -r", shell=True, text=True).strip()
+        except Exception:
+            kernel_name = "7.1.3-2-cachyos"
+
+        # Get Shell dynamically
+        shell_path = os.environ.get("SHELL")
+        if not shell_path:
+            try:
+                import pwd
+                shell_path = pwd.getpwuid(os.getuid()).pw_shell
+            except Exception:
+                shell_path = "/bin/bash"
+        shell_name = os.path.basename(shell_path)
+
         new_block = f"""Wired-Navi0x1F@arch
 -------------------
-OS: Arch Linux x86_64
+OS: {os_name}
 Host: Layer 07 // The Wired
-Kernel: Linux 6.10-arch1-1
+Kernel: {kernel_name}
 Uptime: Always Connected
-Shell: zsh / bash
+Shell: {shell_name}
 Project: {status.get('current_project', '')}
 Research: {status.get('current_research', '')}
 Target: {status.get('compiler_target', '')}"""

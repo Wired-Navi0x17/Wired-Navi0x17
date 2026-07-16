@@ -32,9 +32,9 @@
 
 I am a **Computer Science & Engineering (CSE)** student at **RV University** (Bengaluru, India), specializing in Artificial Intelligence, Machine Learning, and low-level system logic. I build systems where neural algorithms interface with physical data layers.
 
-*   🔭 **Current Project & Research:** Developing **Synapse Notes**, a dynamic markdown-based knowledge management web app featuring **Three.js** 3D force-directed node-link graph mapping.
-*   🤖 **Predictive Agent Systems:** Engineering **Bayesian MPC Predictive Agents** for autonomous driving environments, implementing trajectory prediction GMM heads, Monte Carlo dropout, and **ROS2** control workflows.
-*   🦾 **Academic Pursuits:** Pursuing my B.Tech (Hons.) in Artificial Intelligence & Machine Learning (2025 – Present), specializing in AI robustness, data structures, and real-time inference.
+*   🔭 **Current Project & Focus:** Solving daily Data Structures & Algorithms challenges in **Java** across **LeetCode** and **HackerRank** platforms.
+*   🤖 **Open-Source Exploration:** Investigating **KDE** environment modules and desktop components to establish upstream contribution channels.
+*   🦾 **Academic Pursuits:** Pursuing my B.Tech (Hons.) in Artificial Intelligence & Machine Learning (2025 – Present), focusing on algorithmic design, complexity analysis, and logical systems.
 
 ---
 
@@ -52,11 +52,11 @@ I am a **Computer Science & Engineering (CSE)** student at **RV University** (Be
 ```
 Wired-Navi0x1F@arch
 -------------------
-OS: Arch Linux x86_64
+OS: CachyOS
 Host: Layer 07 // The Wired
-Kernel: Linux 6.10-arch1-1
+Kernel: 7.1.3-2-cachyos
 Uptime: Always Connected
-Shell: zsh / bash
+Shell: fish
 Project: Data Structures & Algorithms in Java (HackerRank & LeetCode)
 Research: Algorithm Complexity and Performance Tuning
 Target: Daily LeetCode/HackerRank Problem Solving
