@@ -61,22 +61,37 @@ def fetch_github_stats(username):
 
 def load_status_yml(filepath):
     """
-    Parses status.yml to load user status parameters.
+    Parses status.yml to load user status parameters (supports scalars and list blocks).
     """
     data = {}
     if not os.path.exists(filepath):
         return data
+    current_key = None
     with open(filepath, "r", encoding="utf-8") as f:
         for line in f:
-            line = line.strip()
-            if not line or line.startswith("#"):
+            stripped = line.strip()
+            if not stripped or stripped.startswith("#"):
                 continue
-            if ":" in line:
+            if stripped.startswith("-"):
+                # It's a list item under current_key
+                item = stripped[1:].strip()
+                if (item.startswith('"') and item.endswith('"')) or (item.startswith("'") and item.endswith("'")):
+                    item = item[1:-1]
+                if current_key:
+                    if not isinstance(data.get(current_key), list):
+                        data[current_key] = []
+                    data[current_key].append(item)
+            elif ":" in line:
                 key, val = line.split(":", 1)
+                key = key.strip()
                 val = val.strip()
                 if (val.startswith('"') and val.endswith('"')) or (val.startswith("'") and val.endswith("'")):
                     val = val[1:-1]
-                data[key.strip()] = val
+                if val == "":
+                    data[key] = []
+                else:
+                    data[key] = val
+                current_key = key
     return data
 
 
@@ -152,6 +167,42 @@ def update_readme_system_state(status):
         print("Markers not found in README.md. Skipping.")
 
 
+def update_readme_staged_ideas(status):
+    """
+    Updates the ideas backlog inside README.md dynamically between markers.
+    """
+    if not os.path.exists("README.md"):
+        print("README.md not found. Skipping inline update.")
+        return
+
+    with open("README.md", "r", encoding="utf-8") as f:
+        readme_content = f.read()
+
+    start_marker = "<!--STAGED_IDEAS:START-->"
+    end_marker = "<!--STAGED_IDEAS:END-->"
+
+    if start_marker in readme_content and end_marker in readme_content:
+        ideas = status.get("staged_ideas", [])
+        if isinstance(ideas, list) and ideas:
+            markdown_list = "\n".join(f"*   {idea}" for idea in ideas)
+        else:
+            markdown_list = "*   *No active ideas staged at the moment.*"
+
+        import re
+        readme_content = re.sub(
+            f"{re.escape(start_marker)}.*?{re.escape(end_marker)}",
+            f"{start_marker}\n{markdown_list}\n{end_marker}",
+            readme_content,
+            flags=re.DOTALL
+        )
+
+        with open("README.md", "w", encoding="utf-8") as f:
+            f.write(readme_content)
+        print("Updated README.md staged ideas.")
+    else:
+        print("Staged ideas markers not found in README.md. Skipping.")
+
+
 def main():
     username = "Wired-Navi0x1F"
     
@@ -170,6 +221,9 @@ def main():
         
     print("Updating README.md system state...")
     update_readme_system_state(status)
+
+    print("Updating README.md staged ideas...")
+    update_readme_staged_ideas(status)
 
     print("Success! Profile dynamic files updated.")
 

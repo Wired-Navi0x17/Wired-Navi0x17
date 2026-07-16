@@ -64,11 +64,20 @@ I am a **Computer Science & Engineering (CSE)** student at **RV University** (Be
 <!--SYSTEM_STATE:START-->
 ```
 [SYSTEM PARAMETERS]
-> CURRENT_PROJECT:  Synapse Notes (Flask + MySQL + Three.js 3D graph)
-> CURRENT_RESEARCH: Bayesian MPC Predictive Agent (PyTorch + ROS2)
-> COMPILER_TARGET:  Real-time trajectory prediction with GMM and Monte Carlo dropout
+> CURRENT_PROJECT:  Data Structures & Algorithms in Java (HackerRank & LeetCode)
+> CURRENT_RESEARCH: Algorithm Complexity and Performance Tuning
+> COMPILER_TARGET:  Daily LeetCode/HackerRank Problem Solving
 ```
 <!--SYSTEM_STATE:END-->
+
+---
+
+### 💡 STAGED PROTOCOLS (IDEAS & BACKLOG)
+
+<!--STAGED_IDEAS:START-->
+*   Exploring KDE environment modules & desktop components
+*   Targeting open-source contributions to public system repositories
+<!--STAGED_IDEAS:END-->
 
 ---
 

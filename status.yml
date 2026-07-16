@@ -1,4 +1,7 @@
-current_project: "Synapse Notes (Flask + MySQL + Three.js 3D graph)"
-current_research: "Bayesian MPC Predictive Agent (PyTorch + ROS2)"
-compiler_target: "Real-time trajectory prediction with GMM and Monte Carlo dropout"
+current_project: "Data Structures & Algorithms in Java (HackerRank & LeetCode)"
+current_research: "Algorithm Complexity and Performance Tuning"
+compiler_target: "Daily LeetCode/HackerRank Problem Solving"
 sync_rate: 98.2
+staged_ideas:
+  - "Exploring KDE environment modules & desktop components"
+  - "Targeting open-source contributions to public system repositories"
