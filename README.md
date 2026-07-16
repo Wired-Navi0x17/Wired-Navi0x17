@@ -46,27 +46,20 @@ I am a **Computer Science & Engineering (CSE)** student at **RV University** (Be
 
 ---
 
-### 🕸️ ACTIVE PROJECT NODES (FEATURED PROJECTS)
-
-*   ⚡ **[Synapse Notes Web Application](https://github.com/Wired-Navi0x1F/synapse-notes)**
-    *   *A markdown-based note editing system with live preview and 3D relationship mapping.*
-    *   **Features:** Developed guest authentication, archive vaulting, markdown rendering, and "The Wired" (an interactive **Three.js** 3D note network mapping notes' relationships).
-    *   **Technologies:** Flask, MySQL, JavaScript, Three.js, Python.
-*   🚘 **[Bayesian MPC Predictive Agent](https://github.com/Wired-Navi0x1F/Enigmaa)**
-    *   *Trajectory prediction and active collision prevention agent for autonomous vehicles.*
-    *   **Features:** Implemented a GMM-based Bayesian trajectory prediction model, Monte Carlo dropout, Hard Shield AEB safety modules, and **ROS2** vehicle simulation control workflows.
-    *   **Technologies:** PyTorch, highway-env, Gymnasium, ROS2.
-
----
-
 ### ⚙️ SYSTEM STATE (`/dev/status`)
 
 <!--SYSTEM_STATE:START-->
 ```
-[SYSTEM PARAMETERS]
-> CURRENT_PROJECT:  Data Structures & Algorithms in Java (HackerRank & LeetCode)
-> CURRENT_RESEARCH: Algorithm Complexity and Performance Tuning
-> COMPILER_TARGET:  Daily LeetCode/HackerRank Problem Solving
+Wired-Navi0x1F@arch
+-------------------
+OS: Arch Linux x86_64
+Host: Layer 07 // The Wired
+Kernel: Linux 6.10-arch1-1
+Uptime: Always Connected
+Shell: zsh / bash
+Project: Data Structures & Algorithms in Java (HackerRank & LeetCode)
+Research: Algorithm Complexity and Performance Tuning
+Target: Daily LeetCode/HackerRank Problem Solving
 ```
 <!--SYSTEM_STATE:END-->
 
@@ -99,6 +92,12 @@ I am a **Computer Science & Engineering (CSE)** student at **RV University** (Be
 </table>
 
 ---
+
+<p align="center">
+  <strong><a href="https://pr0t0lain.dpdns.org">Website</a></strong> |
+  <strong><a href="https://in.linkedin.com/in/haru-l41n-pr0t0">LinkedIn</a></strong> |
+  <strong><a href="https://discord.com/users/lain_0x00.navi" title="Discord ID: lain_0x00.navi">Discord (Navi...)</a></strong>
+</p>
 
 <p align="center">
     <a href="https://octo-ring.com/p/Wired-Navi0x1F/prev">&larr;</a>

@@ -147,10 +147,16 @@ def update_readme_system_state(status):
     end_marker = "<!--SYSTEM_STATE:END-->"
 
     if start_marker in readme_content and end_marker in readme_content:
-        new_block = f"""[SYSTEM PARAMETERS]
-> CURRENT_PROJECT:  {status.get('current_project', '')}
-> CURRENT_RESEARCH: {status.get('current_research', '')}
-> COMPILER_TARGET:  {status.get('compiler_target', '')}"""
+        new_block = f"""Wired-Navi0x1F@arch
+-------------------
+OS: Arch Linux x86_64
+Host: Layer 07 // The Wired
+Kernel: Linux 6.10-arch1-1
+Uptime: Always Connected
+Shell: zsh / bash
+Project: {status.get('current_project', '')}
+Research: {status.get('current_research', '')}
+Target: {status.get('compiler_target', '')}"""
 
         import re
         readme_content = re.sub(
