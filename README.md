@@ -1,4 +1,4 @@
-# 🌐 Wired-Navi0x1F
+# 🌐 Wired-Navi0x17
 
 <div align="center">
   <picture>
@@ -50,7 +50,7 @@ I am a **Computer Science & Engineering (CSE)** student at **RV University** (Be
 
 <!--SYSTEM_STATE:START-->
 ```
-Wired-Navi0x1F@arch
+Wired-Navi0x17@arch
 -------------------
 OS: CachyOS
 Host: Layer 07 // The Wired
