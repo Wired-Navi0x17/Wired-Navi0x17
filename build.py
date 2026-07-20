@@ -171,7 +171,7 @@ def update_readme_system_state(status):
                 shell_path = "/bin/bash"
         shell_name = os.path.basename(shell_path)
 
-        new_block = f"""Wired-Navi0x1F@arch
+        new_block = f"""Wired-Navi0x17@arch
 -------------------
 OS: {os_name}
 Host: Layer 07 // The Wired
@@ -234,7 +234,7 @@ def update_readme_staged_ideas(status):
 
 
 def main():
-    username = "Wired-Navi0x1F"
+    username = "Wired-Navi0x17"
     
     print("Loading status parameters from status.yml...")
     status = load_status_yml("status.yml")

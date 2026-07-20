@@ -100,10 +100,10 @@ Target: Daily LeetCode/HackerRank Problem Solving
 </p>
 
 <p align="center">
-    <a href="https://octo-ring.com/p/Wired-Navi0x1F/prev">&larr;</a>
+    <a href="https://octo-ring.com/p/Wired-Navi0x17/prev">&larr;</a>
     <a class="cactus-link" href="https://octo-ring.com">Octo Ring</a>
-    <a href="https://octo-ring.com/p/Wired-Navi0x1F/random">🎲</a>
-    <a href="https://octo-ring.com/p/Wired-Navi0x1F/next">&rarr;</a>
+    <a href="https://octo-ring.com/p/Wired-Navi0x17/random">🎲</a>
+    <a href="https://octo-ring.com/p/Wired-Navi0x17/next">&rarr;</a>
 </p>
 
 ---
