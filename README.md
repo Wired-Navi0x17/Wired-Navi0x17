@@ -54,7 +54,7 @@ Wired-Navi0x17@arch
 -------------------
 OS: Ubuntu 24.04.4 LTS
 Host: Layer 07 // The Wired
-Kernel: 6.17.0-1020-azure
+Kernel: 6.17.0-1022-azure
 Uptime: Always Connected
 Shell: bash
 Project: Data Structures & Algorithms in Java (HackerRank & LeetCode)
