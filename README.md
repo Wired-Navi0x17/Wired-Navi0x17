@@ -52,11 +52,11 @@ I am a **Computer Science & Engineering (CSE)** student at **RV University** (Be
 ```
 Wired-Navi0x17@arch
 -------------------
-OS: Ubuntu 24.04.4 LTS
+OS: NixOS 26.05 (Yarara)
 Host: Layer 07 // The Wired
-Kernel: 6.17.0-1022-azure
+Kernel: Linux 6.18.46
 Uptime: Always Connected
-Shell: bash
+Shell: fish
 Project: Data Structures & Algorithms in Java (HackerRank & LeetCode)
 Research: Algorithm Complexity and Performance Tuning
 Target: Daily LeetCode/HackerRank Problem Solving

@@ -149,34 +149,53 @@ def update_readme_system_state(status):
     if start_marker in readme_content and end_marker in readme_content:
         import subprocess
 
-        # Get OS dynamically
-        try:
-            os_name = subprocess.check_output("grep PRETTY_NAME /etc/os-release | cut -d'\"' -f2", shell=True, text=True).strip()
-        except Exception:
-            os_name = "CachyOS"
+        is_ci = os.environ.get("GITHUB_ACTIONS") == "true" or os.environ.get("CI") == "true"
 
-        # Get Kernel dynamically
-        try:
-            kernel_name = subprocess.check_output("uname -r", shell=True, text=True).strip()
-        except Exception:
-            kernel_name = "7.1.3-2-cachyos"
+        # Get OS dynamically or from status.yml
+        os_name = status.get("system_os")
+        if not os_name:
+            if not is_ci:
+                try:
+                    os_name = subprocess.check_output("grep PRETTY_NAME /etc/os-release | cut -d'\"' -f2", shell=True, text=True).strip()
+                except Exception:
+                    os_name = "NixOS 26.05 (Yarara)"
+            else:
+                os_name = "NixOS 26.05 (Yarara)"
 
-        # Get Shell dynamically
-        shell_path = os.environ.get("SHELL")
-        if not shell_path:
-            try:
-                import pwd
-                shell_path = pwd.getpwuid(os.getuid()).pw_shell
-            except Exception:
-                shell_path = "/bin/bash"
-        shell_name = os.path.basename(shell_path)
+        # Get Kernel dynamically or from status.yml
+        kernel_name = status.get("system_kernel")
+        if not kernel_name:
+            if not is_ci:
+                try:
+                    kernel_name = subprocess.check_output("uname -r", shell=True, text=True).strip()
+                except Exception:
+                    kernel_name = "Linux 6.18.46"
+            else:
+                kernel_name = "Linux 6.18.46"
+
+        # Get Shell dynamically or from status.yml
+        shell_name = status.get("system_shell")
+        if not shell_name:
+            if not is_ci:
+                shell_path = os.environ.get("SHELL")
+                if not shell_path:
+                    try:
+                        import pwd
+                        shell_path = pwd.getpwuid(os.getuid()).pw_shell
+                    except Exception:
+                        shell_path = "/bin/bash"
+                shell_name = os.path.basename(shell_path)
+            else:
+                shell_name = "fish"
+
+        uptime_val = status.get("system_uptime", "Always Connected")
 
         new_block = f"""Wired-Navi0x17@arch
 -------------------
 OS: {os_name}
 Host: Layer 07 // The Wired
 Kernel: {kernel_name}
-Uptime: Always Connected
+Uptime: {uptime_val}
 Shell: {shell_name}
 Project: {status.get('current_project', '')}
 Research: {status.get('current_research', '')}

@@ -2,6 +2,10 @@ current_project: "Data Structures & Algorithms in Java (HackerRank & LeetCode)"
 current_research: "Algorithm Complexity and Performance Tuning"
 compiler_target: "Daily LeetCode/HackerRank Problem Solving"
 sync_rate: 98.5
+system_os: "NixOS 26.05 (Yarara)"
+system_kernel: "Linux 6.18.46"
+system_uptime: "Always Connected"
+system_shell: "fish"
 staged_ideas:
   - "Exploring KDE environment modules & desktop components"
   - "Targeting open-source contributions to public system repositories"
