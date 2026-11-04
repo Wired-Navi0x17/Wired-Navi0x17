@@ -1,11 +1,89 @@
-current_project: "Data Structures & Algorithms in Java (HackerRank & LeetCode)"
-current_research: "Algorithm Complexity and Performance Tuning"
-compiler_target: "Daily LeetCode/HackerRank Problem Solving"
-sync_rate: 98.5
-system_os: "NixOS 26.05 (Yarara)"
-system_kernel: "Linux 6.18.46"
-system_uptime: "Always Connected"
-system_shell: "fish"
-staged_ideas:
-  - "Exploring KDE environment modules & desktop components"
-  - "Targeting open-source contributions to public system repositories"
+# Everything the profile says lives here. Edit, push, and the Action re-renders.
+# Plain text only: emoji and other symbols are stripped when rendered.
+
+profile:
+  name: "Harshul Kala"
+  handle: "Wired-Navi0x17"
+  alias: "Navi"
+  motto: "a node in the wired"
+  tagline: "AI/ML · Systems · Open source"
+  school_line: "CSE (AI/ML) · RV University"
+  location: "Bengaluru, IN"
+  timezone: "UTC+05:30"
+  quote: "close the world, open the next"
+  bio: "CSE undergraduate at RV University, Bengaluru, specialising in AI and machine learning. I like working close to the metal: Linux, systems logic, and the places where algorithms meet real data."
+
+about:
+  statement: "I build systems where neural algorithms meet physical data, and I want to know what happens underneath."
+  detail: "Right now that means daily data structures and algorithms practice in Java, reading desktop and system code on Linux, and working toward my first upstream contributions."
+  based_in: "Bengaluru, India"
+  studying: "B.Tech (Hons.) CSE, Artificial Intelligence & Machine Learning, RV University, 2025 to present"
+  now: "Data Structures & Algorithms in Java on LeetCode and HackerRank"
+  research: "Algorithm complexity and performance tuning"
+  exploring: "KDE environment modules and desktop components, toward upstream contributions"
+
+backlog:
+  - "Explore KDE environment modules and desktop components"
+  - "Open-source contributions to public system repositories"
+
+# Items ending in * are drawn as primary.
+toolkit:
+  Languages:
+    - "Python*"
+    - "Java*"
+    - "C"
+    - "C++"
+    - "TypeScript"
+    - "JavaScript"
+    - "HTML"
+    - "CSS"
+  Machine learning:
+    - "PyTorch*"
+    - "TensorFlow"
+    - "NumPy"
+    - "Pandas"
+    - "Jupyter"
+  Web and backend:
+    - "FastAPI"
+    - "Flask"
+    - "Node.js"
+    - "Three.js"
+    - "MySQL"
+  Systems:
+    - "Linux*"
+    - "NixOS*"
+    - "KDE Plasma"
+    - "ROS2"
+    - "Git"
+    - "Bash"
+    - "fish"
+
+signal:
+  divergence: "1.048596"
+
+# Optional: replace the auto-written text on a pinned card.
+# pinned_overrides:
+  Wired-Navi0x17:
+    tagline: "This profile: a README that renders itself"
+    summary: "Python generator and GitHub Actions that draw every card on this page as SVG, read pinned repositories and their READMEs, and keep the system specs and statistics current."
+#   Enigmaa:
+#     tagline: "Bayesian MPC predictive agent for autonomous highway driving"
+#     summary: "..."
+pinned_overrides:
+  Wired-Navi0x17:
+    tagline: "This profile: a README that renders itself"
+    summary: "Python generator and GitHub Actions that draw every card on this page as SVG, read pinned repositories and their READMEs, and keep the system specs and statistics current."
+
+system:  # written by `python build.py --sync-system`
+  user: "l41n-pr0t0"
+  host: "wirednavi0x17"
+  os: "NixOS 26.05 (Yarara) x86_64"
+  kernel: "Linux 6.18.46"
+  machine: "Lenovo Legion Pro 7 16IRX8H"
+  desktop: "KDE Plasma 6.6.6 (Wayland)"
+  shell: "fish 4.7.1"
+  cpu: "Intel Core i9-13900HX (24C/32T)"
+  gpu: "NVIDIA RTX 4090 Laptop GPU + Intel UHD Graphics"
+  memory: "31 GiB"
+  filesystem: "btrfs"
+  synced: "2026-11-05"

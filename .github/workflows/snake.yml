@@ -1,0 +1,44 @@
+name: Render contribution snake
+
+on:
+  schedule:
+    - cron: "5 0 * * *"
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/snake.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: profile-commit
+  cancel-in-progress: false
+
+jobs:
+  snake:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Colours follow the profile palette: bronze snake, bronze-ramp cells.
+      - uses: Platane/snk/svg-only@v3
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          outputs: |
+            assets/snake-dark.svg?palette=github-dark&color_snake=#a8996f&color_dots=#161b22,#3b352c,#544c3d,#6f6550,#a8996f
+            assets/snake-light.svg?color_snake=#544c3d&color_dots=#ebedf0,#ddd5c4,#b8ab8a,#8a7d5d,#544c3d
+
+      - name: Commit if anything changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/snake-dark.svg assets/snake-light.svg
+          if git diff --cached --quiet; then
+            echo "No changes."
+            exit 0
+          fi
+          git commit -m "render: refresh contribution snake"
+          git pull --rebase origin main
+          git push
