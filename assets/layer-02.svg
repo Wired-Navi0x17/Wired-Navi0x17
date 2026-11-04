@@ -9,14 +9,15 @@
 <defs><filter id="grain" x="0" y="0" width="100%" height="100%">
 <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/>
 <feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .55 0"/></filter></defs>
-<rect x=".5" y=".5" width="999" height="85" rx="8" fill="#0b0a09" stroke="#2a2622"/>
-<text x="28" y="37" class="bebas" font-size="17" fill="#a8996f" text-anchor="start" letter-spacing="4" >LAYER:02</text>
-<text x="28" y="56" class="plex" font-size="8.5" fill="#7a7670" text-anchor="start" letter-spacing="2" >1,350 M — FOREST OF TEMPTATION</text>
-<text x="300" y="51" class="play" font-size="29" fill="#d9d2c3" text-anchor="start" letter-spacing="0" >Pinned transmissions</text>
-<text x="972" y="37" class="plex" font-size="8.5" fill="#b3b3b3" text-anchor="end" letter-spacing="3" >PINNED REPOSITORIES</text>
-<text x="972" y="56" class="plex" font-size="8" fill="#4a4640" text-anchor="end" letter-spacing="2" >02 / 06</text>
-<path d="M28 72H972 M28 72v-6 M40 72v-3 M52 72v-3 M64 72v-3 M76 72v-3 M88 72v-6 M100 72v-3 M112 72v-3 M124 72v-3 M136 72v-3 M148 72v-6 M160 72v-3 M172 72v-3 M184 72v-3 M196 72v-3 M208 72v-6 M220 72v-3 M232 72v-3 M244 72v-3 M256 72v-3 M268 72v-6 M280 72v-3 M292 72v-3 M304 72v-3 M316 72v-3 M328 72v-6 M340 72v-3 M352 72v-3 M364 72v-3 M376 72v-3 M388 72v-6 M400 72v-3 M412 72v-3 M424 72v-3 M436 72v-3 M448 72v-6 M460 72v-3 M472 72v-3 M484 72v-3 M496 72v-3 M508 72v-6 M520 72v-3 M532 72v-3 M544 72v-3 M556 72v-3 M568 72v-6 M580 72v-3 M592 72v-3 M604 72v-3 M616 72v-3 M628 72v-6 M640 72v-3 M652 72v-3 M664 72v-3 M676 72v-3 M688 72v-6 M700 72v-3 M712 72v-3 M724 72v-3 M736 72v-3 M748 72v-6 M760 72v-3 M772 72v-3 M784 72v-3 M796 72v-3 M808 72v-6 M820 72v-3 M832 72v-3 M844 72v-3 M856 72v-3 M868 72v-6 M880 72v-3 M892 72v-3 M904 72v-3 M916 72v-3 M928 72v-6 M940 72v-3 M952 72v-3 M964 72v-3" stroke="#2a2622" fill="none"/>
-<rect x="28" y="70" width="72" height="3" fill="#6f6550"/>
-<rect y="69" width="2" height="6" fill="#a8996f"><animate attributeName="x" values="28;970;28" dur="14s" repeatCount="indefinite"/></rect>
+<rect x=".5" y=".5" width="999" height="85" rx="8" fill="#0b0b0b" stroke="#363636"/>
+<text x="28" y="37" class="bebas" font-size="17" fill="#f0384b" text-anchor="start" letter-spacing="4" >LAYER:02</text>
+<text x="28" y="56" class="plex" font-size="8.5" fill="#aaa8a3" text-anchor="start" letter-spacing="2" >1,350 M — FOREST OF TEMPTATION</text>
+<text x="300" y="51" class="play" font-size="29" fill="#f4f2ed" text-anchor="start" letter-spacing="0" >Pinned transmissions</text>
+<text x="972" y="37" class="plex" font-size="8.5" fill="#dcdad5" text-anchor="end" letter-spacing="3" >PINNED REPOSITORIES</text>
+<text x="972" y="56" class="plex" font-size="8.5" fill="#7c7a75" text-anchor="end" letter-spacing="2" >02 / 06</text>
+<path d="M28 72H972" stroke="#363636" stroke-width="1.5"/>
+<path d="M34 66l7 12 M48 66l7 12 M62 66l7 12 M76 66l7 12 M90 66l7 12 M104 66l7 12 M118 66l7 12 M132 66l7 12 M146 66l7 12 M160 66l7 12 M174 66l7 12 M188 66l7 12 M202 66l7 12 M216 66l7 12 M230 66l7 12 M244 66l7 12 M258 66l7 12 M272 66l7 12 M286 66l7 12 M300 66l7 12 M314 66l7 12 M328 66l7 12 M342 66l7 12 M356 66l7 12 M370 66l7 12 M384 66l7 12 M398 66l7 12 M412 66l7 12 M426 66l7 12 M440 66l7 12 M454 66l7 12 M468 66l7 12 M482 66l7 12 M496 66l7 12 M510 66l7 12 M524 66l7 12 M538 66l7 12 M552 66l7 12 M566 66l7 12 M580 66l7 12 M594 66l7 12 M608 66l7 12 M622 66l7 12 M636 66l7 12 M650 66l7 12 M664 66l7 12 M678 66l7 12 M692 66l7 12 M706 66l7 12 M720 66l7 12 M734 66l7 12 M748 66l7 12 M762 66l7 12 M776 66l7 12 M790 66l7 12 M804 66l7 12 M818 66l7 12 M832 66l7 12 M846 66l7 12 M860 66l7 12 M874 66l7 12 M888 66l7 12 M902 66l7 12 M916 66l7 12 M930 66l7 12 M944 66l7 12 M958 66l7 12" stroke="#7c7a75" stroke-width="1.3" stroke-linecap="round"/>
+<rect x="28" y="70" width="72" height="3" fill="#c8102e"/>
+<rect y="69" width="2" height="6" fill="#f0384b"><animate attributeName="x" values="28;970;28" dur="14s" repeatCount="indefinite"/></rect>
 <rect x="1" y="1" width="998" height="84" rx="8" filter="url(#grain)" opacity=".045" pointer-events="none"/>
 </svg>

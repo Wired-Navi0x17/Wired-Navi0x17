@@ -2,7 +2,7 @@
 # Plain text only: emoji and other symbols are stripped when rendered.
 
 profile:
-  name: "Harshul Kala"
+  name: "Harshul Kala | Navi"
   handle: "Wired-Navi0x17"
   alias: "Navi"
   motto: "a node in the wired"
@@ -31,6 +31,7 @@ toolkit:
   Languages:
     - "Python*"
     - "Java*"
+    - "Rust*"
     - "C"
     - "C++"
     - "TypeScript"

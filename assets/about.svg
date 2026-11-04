@@ -9,32 +9,32 @@
 <defs><filter id="grain" x="0" y="0" width="100%" height="100%">
 <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/>
 <feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .55 0"/></filter></defs>
-<rect x=".5" y=".5" width="999" height="369" rx="8" fill="#0b0a09" stroke="#2a2622"/>
-<line x1="580" y1="40" x2="580" y2="340" stroke="#2a2622"/>
-<text x="40" y="64" class="play" font-size="21" fill="#d9d2c3" text-anchor="start" letter-spacing="0" >I build systems where neural algorithms meet</text>
-<text x="40" y="95" class="play" font-size="21" fill="#d9d2c3" text-anchor="start" letter-spacing="0" >physical data, and I want to know what</text>
-<text x="40" y="126" class="play" font-size="21" fill="#d9d2c3" text-anchor="start" letter-spacing="0" >happens underneath.</text>
-<text x="40" y="167" class="plex" font-size="10.5" fill="#b3b3b3" text-anchor="start" letter-spacing="0" >Right now that means daily data structures and algorithms practice in Java, reading</text>
-<text x="40" y="184" class="plex" font-size="10.5" fill="#b3b3b3" text-anchor="start" letter-spacing="0" >desktop and system code on Linux, and working toward my first upstream</text>
-<text x="40" y="201" class="plex" font-size="10.5" fill="#b3b3b3" text-anchor="start" letter-spacing="0" >contributions.</text>
-<text x="40" y="238" class="plex" font-size="8" fill="#a8996f" text-anchor="start" letter-spacing="3" >STAGED PROTOCOLS / BACKLOG</text>
-<text x="40" y="258" class="plex" font-size="10.5" fill="#6f6550" text-anchor="start" letter-spacing="0" >—</text>
-<text x="62" y="258" class="plex" font-size="10.5" fill="#b3b3b3" text-anchor="start" letter-spacing="0" >Explore KDE environment modules and desktop components</text>
-<text x="40" y="279" class="plex" font-size="10.5" fill="#6f6550" text-anchor="start" letter-spacing="0" >—</text>
-<text x="62" y="279" class="plex" font-size="10.5" fill="#b3b3b3" text-anchor="start" letter-spacing="0" >Open-source contributions to public system repositories</text>
-<text x="610" y="56" class="plex" font-size="8" fill="#a8996f" text-anchor="start" letter-spacing="3" >BASED IN</text>
-<text x="610" y="74" class="plex" font-size="10.5" fill="#d9d2c3" text-anchor="start" letter-spacing="0" >Bengaluru, India</text>
-<text x="610" y="104" class="plex" font-size="8" fill="#a8996f" text-anchor="start" letter-spacing="3" >STUDYING</text>
-<text x="610" y="122" class="plex" font-size="10.5" fill="#d9d2c3" text-anchor="start" letter-spacing="0" >B.Tech (Hons.) CSE, Artificial Intelligence &amp;</text>
-<text x="610" y="138" class="plex" font-size="10.5" fill="#d9d2c3" text-anchor="start" letter-spacing="0" >Machine Learning, RV University, 2025 to present</text>
-<text x="610" y="168" class="plex" font-size="8" fill="#a8996f" text-anchor="start" letter-spacing="3" >NOW SOLVING</text>
-<text x="610" y="186" class="plex" font-size="10.5" fill="#d9d2c3" text-anchor="start" letter-spacing="0" >Data Structures &amp; Algorithms in Java on LeetCode</text>
-<text x="610" y="202" class="plex" font-size="10.5" fill="#d9d2c3" text-anchor="start" letter-spacing="0" >and HackerRank</text>
-<text x="610" y="232" class="plex" font-size="8" fill="#a8996f" text-anchor="start" letter-spacing="3" >RESEARCH</text>
-<text x="610" y="250" class="plex" font-size="10.5" fill="#d9d2c3" text-anchor="start" letter-spacing="0" >Algorithm complexity and performance tuning</text>
-<text x="610" y="280" class="plex" font-size="8" fill="#a8996f" text-anchor="start" letter-spacing="3" >EXPLORING</text>
-<text x="610" y="298" class="plex" font-size="10.5" fill="#d9d2c3" text-anchor="start" letter-spacing="0" >KDE environment modules and desktop components,</text>
-<text x="610" y="314" class="plex" font-size="10.5" fill="#d9d2c3" text-anchor="start" letter-spacing="0" >toward upstream contributions</text>
-<text x="972" y="352" class="plex" font-size="7.5" fill="#4a4640" text-anchor="end" letter-spacing="2" >0 M — SURFACE</text>
+<rect x=".5" y=".5" width="999" height="369" rx="8" fill="#0b0b0b" stroke="#363636"/>
+<line x1="580" y1="40" x2="580" y2="340" stroke="#363636"/>
+<text x="40" y="64" class="play" font-size="21" fill="#f4f2ed" text-anchor="start" letter-spacing="0" >I build systems where neural algorithms meet</text>
+<text x="40" y="95" class="play" font-size="21" fill="#f4f2ed" text-anchor="start" letter-spacing="0" >physical data, and I want to know what</text>
+<text x="40" y="126" class="play" font-size="21" fill="#f4f2ed" text-anchor="start" letter-spacing="0" >happens underneath.</text>
+<text x="40" y="167" class="plex" font-size="10.5" fill="#dcdad5" text-anchor="start" letter-spacing="0" >Right now that means daily data structures and algorithms practice in Java, reading</text>
+<text x="40" y="184" class="plex" font-size="10.5" fill="#dcdad5" text-anchor="start" letter-spacing="0" >desktop and system code on Linux, and working toward my first upstream</text>
+<text x="40" y="201" class="plex" font-size="10.5" fill="#dcdad5" text-anchor="start" letter-spacing="0" >contributions.</text>
+<text x="40" y="238" class="plex" font-size="8.5" fill="#f0384b" text-anchor="start" letter-spacing="3" >STAGED PROTOCOLS / BACKLOG</text>
+<text x="40" y="258" class="plex" font-size="10.5" fill="#c8102e" text-anchor="start" letter-spacing="0" >—</text>
+<text x="62" y="258" class="plex" font-size="10.5" fill="#dcdad5" text-anchor="start" letter-spacing="0" >Explore KDE environment modules and desktop components</text>
+<text x="40" y="279" class="plex" font-size="10.5" fill="#c8102e" text-anchor="start" letter-spacing="0" >—</text>
+<text x="62" y="279" class="plex" font-size="10.5" fill="#dcdad5" text-anchor="start" letter-spacing="0" >Open-source contributions to public system repositories</text>
+<text x="610" y="56" class="plex" font-size="8.5" fill="#f0384b" text-anchor="start" letter-spacing="3" >BASED IN</text>
+<text x="610" y="74" class="plex" font-size="10.5" fill="#f4f2ed" text-anchor="start" letter-spacing="0" >Bengaluru, India</text>
+<text x="610" y="104" class="plex" font-size="8.5" fill="#f0384b" text-anchor="start" letter-spacing="3" >STUDYING</text>
+<text x="610" y="122" class="plex" font-size="10.5" fill="#f4f2ed" text-anchor="start" letter-spacing="0" >B.Tech (Hons.) CSE, Artificial Intelligence &amp;</text>
+<text x="610" y="138" class="plex" font-size="10.5" fill="#f4f2ed" text-anchor="start" letter-spacing="0" >Machine Learning, RV University, 2025 to present</text>
+<text x="610" y="168" class="plex" font-size="8.5" fill="#f0384b" text-anchor="start" letter-spacing="3" >NOW SOLVING</text>
+<text x="610" y="186" class="plex" font-size="10.5" fill="#f4f2ed" text-anchor="start" letter-spacing="0" >Data Structures &amp; Algorithms in Java on LeetCode</text>
+<text x="610" y="202" class="plex" font-size="10.5" fill="#f4f2ed" text-anchor="start" letter-spacing="0" >and HackerRank</text>
+<text x="610" y="232" class="plex" font-size="8.5" fill="#f0384b" text-anchor="start" letter-spacing="3" >RESEARCH</text>
+<text x="610" y="250" class="plex" font-size="10.5" fill="#f4f2ed" text-anchor="start" letter-spacing="0" >Algorithm complexity and performance tuning</text>
+<text x="610" y="280" class="plex" font-size="8.5" fill="#f0384b" text-anchor="start" letter-spacing="3" >EXPLORING</text>
+<text x="610" y="298" class="plex" font-size="10.5" fill="#f4f2ed" text-anchor="start" letter-spacing="0" >KDE environment modules and desktop components,</text>
+<text x="610" y="314" class="plex" font-size="10.5" fill="#f4f2ed" text-anchor="start" letter-spacing="0" >toward upstream contributions</text>
+<text x="972" y="352" class="plex" font-size="8.5" fill="#7c7a75" text-anchor="end" letter-spacing="2" >0 M — SURFACE</text>
 <rect x="1" y="1" width="998" height="368" rx="8" filter="url(#grain)" opacity=".045" pointer-events="none"/>
 </svg>

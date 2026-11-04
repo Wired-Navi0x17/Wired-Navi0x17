@@ -14,152 +14,152 @@
 <linearGradient id="glass" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".09"/>
 <stop offset=".25" stop-color="#fff" stop-opacity=".02"/><stop offset=".8" stop-color="#fff" stop-opacity="0"/>
 <stop offset="1" stop-color="#fff" stop-opacity=".06"/></linearGradient>
-<radialGradient id="warm" cx=".5" cy=".55" r=".6"><stop offset="0" stop-color="#ff8a2a" stop-opacity=".22"/>
-<stop offset="1" stop-color="#ff8a2a" stop-opacity="0"/></radialGradient>
-<pattern id="mesh" width="6" height="6" patternUnits="userSpaceOnUse"><path d="M0 3h6M3 0v6" stroke="#ffb070" stroke-width=".4" opacity=".25"/></pattern></defs>
-<rect x=".5" y=".5" width="999" height="319" rx="8" fill="#0b0a09" stroke="#2a2622"/>
-<g opacity=".35"><path id="wire0" d="M-10 6 Q 250.0 32 500.0 10 T 1010 8" fill="none" stroke="#2f2a24" stroke-width="1.20"/><path id="wire1" d="M-10 15 Q 250.0 49 500.0 19 T 1010 17" fill="none" stroke="#2f2a24" stroke-width="1.05"/><path id="wire2" d="M-10 23 Q 250.0 43 500.0 27 T 1010 25" fill="none" stroke="#2f2a24" stroke-width="0.90"/><path id="wire3" d="M-10 30 Q 250.0 70 500.0 34 T 1010 32" fill="none" stroke="#2f2a24" stroke-width="0.75"/></g>
-<rect x="194.0" y="34" width="66" height="128" rx="30" fill="#0f0905" stroke="#3a2a1c" stroke-width="1.5"/>
+<radialGradient id="warm" cx=".5" cy=".55" r=".6"><stop offset="0" stop-color="#ff5f2e" stop-opacity=".22"/>
+<stop offset="1" stop-color="#ff5f2e" stop-opacity="0"/></radialGradient>
+<pattern id="mesh" width="6" height="6" patternUnits="userSpaceOnUse"><path d="M0 3h6M3 0v6" stroke="#ff9070" stroke-width=".4" opacity=".25"/></pattern></defs>
+<rect x=".5" y=".5" width="999" height="319" rx="8" fill="#0b0b0b" stroke="#363636"/>
+<g opacity=".35"><path id="wire0" d="M-10 6 Q 250.0 32 500.0 10 T 1010 8" fill="none" stroke="#3d3d3d" stroke-width="1.20"/><path id="wire1" d="M-10 15 Q 250.0 49 500.0 19 T 1010 17" fill="none" stroke="#3d3d3d" stroke-width="1.05"/><path id="wire2" d="M-10 23 Q 250.0 43 500.0 27 T 1010 25" fill="none" stroke="#3d3d3d" stroke-width="0.90"/><path id="wire3" d="M-10 30 Q 250.0 70 500.0 34 T 1010 32" fill="none" stroke="#3d3d3d" stroke-width="0.75"/></g>
+<rect x="194.0" y="34" width="66" height="128" rx="30" fill="#120706" stroke="#4a2018" stroke-width="1.5"/>
 <rect x="194.0" y="34" width="66" height="128" rx="30" fill="url(#warm)"/>
-<text x="227.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">0</text>
-<text x="227.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">1</text>
-<text x="227.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">2</text>
-<text x="227.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">3</text>
-<text x="227.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">4</text>
-<text x="227.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">5</text>
-<text x="227.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">6</text>
-<text x="227.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">7</text>
-<text x="227.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">8</text>
-<text x="227.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">9</text>
-<text x="227.0" y="128" class="cut" font-size="82" fill="#ffd9a8" stroke="#ff8a2a" stroke-width="1.6" text-anchor="middle" filter="url(#nglow)">1</text>
+<text x="227.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">0</text>
+<text x="227.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">1</text>
+<text x="227.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">2</text>
+<text x="227.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">3</text>
+<text x="227.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">4</text>
+<text x="227.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">5</text>
+<text x="227.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">6</text>
+<text x="227.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">7</text>
+<text x="227.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">8</text>
+<text x="227.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">9</text>
+<text x="227.0" y="128" class="cut" font-size="82" fill="#ffd8c8" stroke="#ff5f2e" stroke-width="1.6" text-anchor="middle" filter="url(#nglow)">1</text>
 <rect x="198.0" y="40" width="58" height="116" rx="26" fill="url(#mesh)"/>
 <rect x="194.0" y="34" width="66" height="128" rx="30" fill="url(#glass)"/>
 <rect x="191.0" y="162" width="72" height="12" rx="2" fill="#1a1612" stroke="#2e2820"/>
 <rect x="225.0" y="174" width="4" height="6" fill="#2e2820"/>
-<rect x="272.0" y="34" width="66" height="128" rx="30" fill="#0f0905" stroke="#3a2a1c" stroke-width="1.5"/>
+<rect x="272.0" y="34" width="66" height="128" rx="30" fill="#120706" stroke="#4a2018" stroke-width="1.5"/>
 <rect x="272.0" y="34" width="66" height="128" rx="30" fill="url(#warm)"/>
-<text x="305.0" y="128" class="cut" font-size="82" fill="#ffd9a8" stroke="#ff8a2a" stroke-width="1.6" text-anchor="middle" filter="url(#nglow)">.<animate attributeName="opacity" values="1;.35;1;.9;1" keyTimes="0;.03;.06;.5;1" dur="6.3s" repeatCount="indefinite"/></text>
+<text x="305.0" y="128" class="cut" font-size="82" fill="#ffd8c8" stroke="#ff5f2e" stroke-width="1.6" text-anchor="middle" filter="url(#nglow)">.<animate attributeName="opacity" values="1;.35;1;.9;1" keyTimes="0;.03;.06;.5;1" dur="6.3s" repeatCount="indefinite"/></text>
 <rect x="276.0" y="40" width="58" height="116" rx="26" fill="url(#mesh)"/>
 <rect x="272.0" y="34" width="66" height="128" rx="30" fill="url(#glass)"/>
 <rect x="269.0" y="162" width="72" height="12" rx="2" fill="#1a1612" stroke="#2e2820"/>
 <rect x="303.0" y="174" width="4" height="6" fill="#2e2820"/>
-<rect x="350.0" y="34" width="66" height="128" rx="30" fill="#0f0905" stroke="#3a2a1c" stroke-width="1.5"/>
+<rect x="350.0" y="34" width="66" height="128" rx="30" fill="#120706" stroke="#4a2018" stroke-width="1.5"/>
 <rect x="350.0" y="34" width="66" height="128" rx="30" fill="url(#warm)"/>
-<text x="383.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">0</text>
-<text x="383.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">1</text>
-<text x="383.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">2</text>
-<text x="383.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">3</text>
-<text x="383.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">4</text>
-<text x="383.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">5</text>
-<text x="383.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">6</text>
-<text x="383.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">7</text>
-<text x="383.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">8</text>
-<text x="383.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">9</text>
-<text x="383.0" y="128" class="cut" font-size="82" fill="#ffd9a8" stroke="#ff8a2a" stroke-width="1.6" text-anchor="middle" filter="url(#nglow)">0</text>
+<text x="383.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">0</text>
+<text x="383.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">1</text>
+<text x="383.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">2</text>
+<text x="383.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">3</text>
+<text x="383.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">4</text>
+<text x="383.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">5</text>
+<text x="383.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">6</text>
+<text x="383.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">7</text>
+<text x="383.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">8</text>
+<text x="383.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">9</text>
+<text x="383.0" y="128" class="cut" font-size="82" fill="#ffd8c8" stroke="#ff5f2e" stroke-width="1.6" text-anchor="middle" filter="url(#nglow)">0</text>
 <rect x="354.0" y="40" width="58" height="116" rx="26" fill="url(#mesh)"/>
 <rect x="350.0" y="34" width="66" height="128" rx="30" fill="url(#glass)"/>
 <rect x="347.0" y="162" width="72" height="12" rx="2" fill="#1a1612" stroke="#2e2820"/>
 <rect x="381.0" y="174" width="4" height="6" fill="#2e2820"/>
-<rect x="428.0" y="34" width="66" height="128" rx="30" fill="#0f0905" stroke="#3a2a1c" stroke-width="1.5"/>
+<rect x="428.0" y="34" width="66" height="128" rx="30" fill="#120706" stroke="#4a2018" stroke-width="1.5"/>
 <rect x="428.0" y="34" width="66" height="128" rx="30" fill="url(#warm)"/>
-<text x="461.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">0</text>
-<text x="461.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">1</text>
-<text x="461.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">2</text>
-<text x="461.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">3</text>
-<text x="461.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">4</text>
-<text x="461.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">5</text>
-<text x="461.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">6</text>
-<text x="461.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">7</text>
-<text x="461.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">8</text>
-<text x="461.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">9</text>
-<text x="461.0" y="128" class="cut" font-size="82" fill="#ffd9a8" stroke="#ff8a2a" stroke-width="1.6" text-anchor="middle" filter="url(#nglow)">4</text>
+<text x="461.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">0</text>
+<text x="461.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">1</text>
+<text x="461.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">2</text>
+<text x="461.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">3</text>
+<text x="461.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">4</text>
+<text x="461.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">5</text>
+<text x="461.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">6</text>
+<text x="461.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">7</text>
+<text x="461.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">8</text>
+<text x="461.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">9</text>
+<text x="461.0" y="128" class="cut" font-size="82" fill="#ffd8c8" stroke="#ff5f2e" stroke-width="1.6" text-anchor="middle" filter="url(#nglow)">4</text>
 <rect x="432.0" y="40" width="58" height="116" rx="26" fill="url(#mesh)"/>
 <rect x="428.0" y="34" width="66" height="128" rx="30" fill="url(#glass)"/>
 <rect x="425.0" y="162" width="72" height="12" rx="2" fill="#1a1612" stroke="#2e2820"/>
 <rect x="459.0" y="174" width="4" height="6" fill="#2e2820"/>
-<rect x="506.0" y="34" width="66" height="128" rx="30" fill="#0f0905" stroke="#3a2a1c" stroke-width="1.5"/>
+<rect x="506.0" y="34" width="66" height="128" rx="30" fill="#120706" stroke="#4a2018" stroke-width="1.5"/>
 <rect x="506.0" y="34" width="66" height="128" rx="30" fill="url(#warm)"/>
-<text x="539.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">0</text>
-<text x="539.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">1</text>
-<text x="539.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">2</text>
-<text x="539.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">3</text>
-<text x="539.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">4</text>
-<text x="539.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">5</text>
-<text x="539.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">6</text>
-<text x="539.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">7</text>
-<text x="539.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">8</text>
-<text x="539.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">9</text>
-<text x="539.0" y="128" class="cut" font-size="82" fill="#ffd9a8" stroke="#ff8a2a" stroke-width="1.6" text-anchor="middle" filter="url(#nglow)">8<animate attributeName="opacity" values="1;.35;1;.9;1" keyTimes="0;.03;.06;.5;1" dur="10.2s" repeatCount="indefinite"/></text>
+<text x="539.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">0</text>
+<text x="539.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">1</text>
+<text x="539.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">2</text>
+<text x="539.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">3</text>
+<text x="539.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">4</text>
+<text x="539.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">5</text>
+<text x="539.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">6</text>
+<text x="539.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">7</text>
+<text x="539.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">8</text>
+<text x="539.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">9</text>
+<text x="539.0" y="128" class="cut" font-size="82" fill="#ffd8c8" stroke="#ff5f2e" stroke-width="1.6" text-anchor="middle" filter="url(#nglow)">8<animate attributeName="opacity" values="1;.35;1;.9;1" keyTimes="0;.03;.06;.5;1" dur="10.2s" repeatCount="indefinite"/></text>
 <rect x="510.0" y="40" width="58" height="116" rx="26" fill="url(#mesh)"/>
 <rect x="506.0" y="34" width="66" height="128" rx="30" fill="url(#glass)"/>
 <rect x="503.0" y="162" width="72" height="12" rx="2" fill="#1a1612" stroke="#2e2820"/>
 <rect x="537.0" y="174" width="4" height="6" fill="#2e2820"/>
-<rect x="584.0" y="34" width="66" height="128" rx="30" fill="#0f0905" stroke="#3a2a1c" stroke-width="1.5"/>
+<rect x="584.0" y="34" width="66" height="128" rx="30" fill="#120706" stroke="#4a2018" stroke-width="1.5"/>
 <rect x="584.0" y="34" width="66" height="128" rx="30" fill="url(#warm)"/>
-<text x="617.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">0</text>
-<text x="617.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">1</text>
-<text x="617.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">2</text>
-<text x="617.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">3</text>
-<text x="617.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">4</text>
-<text x="617.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">5</text>
-<text x="617.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">6</text>
-<text x="617.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">7</text>
-<text x="617.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">8</text>
-<text x="617.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">9</text>
-<text x="617.0" y="128" class="cut" font-size="82" fill="#ffd9a8" stroke="#ff8a2a" stroke-width="1.6" text-anchor="middle" filter="url(#nglow)">5</text>
+<text x="617.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">0</text>
+<text x="617.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">1</text>
+<text x="617.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">2</text>
+<text x="617.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">3</text>
+<text x="617.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">4</text>
+<text x="617.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">5</text>
+<text x="617.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">6</text>
+<text x="617.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">7</text>
+<text x="617.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">8</text>
+<text x="617.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">9</text>
+<text x="617.0" y="128" class="cut" font-size="82" fill="#ffd8c8" stroke="#ff5f2e" stroke-width="1.6" text-anchor="middle" filter="url(#nglow)">5</text>
 <rect x="588.0" y="40" width="58" height="116" rx="26" fill="url(#mesh)"/>
 <rect x="584.0" y="34" width="66" height="128" rx="30" fill="url(#glass)"/>
 <rect x="581.0" y="162" width="72" height="12" rx="2" fill="#1a1612" stroke="#2e2820"/>
 <rect x="615.0" y="174" width="4" height="6" fill="#2e2820"/>
-<rect x="662.0" y="34" width="66" height="128" rx="30" fill="#0f0905" stroke="#3a2a1c" stroke-width="1.5"/>
+<rect x="662.0" y="34" width="66" height="128" rx="30" fill="#120706" stroke="#4a2018" stroke-width="1.5"/>
 <rect x="662.0" y="34" width="66" height="128" rx="30" fill="url(#warm)"/>
-<text x="695.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">0</text>
-<text x="695.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">1</text>
-<text x="695.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">2</text>
-<text x="695.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">3</text>
-<text x="695.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">4</text>
-<text x="695.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">5</text>
-<text x="695.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">6</text>
-<text x="695.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">7</text>
-<text x="695.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">8</text>
-<text x="695.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">9</text>
-<text x="695.0" y="128" class="cut" font-size="82" fill="#ffd9a8" stroke="#ff8a2a" stroke-width="1.6" text-anchor="middle" filter="url(#nglow)">9</text>
+<text x="695.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">0</text>
+<text x="695.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">1</text>
+<text x="695.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">2</text>
+<text x="695.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">3</text>
+<text x="695.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">4</text>
+<text x="695.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">5</text>
+<text x="695.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">6</text>
+<text x="695.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">7</text>
+<text x="695.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">8</text>
+<text x="695.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">9</text>
+<text x="695.0" y="128" class="cut" font-size="82" fill="#ffd8c8" stroke="#ff5f2e" stroke-width="1.6" text-anchor="middle" filter="url(#nglow)">9</text>
 <rect x="666.0" y="40" width="58" height="116" rx="26" fill="url(#mesh)"/>
 <rect x="662.0" y="34" width="66" height="128" rx="30" fill="url(#glass)"/>
 <rect x="659.0" y="162" width="72" height="12" rx="2" fill="#1a1612" stroke="#2e2820"/>
 <rect x="693.0" y="174" width="4" height="6" fill="#2e2820"/>
-<rect x="740.0" y="34" width="66" height="128" rx="30" fill="#0f0905" stroke="#3a2a1c" stroke-width="1.5"/>
+<rect x="740.0" y="34" width="66" height="128" rx="30" fill="#120706" stroke="#4a2018" stroke-width="1.5"/>
 <rect x="740.0" y="34" width="66" height="128" rx="30" fill="url(#warm)"/>
-<text x="773.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">0</text>
-<text x="773.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">1</text>
-<text x="773.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">2</text>
-<text x="773.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">3</text>
-<text x="773.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">4</text>
-<text x="773.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">5</text>
-<text x="773.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">6</text>
-<text x="773.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">7</text>
-<text x="773.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">8</text>
-<text x="773.0" y="128" class="cut" font-size="82" fill="none" stroke="#5a3a1c" stroke-width=".7" text-anchor="middle" opacity=".35">9</text>
-<text x="773.0" y="128" class="cut" font-size="82" fill="#ffd9a8" stroke="#ff8a2a" stroke-width="1.6" text-anchor="middle" filter="url(#nglow)">6<animate attributeName="opacity" values="1;.35;1;.9;1" keyTimes="0;.03;.06;.5;1" dur="14.1s" repeatCount="indefinite"/></text>
+<text x="773.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">0</text>
+<text x="773.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">1</text>
+<text x="773.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">2</text>
+<text x="773.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">3</text>
+<text x="773.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">4</text>
+<text x="773.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">5</text>
+<text x="773.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">6</text>
+<text x="773.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">7</text>
+<text x="773.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">8</text>
+<text x="773.0" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">9</text>
+<text x="773.0" y="128" class="cut" font-size="82" fill="#ffd8c8" stroke="#ff5f2e" stroke-width="1.6" text-anchor="middle" filter="url(#nglow)">6<animate attributeName="opacity" values="1;.35;1;.9;1" keyTimes="0;.03;.06;.5;1" dur="14.1s" repeatCount="indefinite"/></text>
 <rect x="744.0" y="40" width="58" height="116" rx="26" fill="url(#mesh)"/>
 <rect x="740.0" y="34" width="66" height="128" rx="30" fill="url(#glass)"/>
 <rect x="737.0" y="162" width="72" height="12" rx="2" fill="#1a1612" stroke="#2e2820"/>
 <rect x="771.0" y="174" width="4" height="6" fill="#2e2820"/>
-<text x="500.0" y="206" class="plex" font-size="8.5" fill="#7a7670" text-anchor="middle" letter-spacing="3" >WORLD LINE DIVERGENCE  ·  STEINS;GATE  ·  ATTRACTOR FIELD: NONE</text>
-<line x1="36" y1="226" x2="964" y2="226" stroke="#2a2622"/>
-<text x="56.0" y="280" class="bebas" font-size="36" fill="#d9d2c3" text-anchor="start" letter-spacing="1" >20</text>
-<text x="56.0" y="298" class="plex" font-size="7.5" fill="#7a7670" text-anchor="start" letter-spacing="2" >PUBLIC REPOS</text>
-<line x1="221.6" y1="244" x2="221.6" y2="296" stroke="#2a2622"/>
-<text x="241.6" y="280" class="bebas" font-size="36" fill="#d9d2c3" text-anchor="start" letter-spacing="1" >4</text>
-<text x="241.6" y="298" class="plex" font-size="7.5" fill="#7a7670" text-anchor="start" letter-spacing="2" >STARS EARNED</text>
-<line x1="407.2" y1="244" x2="407.2" y2="296" stroke="#2a2622"/>
-<text x="427.2" y="280" class="bebas" font-size="36" fill="#d9d2c3" text-anchor="start" letter-spacing="1" >17</text>
-<text x="427.2" y="298" class="plex" font-size="7.5" fill="#7a7670" text-anchor="start" letter-spacing="2" >FOLLOWERS</text>
-<line x1="592.8" y1="244" x2="592.8" y2="296" stroke="#2a2622"/>
-<text x="612.8" y="280" class="bebas" font-size="36" fill="#d9d2c3" text-anchor="start" letter-spacing="1" >282</text>
-<text x="612.8" y="298" class="plex" font-size="7.5" fill="#7a7670" text-anchor="start" letter-spacing="2" >CONTRIBUTIONS / 12 MO</text>
-<line x1="778.4" y1="244" x2="778.4" y2="296" stroke="#2a2622"/>
-<text x="798.4" y="280" class="bebas" font-size="22" fill="#d9d2c3" text-anchor="start" letter-spacing="1" >2026-11-04</text>
-<text x="798.4" y="298" class="plex" font-size="7.5" fill="#7a7670" text-anchor="start" letter-spacing="2" >LAST SYNC</text>
+<text x="500.0" y="206" class="plex" font-size="8.5" fill="#aaa8a3" text-anchor="middle" letter-spacing="3" >WORLD LINE DIVERGENCE  ·  STEINS;GATE  ·  ATTRACTOR FIELD: NONE</text>
+<line x1="36" y1="226" x2="964" y2="226" stroke="#363636"/>
+<text x="56.0" y="280" class="bebas" font-size="36" fill="#f4f2ed" text-anchor="start" letter-spacing="1" >20</text>
+<text x="56.0" y="298" class="plex" font-size="8.5" fill="#aaa8a3" text-anchor="start" letter-spacing="2" >PUBLIC REPOS</text>
+<line x1="221.6" y1="244" x2="221.6" y2="296" stroke="#363636"/>
+<text x="241.6" y="280" class="bebas" font-size="36" fill="#f4f2ed" text-anchor="start" letter-spacing="1" >4</text>
+<text x="241.6" y="298" class="plex" font-size="8.5" fill="#aaa8a3" text-anchor="start" letter-spacing="2" >STARS EARNED</text>
+<line x1="407.2" y1="244" x2="407.2" y2="296" stroke="#363636"/>
+<text x="427.2" y="280" class="bebas" font-size="36" fill="#f4f2ed" text-anchor="start" letter-spacing="1" >17</text>
+<text x="427.2" y="298" class="plex" font-size="8.5" fill="#aaa8a3" text-anchor="start" letter-spacing="2" >FOLLOWERS</text>
+<line x1="592.8" y1="244" x2="592.8" y2="296" stroke="#363636"/>
+<text x="612.8" y="280" class="bebas" font-size="36" fill="#f4f2ed" text-anchor="start" letter-spacing="1" >282</text>
+<text x="612.8" y="298" class="plex" font-size="8.5" fill="#aaa8a3" text-anchor="start" letter-spacing="2" >CONTRIBUTIONS / 12 MO</text>
+<line x1="778.4" y1="244" x2="778.4" y2="296" stroke="#363636"/>
+<text x="798.4" y="280" class="bebas" font-size="22" fill="#f4f2ed" text-anchor="start" letter-spacing="1" >2026-11-04</text>
+<text x="798.4" y="298" class="plex" font-size="8.5" fill="#aaa8a3" text-anchor="start" letter-spacing="2" >LAST SYNC</text>
 <rect x="1" y="1" width="998" height="318" rx="8" filter="url(#grain)" opacity=".045" pointer-events="none"/>
 </svg>

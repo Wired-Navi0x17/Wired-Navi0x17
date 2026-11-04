@@ -9,25 +9,26 @@
 <defs><filter id="grain" x="0" y="0" width="100%" height="100%">
 <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/>
 <feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .55 0"/></filter></defs>
-<rect x=".5" y=".5" width="999" height="209" rx="8" fill="#0b0a09" stroke="#2a2622"/>
-<text x="36" y="46" class="bebas" font-size="14" fill="#a8996f" text-anchor="start" letter-spacing="4" >PINNED · 03</text>
-<text x="160" y="45" class="plex" font-size="8" fill="#ff8a2a" text-anchor="start" letter-spacing="2" opacity=".85">WORLD LINE 0.472580</text>
-<text x="36" y="90" class="bebas" font-size="42" fill="#d9d2c3" text-anchor="start" letter-spacing="1" >Filevo</text>
-<text x="36" y="118" class="play" font-size="15.5" fill="#b3b3b3" text-anchor="start" letter-spacing="0" >Conversational Document Intelligence &amp; RLCD Generation Engine</text>
-<text x="36" y="144" class="plex" font-size="10" fill="#928d84" text-anchor="start" letter-spacing="0" >Filevo is an interactive, conversational terminal application and document intelligence engine.</text>
-<text x="36" y="160" class="plex" font-size="10" fill="#928d84" text-anchor="start" letter-spacing="0" >It extracts structural, stylistic, and taxonomic patterns from Microsoft Word (.docx) documents</text>
-<text x="36" y="176" class="plex" font-size="10" fill="#928d84" text-anchor="start" letter-spacing="0" >to train a policy via Reinforcement Learning from Calibrated Decisions (RLCD) and synthesizes…</text>
-<line x1="666" y1="30" x2="666" y2="180" stroke="#2a2622"/>
-<text x="690" y="46" class="plex" font-size="8" fill="#7a7670" text-anchor="start" letter-spacing="3" >LAST TRANSMISSION</text>
-<text x="964" y="46" class="plex" font-size="8" fill="#b3b3b3" text-anchor="end" letter-spacing="2" >2026-10-31</text>
-<text x="690" y="80" class="plex" font-size="8" fill="#7a7670" text-anchor="start" letter-spacing="3" >COMPOSITION</text>
-<rect x="690.0" y="88" width="182.0" height="6" fill="#a8996f"/>
-<rect x="872.0" y="88" width="92.0" height="6" fill="#8a7d5d"/>
-<rect x="690" y="107" width="7" height="7" fill="#a8996f"/>
-<text x="703" y="114" class="plex" font-size="9.5" fill="#b3b3b3" text-anchor="start" letter-spacing="0" >Python 66.4%</text>
-<rect x="830" y="107" width="7" height="7" fill="#8a7d5d"/>
-<text x="843" y="114" class="plex" font-size="9.5" fill="#b3b3b3" text-anchor="start" letter-spacing="0" >Rust 33.6%</text>
-<text x="690" y="176" class="plex" font-size="8.5" fill="#b3b3b3" text-anchor="start" letter-spacing="2" >STARS 1  ·  FORKS 0</text>
-<text x="964" y="176" class="plex" font-size="8.5" fill="#a8996f" text-anchor="end" letter-spacing="2" >OPEN →</text>
+<rect x=".5" y=".5" width="999" height="209" rx="8" fill="#0b0b0b" stroke="#363636"/>
+<text x="36" y="46" class="bebas" font-size="14" fill="#f0384b" text-anchor="start" letter-spacing="4" >PINNED · 03</text>
+<text x="160" y="45" class="plex" font-size="9" fill="#ff5f2e" text-anchor="start" letter-spacing="2" >WORLD LINE 0.472580</text>
+<text x="380" y="45" class="plex" font-size="9" fill="#aaa8a3" text-anchor="start" letter-spacing="2" >RELIC  3RD GRADE</text>
+<text x="36" y="90" class="bebas" font-size="42" fill="#f4f2ed" text-anchor="start" letter-spacing="1" >Filevo</text>
+<text x="36" y="118" class="play" font-size="15.5" fill="#dcdad5" text-anchor="start" letter-spacing="0" >Conversational Document Intelligence &amp; RLCD Generation Engine</text>
+<text x="36" y="144" class="plex" font-size="10.5" fill="#aaa8a3" text-anchor="start" letter-spacing="0" >Filevo is an interactive, conversational terminal application and document intelligence engine.</text>
+<text x="36" y="160" class="plex" font-size="10.5" fill="#aaa8a3" text-anchor="start" letter-spacing="0" >It extracts structural, stylistic, and taxonomic patterns from Microsoft Word (.docx) documents</text>
+<text x="36" y="176" class="plex" font-size="10.5" fill="#aaa8a3" text-anchor="start" letter-spacing="0" >to train a policy via Reinforcement Learning from Calibrated Decisions (RLCD) and synthesizes…</text>
+<line x1="666" y1="30" x2="666" y2="180" stroke="#363636"/>
+<text x="690" y="46" class="plex" font-size="8.5" fill="#aaa8a3" text-anchor="start" letter-spacing="3" >LAST TRANSMISSION</text>
+<text x="964" y="46" class="plex" font-size="8.5" fill="#dcdad5" text-anchor="end" letter-spacing="2" >2026-10-31</text>
+<text x="690" y="80" class="plex" font-size="8.5" fill="#aaa8a3" text-anchor="start" letter-spacing="3" >COMPOSITION</text>
+<rect x="690.0" y="88" width="182.0" height="6" fill="#c8102e"/>
+<rect x="872.0" y="88" width="92.0" height="6" fill="#f4f2ed"/>
+<rect x="690" y="107" width="7" height="7" fill="#c8102e"/>
+<text x="703" y="114" class="plex" font-size="9.5" fill="#dcdad5" text-anchor="start" letter-spacing="0" >Python 66.4%</text>
+<rect x="830" y="107" width="7" height="7" fill="#f4f2ed"/>
+<text x="843" y="114" class="plex" font-size="9.5" fill="#dcdad5" text-anchor="start" letter-spacing="0" >Rust 33.6%</text>
+<text x="690" y="176" class="plex" font-size="8.5" fill="#dcdad5" text-anchor="start" letter-spacing="2" >STARS 1  ·  FORKS 0</text>
+<text x="964" y="176" class="plex" font-size="8.5" fill="#f0384b" text-anchor="end" letter-spacing="2" >OPEN →</text>
 <rect x="1" y="1" width="998" height="208" rx="8" filter="url(#grain)" opacity=".045" pointer-events="none"/>
 </svg>

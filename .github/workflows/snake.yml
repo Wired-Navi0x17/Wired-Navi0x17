@@ -22,13 +22,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Colours follow the profile palette: bronze snake, bronze-ramp cells.
+      # Colours follow the profile palette: paper-white snake, blood-red cells.
       - uses: Platane/snk/svg-only@v3
         with:
           github_user_name: ${{ github.repository_owner }}
           outputs: |
-            assets/snake-dark.svg?palette=github-dark&color_snake=#a8996f&color_dots=#161b22,#3b352c,#544c3d,#6f6550,#a8996f
-            assets/snake-light.svg?color_snake=#544c3d&color_dots=#ebedf0,#ddd5c4,#b8ab8a,#8a7d5d,#544c3d
+            assets/snake-dark.svg?palette=github-dark&color_snake=#f4f2ed&color_dots=#161b22,#3a0a12,#7d0e1b,#c8102e,#f0384b
+            assets/snake-light.svg?color_snake=#0b0b0b&color_dots=#ebedf0,#f3c4ca,#e0788a,#c8102e,#5c0a14
 
       - name: Commit if anything changed
         run: |
