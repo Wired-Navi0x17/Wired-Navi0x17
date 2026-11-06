@@ -20,14 +20,17 @@
 <text x="36" y="176" class="plex" font-size="10.5" fill="#aaa8a3" text-anchor="start" letter-spacing="0" >to train a policy via Reinforcement Learning from Calibrated Decisions (RLCD) and synthesizes…</text>
 <line x1="666" y1="30" x2="666" y2="180" stroke="#363636"/>
 <text x="690" y="46" class="plex" font-size="8.5" fill="#aaa8a3" text-anchor="start" letter-spacing="3" >LAST TRANSMISSION</text>
-<text x="964" y="46" class="plex" font-size="8.5" fill="#dcdad5" text-anchor="end" letter-spacing="2" >2026-10-31</text>
+<text x="964" y="46" class="plex" font-size="8.5" fill="#dcdad5" text-anchor="end" letter-spacing="2" >2026-11-06</text>
 <text x="690" y="80" class="plex" font-size="8.5" fill="#aaa8a3" text-anchor="start" letter-spacing="3" >COMPOSITION</text>
-<rect x="690.0" y="88" width="182.0" height="6" fill="#c8102e"/>
-<rect x="872.0" y="88" width="92.0" height="6" fill="#f4f2ed"/>
+<rect x="690.0" y="88" width="165.4" height="6" fill="#c8102e"/>
+<rect x="855.4" y="88" width="101.7" height="6" fill="#f4f2ed"/>
+<rect x="957.1" y="88" width="6.9" height="6" fill="#9e9c97"/>
 <rect x="690" y="107" width="7" height="7" fill="#c8102e"/>
-<text x="703" y="114" class="plex" font-size="9.5" fill="#dcdad5" text-anchor="start" letter-spacing="0" >Python 66.4%</text>
+<text x="703" y="114" class="plex" font-size="9.5" fill="#dcdad5" text-anchor="start" letter-spacing="0" >Python 60.4%</text>
 <rect x="830" y="107" width="7" height="7" fill="#f4f2ed"/>
-<text x="843" y="114" class="plex" font-size="9.5" fill="#dcdad5" text-anchor="start" letter-spacing="0" >Rust 33.6%</text>
+<text x="843" y="114" class="plex" font-size="9.5" fill="#dcdad5" text-anchor="start" letter-spacing="0" >Rust 37.1%</text>
+<rect x="690" y="125" width="7" height="7" fill="#9e9c97"/>
+<text x="703" y="132" class="plex" font-size="9.5" fill="#dcdad5" text-anchor="start" letter-spacing="0" >HTML 2.5%</text>
 <text x="690" y="176" class="plex" font-size="8.5" fill="#dcdad5" text-anchor="start" letter-spacing="2" >STARS 1  ·  FORKS 0</text>
 <text x="964" y="176" class="plex" font-size="8.5" fill="#f0384b" text-anchor="end" letter-spacing="2" >OPEN →</text>
 <rect x="1" y="1" width="998" height="208" rx="8" filter="url(#grain)" opacity=".045" pointer-events="none"/>
