@@ -1176,90 +1176,198 @@ def signal_card(st, stats, today, mobile=False):
     return svg_doc(W, H, "\n".join(body), ("Bebas", "Plex", "Cutive"), NIXIE_DEFS, title)
 
 
+def _vein_tree(rng, x, y, ang, length, width, depth, out, max_depth=3):
+    """Branching, wandering vein. Appends (path, width, depth)."""
+    pts, a = [(x, y)], ang
+    for _ in range(4):
+        a += rng.uniform(-.4, .4)
+        x += math.cos(a) * length / 4
+        y += math.sin(a) * length / 4
+        pts.append((x, y))
+    d = f"M{pts[0][0]:.1f} {pts[0][1]:.1f} " + " ".join(
+        f"Q{pts[k][0]:.1f} {pts[k][1]:.1f} {(pts[k][0]+pts[k+1][0])/2:.1f} {(pts[k][1]+pts[k+1][1])/2:.1f}"
+        for k in range(1, len(pts) - 1)) + f" L{pts[-1][0]:.1f} {pts[-1][1]:.1f}"
+    out.append((d, width, depth))
+    if depth < max_depth:
+        for k in range(1, len(pts)):
+            if rng.random() < .55:
+                _vein_tree(rng, pts[k][0], pts[k][1], a + rng.choice((-1, 1)) * rng.uniform(.45, 1.0),
+                           length * .55, width * .6, depth + 1, out, max_depth)
+
+
+def _qpt(p0, p1, p2, t):
+    return ((1-t)**2*p0[0] + 2*(1-t)*t*p1[0] + t*t*p2[0], (1-t)**2*p0[1] + 2*(1-t)*t*p1[1] + t*t*p2[1])
+
+
 def kakugan(ex, ey, s=1.0, uid="k"):
-    """A living kakugan: black sclera, fibred red iris, darting gaze, blinking lids.
-    GitHub serves SVG as an image with no scripts, so it can't follow the cursor;
-    it watches the page on its own instead. At frame 0 the eye is open and centred."""
+    """A living kakugan: black sclera webbed with capillaries, a fibred red iris whose pupil
+    sometimes pinches to a slit, lashes, creased lids, raised veins crawling over the skin
+    and a slow tear of blood. GitHub serves SVG as an image with no scripts, so it can't
+    follow the cursor; it watches the page on its own. At frame 0 the eye is open."""
+    import random
+    rng = random.Random(7)
     hw, hh = 62 * s, 40 * s
-    eye = f"M{ex-hw} {ey} Q{ex} {ey-hh} {ex+hw} {ey} Q{ex} {ey+hh} {ex-hw} {ey}Z"
-    defs = (f'<radialGradient id="{uid}iris" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ff7a6a"/>'
-            f'<stop offset=".35" stop-color="{C["red_hi"]}"/><stop offset=".8" stop-color="{C["red"]}"/>'
-            f'<stop offset="1" stop-color="{C["red_dk"]}"/></radialGradient>'
-            f'<radialGradient id="{uid}scl" cx=".5" cy=".5" r=".6"><stop offset="0" stop-color="#140406"/>'
-            f'<stop offset="1" stop-color="#030303"/></radialGradient>'
+    L, R, T, B = (ex - hw, ey), (ex + hw, ey), (ex, ey - hh), (ex, ey + hh)
+    eye = f"M{L[0]} {ey} Q{ex} {ey-hh} {R[0]} {ey} Q{ex} {ey+hh} {L[0]} {ey}Z"
+    ir = 22 * s
+    defs = (f'<radialGradient id="{uid}iris" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffd0b0"/>'
+            f'<stop offset=".22" stop-color="#ff6a4a"/><stop offset=".55" stop-color="{C["red_hi"]}"/>'
+            f'<stop offset=".85" stop-color="{C["red"]}"/><stop offset="1" stop-color="#3a0008"/></radialGradient>'
+            f'<radialGradient id="{uid}scl" cx=".5" cy=".5" r=".65"><stop offset="0" stop-color="#2a0509"/>'
+            f'<stop offset=".6" stop-color="#0a0102"/><stop offset="1" stop-color="#000"/></radialGradient>'
+            f'<radialGradient id="{uid}sock" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#3a0610" stop-opacity=".75"/>'
+            f'<stop offset=".55" stop-color="#1a0306" stop-opacity=".5"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>'
+            f'<radialGradient id="{uid}shade" cx=".5" cy=".15" r=".8"><stop offset="0" stop-color="#000" stop-opacity=".75"/>'
+            f'<stop offset=".5" stop-color="#000" stop-opacity="0"/></radialGradient>'
+            f'<filter id="{uid}glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="{5*s:.1f}"/></filter>'
+            f'<filter id="{uid}soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="{.5*s:.2f}"/></filter>'
             f'<clipPath id="{uid}clip"><path d="{eye}"/></clipPath>')
     out = []
-    # veins spreading from the corners, pulsing
-    for side in (-1, 1):
-        x0 = ex + side * hw
-        for j, (dy, ln, bend) in enumerate([(-14, 46, -10), (-4, 62, 6), (8, 50, 12), (18, 34, -6), (-24, 28, 4)]):
-            dy, ln, bend = dy * s, ln * s, bend * s
-            out.append(f'<path d="M{x0} {ey} q{side*ln*.5} {dy+bend} {side*ln} {dy}" fill="none" stroke="{C["red"]}" '
-                       f'stroke-width="{(1.4 if abs(dy) < 10*s else .9)*s:.2f}" stroke-linecap="round">'
-                       f'<animate attributeName="stroke-opacity" values="1;.55;1" dur="{2.6+j*.3:.1f}s" repeatCount="indefinite"/></path>')
-    out.append(f'<path d="{eye}" fill="url(#{uid}scl)"/>')
-    # gaze: hold, dart, hold. Quick moves between long holds read as saccades.
-    pts = [(0, 0), (-14, -3), (-14, -3), (10, 2), (10, 2), (3, -6), (3, -6), (-7, 5), (-7, 5), (0, 0), (0, 0), (16, -1), (16, -1), (0, 0)]
-    kts = [0, .10, .22, .25, .38, .40, .52, .54, .64, .66, .76, .78, .92, .94]
+    # bruised socket and lid creases
+    out.append(f'<ellipse cx="{ex}" cy="{ey+4*s}" rx="{hw*1.7:.1f}" ry="{hh*1.9:.1f}" fill="url(#{uid}sock)"/>')
+    for k, (lift, op) in enumerate([(24, .9), (34, .45)]):
+        out.append(f'<path d="M{L[0]+12*s:.1f} {ey-6*s:.1f} Q{ex} {ey-hh-lift*s:.1f} {R[0]-4*s:.1f} {ey-10*s:.1f}" fill="none" '
+                   f'stroke="{C["muted"] if k == 0 else C["dim"]}" stroke-width="{(1.1-k*.4)*s:.2f}" opacity="{op}" stroke-linecap="round"/>')
+    for k, drop in enumerate((14, 24)):
+        out.append(f'<path d="M{L[0]+18*s:.1f} {ey+10*s:.1f} Q{ex} {ey+hh+drop*s:.1f} {R[0]-16*s:.1f} {ey+10*s:.1f}" fill="none" '
+                   f'stroke="{C["dim"]}" stroke-width="{.8*s:.2f}" opacity="{.6-k*.25}" stroke-dasharray="{"" if k == 0 else f"{3*s:.0f} {2*s:.0f}"}"/>')
+
+    # raised veins crawling out over the skin, mostly from the outer corners and under the eye
+    veins = []
+    for i in range(4):
+        _vein_tree(rng, R[0] - 2 * s, ey + rng.uniform(-5, 5) * s, rng.uniform(-.55, .55), rng.uniform(38, 58) * s, 1.8 * s, 0, veins, 2)
+        _vein_tree(rng, L[0] + 2 * s, ey + rng.uniform(-5, 5) * s, math.pi + rng.uniform(-.55, .55), rng.uniform(38, 58) * s, 1.8 * s, 0, veins, 2)
+    for t in (.32, .62):
+        px, py = _qpt((R[0], ey), (ex, ey + hh), (L[0], ey), t)
+        _vein_tree(rng, px, py + 3 * s, math.pi / 2 + rng.uniform(-.4, .4), rng.uniform(20, 30) * s, 1.1 * s, 1, veins, 2)
+    under = "".join(f'<path d="{d}" stroke="#000" stroke-width="{w+1.4*s:.2f}" opacity=".8"/>' for d, w, _ in veins)
+    over = "".join(f'<path d="{d}" stroke="{("#a00c26", "#7d0e1b", "#4a0712")[dep]}" stroke-width="{w:.2f}" '
+                   f'opacity="{(.95, .75, .55)[dep]}"/>' for d, w, dep in veins)
+    hi = "".join(f'<path d="{d}" stroke="#ff8a8a" stroke-width="{w*.28:.2f}" opacity=".45"/>' for d, w, dep in veins if dep == 0)
+    out.append(f'<g fill="none" stroke-linecap="round" stroke-linejoin="round">{under}{over}{hi}'
+               f'<animate attributeName="opacity" values="1;.62;1;.85;1" keyTimes="0;.18;.36;.5;1" dur="2.4s" repeatCount="indefinite"/></g>')
+
+    # the eyeball
+    caps = []
+    for i in range(7):
+        side = -1 if i % 2 else 1
+        _vein_tree(rng, ex + side * (hw - 4 * s), ey + rng.uniform(-10, 10) * s, (math.pi if side > 0 else 0) + rng.uniform(-.5, .5),
+                   rng.uniform(26, 44) * s, .9 * s, 1, caps, 3)
+    caps_svg = "".join(f'<path d="{d}" stroke="{C["red"] if dep < 2 else C["red_dk"]}" stroke-width="{w:.2f}" opacity=".85"/>'
+                       for d, w, dep in caps)
+    pts = [(0, 0), (-16, -3), (-16, -3), (12, 2), (12, 2), (3, -7), (3, -7), (-8, 6), (-8, 6), (0, 0), (0, 0), (19, -1), (19, -1), (0, 0)]
+    kts = [0, .10, .22, .23, .38, .39, .52, .53, .64, .65, .76, .77, .92, .93]
     vals = ";".join(f"{x*s:.1f} {y*s:.1f}" for x, y in pts) + ";0 0"
     kt = ";".join(f"{k:.2f}" for k in kts) + ";1"
     fib = []
-    for a in range(0, 360, 12):
-        c, sn = math.cos(math.radians(a)), math.sin(math.radians(a))
-        r0, r1 = 7.5 * s, (17 if a % 24 else 15) * s
-        fib.append(f'<path d="M{ex+c*r0:.1f} {ey+sn*r0:.1f} L{ex+c*r1:.1f} {ey+sn*r1:.1f}" stroke="{"#ffb0a0" if a % 36 == 0 else C["red_dk"]}" '
-                   f'stroke-width="{.7*s:.2f}" opacity=".55"/>')
+    for k in range(96):
+        a = k * 2 * math.pi / 96 + rng.uniform(-.02, .02)
+        r0, r1 = 8 * s + rng.uniform(0, 2) * s, ir * rng.uniform(.72, .98)
+        col = rng.choice(("#ffb0a0", "#ff7060", C["red_dk"], "#7a0010", "#ffd8c8"))
+        fib.append(f'<path d="M{ex+math.cos(a)*r0:.1f} {ey+math.sin(a)*r0:.1f} L{ex+math.cos(a)*r1:.1f} {ey+math.sin(a)*r1:.1f}" '
+                   f'stroke="{col}" stroke-width="{rng.uniform(.35, .8)*s:.2f}" opacity="{rng.uniform(.35, .8):.2f}"/>')
+    collar = " ".join(f"{ex+math.cos(k*math.pi/14)*(10.5+(1.8 if k % 2 else -.6))*s:.1f},{ey+math.sin(k*math.pi/14)*(10.5+(1.8 if k % 2 else -.6))*s:.1f}"
+                      for k in range(28))
+    crypts = "".join(f'<ellipse cx="{ex+math.cos(a)*r:.1f}" cy="{ey+math.sin(a)*r:.1f}" rx="{1.4*s:.1f}" ry="{.7*s:.1f}" '
+                     f'transform="rotate({math.degrees(a):.0f} {ex+math.cos(a)*r:.1f} {ey+math.sin(a)*r:.1f})" fill="#2a0006" opacity=".7"/>'
+                     for a, r in [(rng.uniform(0, 6.28), rng.uniform(12, 18) * s) for _ in range(14)])
+    blink_k = "0;.30;.312;.326;.80;.812;.826;.838;.85;1"
     out.append(
         f'<g clip-path="url(#{uid}clip)">'
-        # faint capillaries in the black sclera
-        f'<path d="M{ex-hw+8*s} {ey-4*s} q{14*s} {-6*s} {26*s} {-2*s} M{ex+hw-8*s} {ey+5*s} q{-15*s} {5*s} {-28*s} {1*s}" '
-        f'stroke="{C["red_dk"]}" stroke-width="{.8*s:.2f}" fill="none"/>'
+        f'<path d="{eye}" fill="url(#{uid}scl)"/>'
+        f'<g fill="none" stroke-linecap="round">{caps_svg}</g>'
         f'<g><animateTransform attributeName="transform" type="translate" values="{vals}" keyTimes="{kt}" dur="11s" repeatCount="indefinite"/>'
-        f'<circle cx="{ex}" cy="{ey}" r="{19*s}" fill="url(#{uid}iris)"/>' + "".join(fib) +
-        f'<circle cx="{ex}" cy="{ey}" r="{19*s}" fill="none" stroke="#2a0006" stroke-width="{2.2*s:.1f}"/>'
-        f'<circle cx="{ex}" cy="{ey}" r="{6*s}" fill="#050505"><animate attributeName="r" '
-        f'values="{6*s};{4.4*s};{4.4*s};{7.6*s};{6*s}" keyTimes="0;.2;.45;.7;1" dur="7s" repeatCount="indefinite"/></circle>'
-        f'<circle cx="{ex+6*s}" cy="{ey-6*s}" r="{2.6*s}" fill="{C["paper"]}"/>'
-        f'<circle cx="{ex-5*s}" cy="{ey+6*s}" r="{1.1*s}" fill="{C["paper"]}" opacity=".7"/></g>'
-        # eyelids: parked outside the eye, they close in ~0.1 s; a double blink near the end
+        f'<circle cx="{ex}" cy="{ey}" r="{ir*1.25:.1f}" fill="{C["red"]}" opacity=".55" filter="url(#{uid}glow)"/>'
+        f'<circle cx="{ex}" cy="{ey}" r="{ir:.1f}" fill="url(#{uid}iris)"/>' + "".join(fib) + crypts +
+        f'<polygon points="{collar}" fill="none" stroke="#ffb090" stroke-width="{.7*s:.2f}" opacity=".55"/>'
+        f'<circle cx="{ex}" cy="{ey}" r="{ir:.1f}" fill="none" stroke="#1a0004" stroke-width="{3*s:.1f}"/>'
+        f'<circle cx="{ex}" cy="{ey}" r="{ir-2.2*s:.1f}" fill="none" stroke="#000" stroke-width="{1*s:.1f}" opacity=".5"/>'
+        # pupil: dilates, contracts, and every so often pinches into a slit
+        f'<ellipse cx="{ex}" cy="{ey}" rx="{7*s:.1f}" ry="{7*s:.1f}" fill="#000">'
+        f'<animate attributeName="rx" values="{7*s:.1f};{5*s:.1f};{5*s:.1f};{1.8*s:.1f};{1.8*s:.1f};{9.5*s:.1f};{7*s:.1f}" '
+        f'keyTimes="0;.15;.4;.45;.62;.72;1" dur="13s" repeatCount="indefinite"/>'
+        f'<animate attributeName="ry" values="{7*s:.1f};{5*s:.1f};{5*s:.1f};{9*s:.1f};{9*s:.1f};{9.5*s:.1f};{7*s:.1f}" '
+        f'keyTimes="0;.15;.4;.45;.62;.72;1" dur="13s" repeatCount="indefinite"/></ellipse>'
+        f'<ellipse cx="{ex+7*s:.1f}" cy="{ey-8*s:.1f}" rx="{3.4*s:.1f}" ry="{2.4*s:.1f}" fill="#fff" opacity=".92"/>'
+        f'<circle cx="{ex-6*s:.1f}" cy="{ey+7*s:.1f}" r="{1.2*s:.1f}" fill="#fff" opacity=".55"/></g>'
+        # wet line along the lower lid and shadow from the upper lid
+        f'<path d="{eye}" fill="url(#{uid}shade)"/>'
+        f'<path d="M{L[0]+8*s:.1f} {ey+3*s:.1f} Q{ex} {ey+hh-5*s:.1f} {R[0]-8*s:.1f} {ey+3*s:.1f}" fill="none" stroke="#fff" '
+        f'stroke-width="{.8*s:.2f}" opacity=".18"/>'
+        # eyelids: parked outside the eye, they snap shut for ~0.1 s; a double blink near the end
         f'<g><animateTransform attributeName="transform" type="translate" '
         f'values="0 {-hh};0 {-hh};0 0;0 {-hh};0 {-hh};0 0;0 {-hh};0 0;0 {-hh};0 {-hh}" '
-        f'keyTimes="0;.30;.315;.33;.80;.815;.83;.845;.86;1" dur="9s" repeatCount="indefinite"/>'
-        f'<rect x="{ex-hw}" y="{ey-hh}" width="{2*hw}" height="{hh}" fill="{C["ink"]}"/>'
-        f'<path d="M{ex-hw} {ey} Q{ex} {ey+6*s} {ex+hw} {ey}" fill="none" stroke="{C["paper"]}" stroke-width="{1.4*s:.1f}"/></g>'
+        f'keyTimes="{blink_k}" dur="9s" repeatCount="indefinite"/>'
+        f'<rect x="{L[0]}" y="{ey-hh}" width="{2*hw}" height="{hh}" fill="#120a0a"/>'
+        f'<path d="M{L[0]} {ey} Q{ex} {ey+7*s:.1f} {R[0]} {ey}" fill="none" stroke="{C["paper"]}" stroke-width="{1.5*s:.1f}"/></g>'
         f'<g><animateTransform attributeName="transform" type="translate" '
         f'values="0 {hh};0 {hh};0 0;0 {hh};0 {hh};0 0;0 {hh};0 0;0 {hh};0 {hh}" '
-        f'keyTimes="0;.30;.315;.33;.80;.815;.83;.845;.86;1" dur="9s" repeatCount="indefinite"/>'
-        f'<rect x="{ex-hw}" y="{ey}" width="{2*hw}" height="{hh}" fill="{C["ink"]}"/></g>'
+        f'keyTimes="{blink_k}" dur="9s" repeatCount="indefinite"/>'
+        f'<rect x="{L[0]}" y="{ey}" width="{2*hw}" height="{hh}" fill="#120a0a"/></g>'
         f'</g>')
-    out.append(f'<path d="{eye}" fill="none" stroke="{C["paper"]}" stroke-width="{1.6*s:.1f}"/>')
-    return defs, "".join(out)
+    # lid rims and lashes
+    out.append(f'<path d="M{L[0]} {ey} Q{ex} {ey-hh} {R[0]} {ey}" fill="none" stroke="{C["paper"]}" stroke-width="{2.2*s:.1f}" stroke-linecap="round"/>')
+    out.append(f'<path d="M{L[0]} {ey} Q{ex} {ey+hh} {R[0]} {ey}" fill="none" stroke="{C["text"]}" stroke-width="{1.1*s:.1f}" opacity=".8"/>')
+    lashes = []
+    for k in range(26):
+        t = .06 + k * .88 / 25
+        px, py = _qpt(L, T, R, t)
+        tx, ty = 2 * ((1 - t) * (T[0] - L[0]) + t * (R[0] - T[0])), 2 * ((1 - t) * (T[1] - L[1]) + t * (R[1] - T[1]))
+        n = math.hypot(tx, ty)
+        nx, ny = ty / n, -tx / n
+        lean = (t - .5) * 1.6
+        ln = (3 + 9 * t * t + rng.uniform(-1, 2)) * s
+        bend = rng.uniform(.6, 1.2)
+        lashes.append(f'M{px:.1f} {py:.1f} q{(nx*.6)*ln:.1f} {ny*ln*.7:.1f} {(nx+lean*bend)*ln:.1f} {ny*ln*.55:.1f}')
+    low = []
+    for k in range(7):
+        t = .55 + k * .35 / 6
+        px, py = _qpt(L, B, R, t)
+        ln = (2 + rng.uniform(0, 2.5)) * s
+        low.append(f'M{px:.1f} {py:.1f} l{(t-.5)*ln*1.5:.1f} {ln:.1f}')
+    out.append(f'<path d="{" ".join(lashes)}" fill="none" stroke="#1a1414" stroke-width="{1.5*s:.2f}" stroke-linecap="round"/>')
+    out.append(f'<path d="{" ".join(lashes)}" fill="none" stroke="{C["muted"]}" stroke-width="{.75*s:.2f}" stroke-linecap="round"/>')
+    out.append(f'<path d="{" ".join(low)}" fill="none" stroke="{C["dim"]}" stroke-width="{.6*s:.2f}" stroke-linecap="round"/>')
+    # a tear of blood from the lower lid, slowly running down the cheek
+    tx0, ty0 = _qpt(L, B, R, .3)
+    trail = f"M{tx0:.1f} {ty0:.1f} q{-2*s:.1f} {18*s:.1f} {1*s:.1f} {34*s:.1f} t{-1*s:.1f} {30*s:.1f}"
+    ln = 70 * s
+    out.append(f'<path d="{trail}" fill="none" stroke="{C["red"]}" stroke-width="{2.4*s:.1f}" stroke-linecap="round" '
+               f'stroke-dasharray="{ln:.0f} {ln:.0f}" stroke-dashoffset="{ln*.55:.0f}">'
+               f'<animate attributeName="stroke-dashoffset" values="{ln*.55:.0f};0;0;{ln*.55:.0f}" keyTimes="0;.6;.9;1" dur="16s" repeatCount="indefinite"/>'
+               f'<animate attributeName="opacity" values="1;1;0;1" keyTimes="0;.85;.99;1" dur="16s" repeatCount="indefinite"/></path>')
+    eye_svg = "".join(out)
+    # an occasional twitch of the whole eye
+    eye_svg = (f'<g>{eye_svg}<animateTransform attributeName="transform" type="translate" '
+               f'values="0 0;0 0;{1.5*s:.1f} {-1*s:.1f};{-1.2*s:.1f} {1*s:.1f};{.8*s:.1f} 0;0 0;0 0" '
+               f'keyTimes="0;.61;.615;.62;.625;.63;1" dur="13s" repeatCount="indefinite"/></g>')
+    return defs, eye_svg
 
 
 def footer_card(mobile=False):
     depth, layer = LAYERS[6]
     if mobile:
-        W, H = 480, 330
-        defs, eye = kakugan(240, 84, 1.25)
+        W, H = 480, 420
+        defs, eye = kakugan(240, 130, 1.35)
         body = [
             wires(W, 10, ".4"), eye,
-            text(W / 2, 192, "El Psy Kongroo.", "play", 32, C["paper"], "middle"),
-            f'<g transform="rotate(180 240 226)">' + text(240, 231, "CLOSE THE WORLD, OPEN THE NEXT", "bebas", 18, C["muted"], "middle", ls=3) + "</g>",
-            text(W / 2, 270, f"LAYER:07  ·  {layer}", "plex", 11.5, C["dim"], "middle", ls=2),
-            text(W / 2, 288, f"DEPTH {depth}  ·  NO ASCENT WITHOUT A PRICE", "plex", 11, C["dim"], "middle", ls=1),
-            f'<line x1="90" y1="306" x2="390" y2="306" stroke="{C["line"]}"/>',
-            f'<rect x="236" y="303" width="8" height="6" fill="{C["red"]}"/>',
+            text(W / 2, 282, "El Psy Kongroo.", "play", 32, C["paper"], "middle"),
+            f'<g transform="rotate(180 240 316)">' + text(240, 321, "CLOSE THE WORLD, OPEN THE NEXT", "bebas", 18, C["muted"], "middle", ls=3) + "</g>",
+            text(W / 2, 360, f"LAYER:07  ·  {layer}", "plex", 11.5, C["dim"], "middle", ls=2),
+            text(W / 2, 378, f"DEPTH {depth}  ·  NO ASCENT WITHOUT A PRICE", "plex", 11, C["dim"], "middle", ls=1),
+            f'<line x1="90" y1="398" x2="390" y2="398" stroke="{C["line"]}"/>',
+            f'<rect x="236" y="395" width="8" height="6" fill="{C["red"]}"/>',
         ]
         return svg_doc(W, H, "\n".join(body), ("Bebas", "Plex", "Playfair"), defs, title="El Psy Kongroo. Close the world, open the next.")
-    W, H = 1000, 260
-    defs, eye = kakugan(500, 72, 1.15)
+    W, H = 1000, 370
+    defs, eye = kakugan(500, 132, 1.6)
     body = [
         wires(W, 10, ".4"), eye,
-        text(W / 2, 158, "El Psy Kongroo.", "play", 26, C["paper"], "middle"),
-        f'<g transform="rotate(180 500 186)">' + text(500, 191, "CLOSE THE WORLD, OPEN THE NEXT", "bebas", 15, C["muted"], "middle", ls=4) + "</g>",
-        text(W / 2, 222, f"LAYER:07  ·  {layer}  ·  DEPTH {depth}  ·  NO ASCENT WITHOUT A PRICE", "plex", 9, C["dim"], "middle", ls=2),
-        f'<line x1="300" y1="238" x2="700" y2="238" stroke="{C["line"]}"/>',
-        f'<rect x="496" y="235" width="8" height="6" fill="{C["red"]}"/>',
+        text(W / 2, 270, "El Psy Kongroo.", "play", 28, C["paper"], "middle"),
+        f'<g transform="rotate(180 500 298)">' + text(500, 303, "CLOSE THE WORLD, OPEN THE NEXT", "bebas", 15, C["muted"], "middle", ls=4) + "</g>",
+        text(W / 2, 334, f"LAYER:07  ·  {layer}  ·  DEPTH {depth}  ·  NO ASCENT WITHOUT A PRICE", "plex", 9, C["dim"], "middle", ls=2),
+        f'<line x1="300" y1="350" x2="700" y2="350" stroke="{C["line"]}"/>',
+        f'<rect x="496" y="347" width="8" height="6" fill="{C["red"]}"/>',
     ]
     return svg_doc(W, H, "\n".join(body), ("Bebas", "Plex", "Playfair"), defs, title="El Psy Kongroo. Close the world, open the next.")
 
@@ -1322,7 +1430,7 @@ def hero_m(st, stats):
 <pattern id="scan" width="4" height="4" patternUnits="userSpaceOnUse"><rect width="4" height="1" fill="#000" opacity=".55"/></pattern>
 <filter id="pulse" x="-10%" y="-50%" width="120%" height="200%"><feGaussianBlur stdDeviation="0">
 <animate attributeName="stdDeviation" values="0;1.3;0" dur="3s" repeatCount="indefinite"/></feGaussianBlur></filter>"""
-    b = [f'<g clip-path="url(#pclip)"><image x="20" y="-40" width="440" height="782" preserveAspectRatio="xMidYMin slice" '
+    b = [f'<g clip-path="url(#pclip)"><image x="20" y="-170" width="440" height="782" preserveAspectRatio="xMidYMin slice" '
          f'xlink:href="{b64(img / "portrait.jpg", "image/jpeg")}" filter="url(#duo)"/>'
          f'<rect x="20" y="20" width="440" height="310" fill="url(#scan)" opacity=".35"/>'
          f'<rect x="20" y="20" width="440" height="310" fill="url(#fadeB)"/></g>',
@@ -1575,9 +1683,10 @@ def abyss_mobile(rows, here, defs, mapb, tops, rank, cleared, cur, contrib, titl
 # README pinned block
 # --------------------------------------------------------------------------- #
 def picture(path, alt):
-    """Desktop card, with the phone version swapped in on narrow screens."""
-    return (f'<picture><source media="(max-width: 700px)" srcset="assets/m/{path}">'
-            f'<img src="assets/{path}" width="100%" alt="{alt}"></picture>')
+    """Phone card by default; wide screens opt into the desktop card. Viewers that ignore
+    <source> (the GitHub app) then get the readable phone card, not a shrunken desktop one."""
+    return (f'<picture><source media="(min-width: 701px)" srcset="assets/{path}">'
+            f'<img src="assets/m/{path}" width="100%" alt="{alt}"></picture>')
 
 
 def update_readme_pinned(pinned):

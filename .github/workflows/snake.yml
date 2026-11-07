@@ -22,12 +22,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Colours follow the profile palette: paper-white snake, blood-red cells.
+      # Colours follow the profile palette: paper-white snake, blood-red cells on ink.
+      # The README always shows the dark one; the light file is kept for reuse.
       - uses: Platane/snk/svg-only@v3
         with:
           github_user_name: ${{ github.repository_owner }}
           outputs: |
-            assets/snake-dark.svg?palette=github-dark&color_snake=#f4f2ed&color_dots=#161b22,#3a0a12,#7d0e1b,#c8102e,#f0384b
+            assets/snake-dark.svg?palette=github-dark&color_snake=#f4f2ed&color_dots=#1c1c1c,#3a0a12,#7d0e1b,#c8102e,#f0384b
             assets/snake-light.svg?color_snake=#0b0b0b&color_dots=#ebedf0,#f3c4ca,#e0788a,#c8102e,#5c0a14
 
       - name: Commit if anything changed
