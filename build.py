@@ -18,6 +18,7 @@ import datetime as dt
 import hashlib
 import html
 import json
+import math
 import os
 import re
 import shutil
@@ -470,9 +471,22 @@ def relic_grade(stars, forks):
     return "4th Grade"
 
 
-def abyss_card(stats):
-    """An original cross-section of the Abyss; each layer maps to a README section."""
-    W, H = 1000, 800
+def abyss_journey(st):
+    """Seven (step, when, cost) rows from status.yml `abyss:`; falls back to the curse of ascent."""
+    a = st.get("abyss", {}) or {}
+    rows = []
+    for i in range(7):
+        e = a.get(f"L{i+1}", {}) or {}
+        rows.append((clean(e.get("step")) or CURSE[i], clean(e.get("when")), clean(e.get("cost"))))
+    try:
+        here = min(7, max(1, int(a.get("here", 0))))
+    except ValueError:
+        here = 0
+    return rows, here
+
+
+def abyss_map(here=0):
+    """The cross-section itself, drawn in a 1000-unit frame between x=30 and x=500."""
     tops = [96, 166, 256, 376, 466, 536, 606]
     bottom = 656
     cx = 265
@@ -565,30 +579,57 @@ def abyss_card(stats):
     b.append(f'<path id="route" d="{route}" fill="none" stroke="{C["paper"]}" stroke-width="1" stroke-dasharray="1 4" opacity=".7"/>')
     b.append(f'<circle r="3.5" fill="{C["red_hi"]}" stroke="{C["ink"]}"><animateMotion dur="40s" repeatCount="indefinite"><mpath xlink:href="#route"/></animateMotion></circle>')
 
-    # Right side: the layer log
-    b.append(text(540, 54, "THE ABYSS", "bebas", 32, C["paper"], ls=3))
-    b.append(text(964, 46, "DESCENT MAP", "plex", 9, C["red_hi"], "end", ls=3))
-    b.append(text(964, 62, "EACH SECTION BELOW IS ONE LAYER DEEPER", "plex", 8.5, C["muted"], "end", ls=1))
-    for i, (depth, layer) in enumerate(LAYERS):
-        y0 = tops[i] + 22
-        target = f"{i+1:02d}  {SECTIONS[i][0].upper()}" if i < len(SECTIONS) else "END OF PAGE"
-        b.append(f'<path d="M504 {y0-5}H532" stroke="{C["line"]}" stroke-dasharray="2 3"/>')
-        b.append(text(540, y0, f"L{i+1}", "bebas", 20, C["red_hi"], ls=1))
-        b.append(text(574, y0, layer, "bebas", 17, C["paper"], ls=2))
-        b.append(text(964, y0, depth, "plex", 9, C["muted"], "end", ls=1))
-        b.append(f'<text x="574" y="{y0+17}" class="plex" font-size="9.5"><tspan fill="{C["dim"]}">ASCENT  </tspan>'
-                 f'<tspan fill="{C["text"]}">{esc(CURSE[i])}</tspan></text>')
-        b.append(text(574, y0 + 33, f"→ {target}", "plex", 9, C["red_hi"], ls=1))
 
-    # Whistle ranks
+    if here:
+        y = (tops[here - 1] + (tops[here] if here < 7 else bottom)) / 2
+        b.append(f'<circle cx="{cx}" cy="{y}" r="5" fill="{C["red"]}" stroke="{C["paper"]}" stroke-width="1.2"/>')
+        b.append(f'<circle cx="{cx}" cy="{y}" r="5" fill="none" stroke="{C["red_hi"]}" stroke-width="1.2">'
+                 f'<animate attributeName="r" values="5;16" dur="2s" repeatCount="indefinite"/>'
+                 f'<animate attributeName="opacity" values="1;0" dur="2s" repeatCount="indefinite"/></circle>')
+        b.append(f'<rect x="{cx+14}" y="{y-9}" width="92" height="17" fill="{C["ink"]}" stroke="{C["red"]}"/>')
+        b.append(text(cx + 60, y + 3.5, "YOU ARE HERE", "plex", 8.5, C["paper"], "middle", ls=1.5))
+    return defs, b, tops
+
+
+def abyss_card(st, stats, mobile=False):
+    """An original cross-section of the Abyss; each layer is one step of Harshul's own descent."""
+    rows, here = abyss_journey(st)
+    defs, b, tops = abyss_map(here)
     contrib = stats.get("contributions")
     rank, cleared = whistle_rank(contrib)
+    cur = [w[0] for w in WHISTLES].index(rank)
+    title = ("The Abyss, a descent map of Harshul's path. " + "; ".join(
+        f"Layer {i+1}, {LAYERS[i][1].title()}: {r[0]}" + (f" ({r[1]})" if r[1] else "") for i, r in enumerate(rows))
+        + f". Whistle rank: {rank}.")
+    if mobile:
+        return abyss_mobile(rows, here, defs, b, tops, rank, cleared, cur, contrib, title)
+    W, H = 1000, 800
+
+    # Right side: the layer log
+    b.append(text(540, 54, "HARSHUL'S DESCENT", "bebas", 32, C["paper"], ls=3))
+    b.append(text(964, 46, "DESCENT MAP", "plex", 9, C["red_hi"], "end", ls=3))
+    b.append(text(540, 74, "ONE LAYER PER STEP OF THE WAY DOWN", "plex", 8.5, C["muted"], ls=1))
+    for i, (depth, layer) in enumerate(LAYERS):
+        step, when, cost = rows[i]
+        y0 = tops[i] + 22
+        on = here == i + 1
+        target = f"{i+1:02d} {SECTIONS[i][0].upper()}" if i < len(SECTIONS) else "END OF PAGE"
+        b.append(f'<path d="M504 {y0-5}H532" stroke="{C["red"] if on else C["line"]}" stroke-dasharray="2 3"/>')
+        b.append(text(540, y0, f"L{i+1}", "bebas", 20, C["red_hi"], ls=1))
+        b.append(text(574, y0, layer, "bebas", 17, C["paper"], ls=2))
+        b.append(text(964, y0, (when or depth).upper(), "plex", 9, C["red_hi"] if on else C["muted"], "end", ls=1))
+        b.append(text(574, y0 + 17, clip(step, 62), "plex", 10.5, C["paper"] if on else C["text"]))
+        if cost:
+            b.append(f'<text x="574" y="{y0+33}" class="plex" font-size="9"><tspan fill="{C["dim"]}">COST  </tspan>'
+                     f'<tspan fill="{C["muted"]}">{esc(clip(cost, 44))}</tspan></text>')
+        b.append(text(964, y0 + 33, f"→ {target}", "plex", 8.5, C["red_hi"], "end", ls=1))
+
+    # Whistle ranks
     b.append(f'<line x1="36" y1="700" x2="964" y2="700" stroke="{C["line"]}"/>')
     b.append(text(36, 728, "WHISTLE RANK", "plex", 9, C["red_hi"], ls=3))
     b.append(text(36, 752, f"{rank} whistle, {cleared}.", "play", 17, C["paper"]))
     b.append(text(36, 774, f"Earned from {contrib if contrib is not None else 'unknown'} contributions in 12 months.",
                   "plex", 9, C["muted"]))
-    cur = [w[0] for w in WHISTLES].index(rank)
     for k, (name, need, depth_ok) in enumerate(WHISTLES):
         x = 404 + k * 94
         on = k == cur
@@ -601,8 +642,6 @@ def abyss_card(stats):
         b.append(text(x, 776, f"{need}+", "plex", 8.5, C["muted"] if k <= cur else C["dim"]))
         b.append(text(x + 38, 776, WHISTLE_SHORT[k], "plex", 8.5, C["muted"] if k <= cur else C["dim"]))
 
-    title = ("The Abyss, a descent map. " + "; ".join(f"Layer {i+1}, {l.title()}, {d}: ascent causes {CURSE[i]}"
-             for i, (d, l) in enumerate(LAYERS)) + f". Whistle rank: {rank}.")
     return svg_doc(W, H, "\n".join(b), ("Bebas", "Plex", "Playfair"), defs, title)
 
 
@@ -863,7 +902,7 @@ def about_card(st):
 RAMP = ["#c8102e", "#f4f2ed", "#9e9c97", "#5f5d59", "#7d0e1b"]
 
 
-def project_card(i, r, override):
+def project_card(i, r, override, mobile=False):
     W = 1000
     rd_tag, rd_sum = readme_summary(r.get("readme", ""), r["name"])
     desc = clean(r.get("description"))
@@ -889,6 +928,8 @@ def project_card(i, r, override):
     if not tagline and not summary:
         tagline = "No transmission recorded."
     tagline = clip(tagline, 78)
+    if mobile:
+        return project_m(i, r, tagline, summary, f"{r['name']}: {tagline}. {summary}")
     sum_lines = wrap(summary, 96, 3) if summary else []
     H = 178 + 16 * max(0, len(sum_lines) - 1) + (30 if r.get("topics") else 0)
     n_lang = len(r.get("languages") or [])
@@ -1013,89 +1054,532 @@ def system_card(st):
     return svg_doc(W, H, "\n".join(body), ("Bebas", "Plex"), duo, title)
 
 
-def signal_card(st, stats, today):
-    W, H = 1000, 320
-    dv = str(st.get("signal", {}).get("divergence", "1.048596"))[:8]
-    defs = f"""<filter id="nglow" x="-60%" y="-30%" width="220%" height="160%"><feGaussianBlur stdDeviation="4" result="a"/>
+NIXIE_DEFS = f"""<filter id="nglow" x="-60%" y="-30%" width="220%" height="160%"><feGaussianBlur stdDeviation="4" result="a"/>
 <feGaussianBlur in="SourceGraphic" stdDeviation="1" result="b"/><feMerge><feMergeNode in="a"/><feMergeNode in="a"/>
 <feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-<linearGradient id="glass" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".09"/>
-<stop offset=".25" stop-color="#fff" stop-opacity=".02"/><stop offset=".8" stop-color="#fff" stop-opacity="0"/>
-<stop offset="1" stop-color="#fff" stop-opacity=".06"/></linearGradient>
-<radialGradient id="warm" cx=".5" cy=".55" r=".6"><stop offset="0" stop-color="{C['nixie']}" stop-opacity=".22"/>
+<linearGradient id="glass" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".13"/>
+<stop offset=".12" stop-color="#fff" stop-opacity=".03"/><stop offset=".7" stop-color="#fff" stop-opacity="0"/>
+<stop offset=".9" stop-color="#fff" stop-opacity=".08"/><stop offset="1" stop-color="#fff" stop-opacity=".02"/></linearGradient>
+<radialGradient id="warm" cx=".5" cy=".6" r=".6"><stop offset="0" stop-color="{C['nixie']}" stop-opacity=".26"/>
 <stop offset="1" stop-color="{C['nixie']}" stop-opacity="0"/></radialGradient>
-<pattern id="mesh" width="6" height="6" patternUnits="userSpaceOnUse"><path d="M0 3h6M3 0v6" stroke="#ff9070" stroke-width=".4" opacity=".25"/></pattern>"""
-    body = [wires(W, 6, ".35", signal=False)]
-    tw, gap = 66, 12
+<pattern id="mesh" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+<path d="M0 2.5h5M2.5 0v5" stroke="#ff9070" stroke-width=".35" opacity=".3"/></pattern>
+<linearGradient id="wood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a2416"/><stop offset=".5" stop-color="#24150c"/>
+<stop offset="1" stop-color="#120a05"/></linearGradient>
+<linearGradient id="brass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c9a35c"/><stop offset="1" stop-color="#6b4f22"/></linearGradient>
+<linearGradient id="sock" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0c0c0c"/><stop offset=".45" stop-color="#2c2c2c"/>
+<stop offset="1" stop-color="#0c0c0c"/></linearGradient>"""
+
+
+def nixie_row(dv, x0, top, tw, th, gap, fs, seed="meter"):
+    """A row of IN-14 style tubes on a wooden base. Every 14 s the reading shuffles like a
+    world-line shift and settles again; at frame 0 the real reading is lit."""
+    T = 14.0
+    h = hashlib.sha1(seed.encode()).digest()
+    out = []
     total = len(dv) * tw + (len(dv) - 1) * gap
-    x0 = (W - total) / 2
+    bot = top + th
+    # base plate with brass trim and screws
+    out.append(f'<rect x="{x0-22}" y="{bot-4}" width="{total+44}" height="{tw*.42:.0f}" rx="4" fill="url(#wood)" stroke="#000"/>')
+    out.append(f'<rect x="{x0-22}" y="{bot-4}" width="{total+44}" height="2.2" fill="url(#brass)"/>')
+    for sx in (x0 - 13, x0 + total + 13):
+        out.append(f'<circle cx="{sx}" cy="{bot + tw*.2:.1f}" r="3" fill="url(#brass)" stroke="#000" stroke-width=".6"/>'
+                   f'<path d="M{sx-2} {bot + tw*.2:.1f}h4" stroke="#3a2a10" stroke-width=".8"/>')
+    r = tw / 2
     for i, ch in enumerate(dv):
         x = x0 + i * (tw + gap)
-        body.append(f'<rect x="{x}" y="34" width="{tw}" height="128" rx="30" fill="#120706" stroke="#4a2018" stroke-width="1.5"/>')
-        body.append(f'<rect x="{x}" y="34" width="{tw}" height="128" rx="30" fill="url(#warm)"/>')
-        if ch != ".":
+        mx = x + r
+        body = f"M{x} {bot} V{top + r} A{r} {r} 0 0 1 {x + tw} {top + r} V{bot} Z"
+        out.append(f'<path d="M{mx-3} {top+2} v-7 a3 3 0 0 1 6 0 v7z" fill="#2a1410" stroke="#4a2018" stroke-width=".8"/>')
+        out.append(f'<path d="{body}" fill="#120706" stroke="#4a2018" stroke-width="1.5"/>')
+        out.append(f'<path d="{body}" fill="url(#warm)"/>')
+        # support posts and the anode mesh cage
+        out.append(f'<path d="M{x+5} {top+r*.8} V{bot-2} M{x+tw-5} {top+r*.8} V{bot-2}" stroke="#5a3a2a" stroke-width="1.2"/>')
+        out.append(f'<path d="M{x+5} {top+r*.8} H{x+tw-5}" stroke="#5a3a2a" stroke-width=".8"/>')
+        ty = top + th * .74
+        if ch == ".":
+            out.append(f'<g filter="url(#nglow)"><circle cx="{x + tw*.3:.1f}" cy="{ty:.1f}" r="{fs*.07:.1f}" fill="{C["nixie_core"]}" '
+                       f'stroke="{C["nixie"]}" stroke-width="1.2"/></g>')
+        else:
             for g in "0123456789":
-                body.append(f'<text x="{x+tw/2}" y="128" class="cut" font-size="82" fill="none" stroke="#6a2a1c" stroke-width=".7" text-anchor="middle" opacity=".35">{g}</text>')
-        flick = ""
-        if i in (1, 4, 7):
-            flick = (f'<animate attributeName="opacity" values="1;.35;1;.9;1" keyTimes="0;.03;.06;.5;1" dur="{5+i*1.3:.1f}s" '
-                     f'repeatCount="indefinite"/>')
-        body.append(f'<text x="{x+tw/2}" y="128" class="cut" font-size="82" fill="{C["nixie_core"]}" stroke="{C["nixie"]}" stroke-width="1.6" '
-                    f'text-anchor="middle" filter="url(#nglow)">{esc(ch)}{flick}</text>')
-        body.append(f'<rect x="{x+4}" y="40" width="{tw-8}" height="116" rx="26" fill="url(#mesh)"/>')
-        body.append(f'<rect x="{x}" y="34" width="{tw}" height="128" rx="30" fill="url(#glass)"/>')
-        body.append(f'<rect x="{x-3}" y="162" width="{tw+6}" height="12" rx="2" fill="#1a1612" stroke="#2e2820"/>')
-        body.append(f'<rect x="{x+tw/2-2}" y="174" width="4" height="6" fill="#2e2820"/>')
-    body.append(text(W / 2, 206, "WORLD LINE DIVERGENCE  ·  STEINS;GATE  ·  ATTRACTOR FIELD: NONE", "plex", 8.5, C["muted"], "middle", ls=3))
-    body.append(f'<line x1="36" y1="226" x2="964" y2="226" stroke="{C["line"]}"/>')
+                out.append(f'<text x="{mx}" y="{ty:.1f}" class="cut" font-size="{fs}" fill="none" stroke="#6a2a1c" '
+                           f'stroke-width=".7" text-anchor="middle" opacity=".33">{g}</text>')
+            settle = .5 + .14 * i
+            k = 7
+            step = settle / k
+            seq = [str(h[(i * 7 + j) % len(h)] % 10) for j in range(k)]
+            g = [f'<g filter="url(#nglow)">']
+            t0 = 4.0  # the true reading is lit at frame 0; the shift starts 4 s in
+            for j, d in enumerate(seq):
+                a0, a1 = (t0 + j * step) / T, (t0 + (j + 1) * step) / T
+                g.append(f'<text x="{mx}" y="{ty:.1f}" class="cut" font-size="{fs}" fill="{C["nixie_core"]}" stroke="{C["nixie"]}" '
+                         f'stroke-width="1.5" text-anchor="middle" opacity="0">{d}<animate attributeName="opacity" values="0;1;0;0" '
+                         f'keyTimes="0;{a0:.4f};{a1:.4f};1" calcMode="discrete" dur="{T}s" repeatCount="indefinite"/></text>')
+            q0, s0 = t0 / T, (t0 + settle) / T
+            g.append(f'<text x="{mx}" y="{ty:.1f}" class="cut" font-size="{fs}" fill="{C["nixie_core"]}" stroke="{C["nixie"]}" '
+                     f'stroke-width="1.6" text-anchor="middle">{esc(ch)}<animate attributeName="opacity" '
+                     f'values="1;0;1;.4;1;1;.55;1" keyTimes="0;{q0:.4f};{s0:.4f};{s0+.006:.4f};{s0+.012:.4f};{.75+i*.02:.3f};{.753+i*.02:.3f};1" '
+                     f'calcMode="discrete" dur="{T}s" repeatCount="indefinite"/></text>')
+            g.append("</g>")
+            out.append("".join(g))
+        out.append(f'<rect x="{x+4}" y="{top+8}" width="{tw-8}" height="{th-14}" rx="{r-4}" fill="url(#mesh)"/>')
+        out.append(f'<path d="{body}" fill="url(#glass)"/>')
+        out.append(f'<path d="M{x+5} {bot-8} V{top + r} A{r-5} {r-5} 0 0 1 {x + r*.7:.1f} {top+6}" fill="none" stroke="#fff" '
+                   f'stroke-width="1.2" opacity=".12"/>')
+        # socket with pins
+        out.append(f'<rect x="{x-2}" y="{bot-10}" width="{tw+4}" height="12" rx="3" fill="url(#sock)" stroke="#000"/>')
+        for p in range(5):
+            px = x + 6 + p * (tw - 12) / 4
+            out.append(f'<path d="M{px:.1f} {bot-10} v-4" stroke="#8a7a6a" stroke-width=".7" opacity=".7"/>')
+    return "".join(out), total
+
+
+def signal_card(st, stats, today, mobile=False):
+    dv = str(st.get("signal", {}).get("divergence", "1.048596"))[:8]
     cells = [("PUBLIC REPOS", stats.get("repos")), ("STARS EARNED", stats.get("stars")), ("FOLLOWERS", stats.get("followers")),
              ("CONTRIBUTIONS / 12 MO", stats.get("contributions")), ("LAST SYNC", today)]
+    title = f"World line divergence {dv}. " + ", ".join(f"{k.lower()} {v}" for k, v in cells if v is not None)
+    if mobile:
+        W = 480
+        tw, gap = 46, 7
+        x0 = (W - (8 * tw + 7 * gap)) / 2
+        row, _ = nixie_row(dv, x0, 34, tw, 104, gap, 58)
+        body = [wires(W, 6, ".35", signal=False), row]
+        body.append(text(W / 2, 192, "WORLD LINE DIVERGENCE", "plex", 12, C["muted"], "middle", ls=3))
+        body.append(text(W / 2, 210, "STEINS;GATE  ·  ATTRACTOR FIELD: NONE", "plex", 11, C["dim"], "middle", ls=1.5))
+        body.append(f'<line x1="20" y1="226" x2="460" y2="226" stroke="{C["line"]}"/>')
+        y = 270
+        for i, (k, v) in enumerate(cells):
+            cx = 20 + (i % 2) * 226
+            if i % 2 == 0 and i:
+                y += 70
+            size = 28 if k == "LAST SYNC" else 40
+            body.append(text(cx, y, "—" if v is None else v, "bebas", size, C["paper"], ls=1))
+            body.append(text(cx, y + 20, k, "plex", 11, C["muted"], ls=1.5))
+        H = y + 46
+        return svg_doc(W, H, "\n".join(body), ("Bebas", "Plex", "Cutive"), NIXIE_DEFS, title)
+    W, H = 1000, 340
+    tw, gap = 70, 14
+    x0 = (W - (8 * tw + 7 * gap)) / 2
+    row, _ = nixie_row(dv, x0, 30, tw, 150, gap, 84)
+    body = [wires(W, 6, ".35", signal=False), row]
+    body.append(text(W / 2, 228, "WORLD LINE DIVERGENCE  ·  STEINS;GATE  ·  ATTRACTOR FIELD: NONE", "plex", 9, C["muted"], "middle", ls=3))
+    body.append(f'<line x1="36" y1="246" x2="964" y2="246" stroke="{C["line"]}"/>')
     cw = (W - 72) / len(cells)
     for i, (k, v) in enumerate(cells):
         cx = 36 + i * cw
         if i:
-            body.append(f'<line x1="{cx}" y1="244" x2="{cx}" y2="296" stroke="{C["line"]}"/>')
+            body.append(f'<line x1="{cx}" y1="264" x2="{cx}" y2="316" stroke="{C["line"]}"/>')
         size = 22 if k == "LAST SYNC" else 36
-        body.append(text(cx + 20, 280, "—" if v is None else v, "bebas", size, C["paper"], ls=1))
-        body.append(text(cx + 20, 298, k, "plex", 7.5, C["muted"], ls=2))
-    title = f"World line divergence {dv}. " + ", ".join(f"{k.lower()} {v}" for k, v in cells if v is not None)
-    return svg_doc(W, H, "\n".join(body), ("Bebas", "Plex", "Cutive"), defs, title)
+        body.append(text(cx + 20, 300, "—" if v is None else v, "bebas", size, C["paper"], ls=1))
+        body.append(text(cx + 20, 318, k, "plex", 7.5, C["muted"], ls=2))
+    return svg_doc(W, H, "\n".join(body), ("Bebas", "Plex", "Cutive"), NIXIE_DEFS, title)
 
 
-def footer_card():
-    W, H = 1000, 250
-    depth, layer = LAYERS[6]
-    ex, ey = 500, 66
-    defs = f"""<radialGradient id="iris" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="{C['red_hi']}"/>
-<stop offset=".7" stop-color="{C['red']}"/><stop offset="1" stop-color="{C['red_dk']}"/></radialGradient>
-<clipPath id="eye"><path d="M{ex-62} {ey} Q{ex} {ey-40} {ex+62} {ey} Q{ex} {ey+40} {ex-62} {ey}Z"/></clipPath>"""
-    veins = []
+def kakugan(ex, ey, s=1.0, uid="k"):
+    """A living kakugan: black sclera, fibred red iris, darting gaze, blinking lids.
+    GitHub serves SVG as an image with no scripts, so it can't follow the cursor;
+    it watches the page on its own instead. At frame 0 the eye is open and centred."""
+    hw, hh = 62 * s, 40 * s
+    eye = f"M{ex-hw} {ey} Q{ex} {ey-hh} {ex+hw} {ey} Q{ex} {ey+hh} {ex-hw} {ey}Z"
+    defs = (f'<radialGradient id="{uid}iris" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ff7a6a"/>'
+            f'<stop offset=".35" stop-color="{C["red_hi"]}"/><stop offset=".8" stop-color="{C["red"]}"/>'
+            f'<stop offset="1" stop-color="{C["red_dk"]}"/></radialGradient>'
+            f'<radialGradient id="{uid}scl" cx=".5" cy=".5" r=".6"><stop offset="0" stop-color="#140406"/>'
+            f'<stop offset="1" stop-color="#030303"/></radialGradient>'
+            f'<clipPath id="{uid}clip"><path d="{eye}"/></clipPath>')
+    out = []
+    # veins spreading from the corners, pulsing
     for side in (-1, 1):
-        x0 = ex + side * 62
-        for dy, ln, bend in [(-14, 46, -10), (-4, 62, 6), (8, 50, 12), (18, 34, -6)]:
-            veins.append(f'<path d="M{x0} {ey} q{side*ln*.5} {dy+bend} {side*ln} {dy}" fill="none" stroke="{C["red"]}" '
-                         f'stroke-width="{1.4 if abs(dy) < 10 else .9}" stroke-linecap="round"/>')
+        x0 = ex + side * hw
+        for j, (dy, ln, bend) in enumerate([(-14, 46, -10), (-4, 62, 6), (8, 50, 12), (18, 34, -6), (-24, 28, 4)]):
+            dy, ln, bend = dy * s, ln * s, bend * s
+            out.append(f'<path d="M{x0} {ey} q{side*ln*.5} {dy+bend} {side*ln} {dy}" fill="none" stroke="{C["red"]}" '
+                       f'stroke-width="{(1.4 if abs(dy) < 10*s else .9)*s:.2f}" stroke-linecap="round">'
+                       f'<animate attributeName="stroke-opacity" values="1;.55;1" dur="{2.6+j*.3:.1f}s" repeatCount="indefinite"/></path>')
+    out.append(f'<path d="{eye}" fill="url(#{uid}scl)"/>')
+    # gaze: hold, dart, hold. Quick moves between long holds read as saccades.
+    pts = [(0, 0), (-14, -3), (-14, -3), (10, 2), (10, 2), (3, -6), (3, -6), (-7, 5), (-7, 5), (0, 0), (0, 0), (16, -1), (16, -1), (0, 0)]
+    kts = [0, .10, .22, .25, .38, .40, .52, .54, .64, .66, .76, .78, .92, .94]
+    vals = ";".join(f"{x*s:.1f} {y*s:.1f}" for x, y in pts) + ";0 0"
+    kt = ";".join(f"{k:.2f}" for k in kts) + ";1"
+    fib = []
+    for a in range(0, 360, 12):
+        c, sn = math.cos(math.radians(a)), math.sin(math.radians(a))
+        r0, r1 = 7.5 * s, (17 if a % 24 else 15) * s
+        fib.append(f'<path d="M{ex+c*r0:.1f} {ey+sn*r0:.1f} L{ex+c*r1:.1f} {ey+sn*r1:.1f}" stroke="{"#ffb0a0" if a % 36 == 0 else C["red_dk"]}" '
+                   f'stroke-width="{.7*s:.2f}" opacity=".55"/>')
+    out.append(
+        f'<g clip-path="url(#{uid}clip)">'
+        # faint capillaries in the black sclera
+        f'<path d="M{ex-hw+8*s} {ey-4*s} q{14*s} {-6*s} {26*s} {-2*s} M{ex+hw-8*s} {ey+5*s} q{-15*s} {5*s} {-28*s} {1*s}" '
+        f'stroke="{C["red_dk"]}" stroke-width="{.8*s:.2f}" fill="none"/>'
+        f'<g><animateTransform attributeName="transform" type="translate" values="{vals}" keyTimes="{kt}" dur="11s" repeatCount="indefinite"/>'
+        f'<circle cx="{ex}" cy="{ey}" r="{19*s}" fill="url(#{uid}iris)"/>' + "".join(fib) +
+        f'<circle cx="{ex}" cy="{ey}" r="{19*s}" fill="none" stroke="#2a0006" stroke-width="{2.2*s:.1f}"/>'
+        f'<circle cx="{ex}" cy="{ey}" r="{6*s}" fill="#050505"><animate attributeName="r" '
+        f'values="{6*s};{4.4*s};{4.4*s};{7.6*s};{6*s}" keyTimes="0;.2;.45;.7;1" dur="7s" repeatCount="indefinite"/></circle>'
+        f'<circle cx="{ex+6*s}" cy="{ey-6*s}" r="{2.6*s}" fill="{C["paper"]}"/>'
+        f'<circle cx="{ex-5*s}" cy="{ey+6*s}" r="{1.1*s}" fill="{C["paper"]}" opacity=".7"/></g>'
+        # eyelids: parked outside the eye, they close in ~0.1 s; a double blink near the end
+        f'<g><animateTransform attributeName="transform" type="translate" '
+        f'values="0 {-hh};0 {-hh};0 0;0 {-hh};0 {-hh};0 0;0 {-hh};0 0;0 {-hh};0 {-hh}" '
+        f'keyTimes="0;.30;.315;.33;.80;.815;.83;.845;.86;1" dur="9s" repeatCount="indefinite"/>'
+        f'<rect x="{ex-hw}" y="{ey-hh}" width="{2*hw}" height="{hh}" fill="{C["ink"]}"/>'
+        f'<path d="M{ex-hw} {ey} Q{ex} {ey+6*s} {ex+hw} {ey}" fill="none" stroke="{C["paper"]}" stroke-width="{1.4*s:.1f}"/></g>'
+        f'<g><animateTransform attributeName="transform" type="translate" '
+        f'values="0 {hh};0 {hh};0 0;0 {hh};0 {hh};0 0;0 {hh};0 0;0 {hh};0 {hh}" '
+        f'keyTimes="0;.30;.315;.33;.80;.815;.83;.845;.86;1" dur="9s" repeatCount="indefinite"/>'
+        f'<rect x="{ex-hw}" y="{ey}" width="{2*hw}" height="{hh}" fill="{C["ink"]}"/></g>'
+        f'</g>')
+    out.append(f'<path d="{eye}" fill="none" stroke="{C["paper"]}" stroke-width="{1.6*s:.1f}"/>')
+    return defs, "".join(out)
+
+
+def footer_card(mobile=False):
+    depth, layer = LAYERS[6]
+    if mobile:
+        W, H = 480, 330
+        defs, eye = kakugan(240, 84, 1.25)
+        body = [
+            wires(W, 10, ".4"), eye,
+            text(W / 2, 192, "El Psy Kongroo.", "play", 32, C["paper"], "middle"),
+            f'<g transform="rotate(180 240 226)">' + text(240, 231, "CLOSE THE WORLD, OPEN THE NEXT", "bebas", 18, C["muted"], "middle", ls=3) + "</g>",
+            text(W / 2, 270, f"LAYER:07  ·  {layer}", "plex", 11.5, C["dim"], "middle", ls=2),
+            text(W / 2, 288, f"DEPTH {depth}  ·  NO ASCENT WITHOUT A PRICE", "plex", 11, C["dim"], "middle", ls=1),
+            f'<line x1="90" y1="306" x2="390" y2="306" stroke="{C["line"]}"/>',
+            f'<rect x="236" y="303" width="8" height="6" fill="{C["red"]}"/>',
+        ]
+        return svg_doc(W, H, "\n".join(body), ("Bebas", "Plex", "Playfair"), defs, title="El Psy Kongroo. Close the world, open the next.")
+    W, H = 1000, 260
+    defs, eye = kakugan(500, 72, 1.15)
     body = [
-        wires(W, 10, ".4"),
-        # Kakugan: black sclera, red iris, veins spreading from the corners
-        "".join(veins),
-        f'<path d="M{ex-62} {ey} Q{ex} {ey-40} {ex+62} {ey} Q{ex} {ey+40} {ex-62} {ey}Z" fill="#050505" stroke="{C["paper"]}" stroke-width="1.6"/>',
-        f'<g clip-path="url(#eye)"><circle cx="{ex}" cy="{ey}" r="19" fill="url(#iris)">'
-        f'<animate attributeName="cx" values="{ex};{ex-6};{ex};{ex+5};{ex}" dur="9s" repeatCount="indefinite"/></circle>'
-        f'<circle cx="{ex}" cy="{ey}" r="6" fill="#050505"><animate attributeName="cx" values="{ex};{ex-6};{ex};{ex+5};{ex}" dur="9s" repeatCount="indefinite"/></circle>'
-        f'<circle cx="{ex+6}" cy="{ey-6}" r="2.4" fill="{C["paper"]}"/></g>',
-        text(W / 2, 148, "El Psy Kongroo.", "play", 26, C["paper"], "middle"),
-        f'<g transform="rotate(180 500 176)">' + text(500, 181, "CLOSE THE WORLD, OPEN THE NEXT", "bebas", 15, C["muted"], "middle", ls=4) + "</g>",
-        text(W / 2, 212, f"LAYER:07  \u00b7  {layer}  \u00b7  DEPTH {depth}  \u00b7  NO ASCENT WITHOUT A PRICE", "plex", 9, C["dim"], "middle", ls=2),
-        f'<line x1="300" y1="228" x2="700" y2="228" stroke="{C["line"]}"/>',
-        f'<rect x="496" y="225" width="8" height="6" fill="{C["red"]}"/>',
+        wires(W, 10, ".4"), eye,
+        text(W / 2, 158, "El Psy Kongroo.", "play", 26, C["paper"], "middle"),
+        f'<g transform="rotate(180 500 186)">' + text(500, 191, "CLOSE THE WORLD, OPEN THE NEXT", "bebas", 15, C["muted"], "middle", ls=4) + "</g>",
+        text(W / 2, 222, f"LAYER:07  ·  {layer}  ·  DEPTH {depth}  ·  NO ASCENT WITHOUT A PRICE", "plex", 9, C["dim"], "middle", ls=2),
+        f'<line x1="300" y1="238" x2="700" y2="238" stroke="{C["line"]}"/>',
+        f'<rect x="496" y="235" width="8" height="6" fill="{C["red"]}"/>',
     ]
     return svg_doc(W, H, "\n".join(body), ("Bebas", "Plex", "Playfair"), defs, title="El Psy Kongroo. Close the world, open the next.")
 
 
 # --------------------------------------------------------------------------- #
+# Contact: one small SVG per link, so each one can be clicked
+# --------------------------------------------------------------------------- #
+CONTACT = [
+    ("website", "WEB", "harshulkala.dpdns.org", "SEND D-MAIL"),
+    ("linkedin", "LINKEDIN", "haru-l41n-pr0t0", "OPEN CHANNEL"),
+    ("discord", "DISCORD", "lain_0x00.navi", "ADD ON DISCORD"),
+]
+RING = [("ring-prev", "← PREV"), ("ring-home", "OCTO RING"), ("ring-random", "RANDOM"), ("ring-next", "NEXT →")]
+
+
+def contact_button(label, value, verb):
+    W, H = max(300, int(len(value) * 9.6 + 70)), 64
+    body = [
+        f'<rect x="1" y="1" width="{W-2}" height="{H-2}" rx="6" fill="{C["ink"]}" stroke="{C["line"]}" stroke-width="1.5"/>',
+        f'<rect x="1" y="1" width="5" height="{H-2}" fill="{C["red"]}"/>',
+        text(20, 24, f"> {verb}", "plex", 10, C["muted"], ls=2),
+        text(W - 14, 24, label, "bebas", 15, C["red_hi"], "end", ls=3),
+        f'<text x="20" y="48" class="plex" font-size="16"><tspan fill="{C["red_hi"]}">$ </tspan>'
+        f'<tspan fill="{C["paper"]}">{esc(value)}</tspan></text>',
+        f'<rect x="{20 + (len(value) + 2) * 9.6 + 3:.0f}" y="35" width="9" height="16" fill="{C["paper"]}">'
+        f'<animate attributeName="opacity" values="1;1;0;0" keyTimes="0;.5;.5;1" dur="1.1s" repeatCount="indefinite"/></rect>',
+    ]
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img" '
+            f'aria-label="{esc(label)}: {esc(value)}"><title>{esc(label)}: {esc(value)}</title>'
+            f'<style>{font_css(("Bebas", "Plex"))}{BASE_CSS}</style>' + "".join(body) + "</svg>\n")
+
+
+def ring_button(label):
+    W, H = int(len(label) * 9 + 36), 40
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img" '
+            f'aria-label="{esc(label)}"><title>{esc(label)}</title><style>{font_css(("Plex",))}{BASE_CSS}</style>'
+            f'<rect x="1" y="1" width="{W-2}" height="{H-2}" rx="20" fill="{C["ink"]}" stroke="{C["line"]}" stroke-width="1.5"/>'
+            + text(W / 2, 25, label, "plex", 13, C["text"], "middle", ls=1.5) + "</svg>\n")
+
+
+# --------------------------------------------------------------------------- #
+# Phone versions. A 1000-wide card squeezed onto a 390 px screen turns 9 px text
+# into 3.5 px. These are drawn 480 wide with body text at 13 or more, so text
+# lands at 10 px or bigger. README swaps them in with <picture media=...>.
+# --------------------------------------------------------------------------- #
+MW = 480
+
+
+def hero_m(st, stats):
+    p = st.get("profile", {})
+    sysd = st.get("system", {})
+    img = ASSETS / "img"
+    W = MW
+    defs = f"""<filter id="duo" color-interpolation-filters="sRGB"><feColorMatrix type="saturate" values="0"/>
+<feComponentTransfer><feFuncR type="table" tableValues=".04 .07 .72 .9"/><feFuncG type="table" tableValues=".04 .07 .71 .89"/>
+<feFuncB type="table" tableValues=".04 .07 .69 .87"/></feComponentTransfer></filter>
+<clipPath id="pclip"><polygon points="40,20 460,20 440,330 20,330"/></clipPath>
+<linearGradient id="fadeB" x1="0" y1="0" x2="0" y2="1"><stop offset=".5" stop-color="{C['ink']}" stop-opacity="0"/>
+<stop offset="1" stop-color="{C['ink']}" stop-opacity=".95"/></linearGradient>
+<pattern id="scan" width="4" height="4" patternUnits="userSpaceOnUse"><rect width="4" height="1" fill="#000" opacity=".55"/></pattern>
+<filter id="pulse" x="-10%" y="-50%" width="120%" height="200%"><feGaussianBlur stdDeviation="0">
+<animate attributeName="stdDeviation" values="0;1.3;0" dur="3s" repeatCount="indefinite"/></feGaussianBlur></filter>"""
+    b = [f'<g clip-path="url(#pclip)"><image x="20" y="-40" width="440" height="782" preserveAspectRatio="xMidYMin slice" '
+         f'xlink:href="{b64(img / "portrait.jpg", "image/jpeg")}" filter="url(#duo)"/>'
+         f'<rect x="20" y="20" width="440" height="310" fill="url(#scan)" opacity=".35"/>'
+         f'<rect x="20" y="20" width="440" height="310" fill="url(#fadeB)"/></g>',
+         f'<polygon points="40,20 460,20 440,330 20,330" fill="none" stroke="{C["paper"]}" stroke-width="1.5"/>',
+         wires(W, 14, ".55"),
+         text(56, 58, "PRESENT DAY", "bebas", 26, C["paper"], ls=1.5),
+         text(56, 84, "PRESENT TIME", "bebas", 26, C["paper"], ls=1.5),
+         text(W / 2, 312, clean(p.get("quote", "")), "play", 18, C["paper"], "middle", extra='filter="url(#pulse)"')]
+    b.append(f'<g transform="rotate(-6 240 262)"><rect x="10" y="246" width="460" height="32" fill="{C["red"]}" opacity=".92"/>'
+             + text(240, 268, clean(p.get("name", "")).upper(), "cut", 18, C["paper"], "middle", ls=3) + "</g>")
+    y = 372
+    b.append(text(20, y, f"@{p.get('handle', USER).upper()}  //  LAYER:01", "plex", 12, C["muted"], ls=2))
+    first, _, rest = clean(p.get("name", "")).partition("|")
+    b.append(f'<text x="20" y="{y+46}" class="bebas" font-size="46" letter-spacing="1"><tspan fill="{C["paper"]}">{esc(first.strip().upper())}</tspan>'
+             + (f'<tspan fill="{C["red_hi"]}"> | {esc(rest.strip().upper())}</tspan>' if rest else "") + "</text>")
+    b.append(text(20, y + 72, clean(p.get("tagline", "")).upper(), "plex", 13, C["text"], ls=1.5))
+    b.append(text(20, y + 98, clean(p.get("school_line", "")).upper(), "bebas", 19, C["red_hi"], ls=2))
+    os_short = clean(sysd.get("os", "Linux")).split(" ")[0]
+    de_short = re.sub(r"\s*[\d.]+.*$", "", clean(sysd.get("desktop", "")))
+    sh_short = clean(sysd.get("shell", "")).split(" ")[0]
+    b.append(text(20, y + 120, " · ".join(x for x in [os_short, de_short, sh_short] if x).upper(), "plex", 12, C["muted"], ls=2))
+    y += 146
+    b.append(f'<line x1="20" y1="{y}" x2="460" y2="{y}" stroke="{C["line"]}"/>')
+    y += 30
+    for line in wrap(clean(p.get("bio", "")), 50, 8):
+        b.append(text(20, y, line, "plex", 14, C["text"]))
+        y += 22
+    y += 14
+    dv = str(st.get("signal", {}).get("divergence", "1.048596"))[:8]
+    rank, cleared = whistle_rank(stats.get("contributions"))
+    b.append(f'<text x="20" y="{y}" class="plex" font-size="12" letter-spacing="1.5"><tspan fill="{C["muted"]}">DIVERGENCE </tspan>'
+             f'<tspan fill="{C["nixie"]}">{esc(dv)}</tspan><tspan fill="{C["muted"]}">  ·  WHISTLE </tspan>'
+             f'<tspan fill="{C["red_hi"]}">{rank.upper()}</tspan></text>')
+    y += 22
+    b.append(text(20, y, f"{clean(p.get('location','')).upper()}  ·  {p.get('timezone','')}", "plex", 12, C["dim"], ls=2))
+    H = y + 26
+    title = f"{p.get('name','')} ({USER}): {clean(p.get('bio',''))}"
+    return svg_doc(W, H, "\n".join(b), ("Bebas", "Plex", "Playfair", "Cutive"), defs, title)
+
+
+def section_header_m(n):
+    W, H = MW, 112
+    depth, layer = LAYERS[n - 1]
+    title, kicker = SECTIONS[n - 1]
+    stitches = " ".join(f"M{x} 94l6 10" for x in range(22, 458, 13))
+    body = [
+        text(20, 34, f"LAYER:{n:02d}", "bebas", 22, C["red_hi"], ls=4),
+        text(460, 33, f"{n:02d} / {len(SECTIONS):02d}  ·  {kicker}", "plex", 11, C["text"], "end", ls=1.5),
+        text(20, 70, title, "play", 30, C["paper"]),
+        text(460, 70, depth, "plex", 11, C["muted"], "end", ls=1),
+        f'<path d="M20 98H460" stroke="{C["line"]}" stroke-width="1.5"/>',
+        f'<path d="{stitches}" stroke="{C["dim"]}" stroke-width="1.3" stroke-linecap="round"/>',
+        f'<rect x="20" y="96" width="{30 + n*14}" height="4" fill="{C["red"]}"/>',
+    ]
+    return svg_doc(W, H, "\n".join(body), ("Bebas", "Plex", "Playfair"), title=f"Layer {n:02d}: {title} ({kicker.lower()}), {layer.lower()}")
+
+
+def about_m(st):
+    a = st.get("about", {})
+    W, b, y = MW, [], 52
+    for line in wrap(clean(a.get("statement", "")), 34):
+        b.append(text(20, y, line, "play", 23, C["paper"]))
+        y += 32
+    y += 8
+    for line in wrap(clean(a.get("detail", "")), 50):
+        b.append(text(20, y, line, "plex", 14, C["text"]))
+        y += 22
+    y += 18
+    for key, label in [("based_in", "BASED IN"), ("studying", "STUDYING"), ("now", "NOW SOLVING"),
+                       ("research", "RESEARCH"), ("exploring", "EXPLORING")]:
+        if not a.get(key):
+            continue
+        b.append(f'<line x1="20" y1="{y-6}" x2="460" y2="{y-6}" stroke="{C["line"]}" stroke-dasharray="2 4"/>')
+        y += 16
+        b.append(text(20, y, label, "plex", 11.5, C["red_hi"], ls=3))
+        y += 22
+        for line in wrap(clean(a[key]), 50):
+            b.append(text(20, y, line, "plex", 14, C["paper"]))
+            y += 21
+        y += 12
+    backlog = st.get("backlog", []) or []
+    if backlog:
+        y += 8
+        b.append(text(20, y, "STAGED PROTOCOLS / BACKLOG", "plex", 11.5, C["red_hi"], ls=3))
+        y += 24
+        for item in backlog:
+            for j, line in enumerate(wrap(clean(item), 46)):
+                if j == 0:
+                    b.append(text(20, y, "—", "plex", 14, C["red"]))
+                b.append(text(44, y, line, "plex", 14, C["text"]))
+                y += 21
+            y += 4
+    H = y + 14
+    desc = " ".join(clean(a.get(k, "")) for k in ("statement", "detail", "based_in", "studying", "now", "research", "exploring"))
+    return svg_doc(W, H, "\n".join(b), ("Bebas", "Plex", "Playfair"), title=f"About: {desc}")
+
+
+def toolkit_m(st):
+    groups = st.get("toolkit", {})
+    W, b, y = MW, [], 40
+    for gi, (group, items) in enumerate(groups.items()):
+        b.append(text(20, y, clean(group).upper(), "bebas", 20, C["red_hi"], ls=3))
+        b.append(text(460, y, f"0{gi+1}", "plex", 11, C["dim"], "end", ls=2))
+        y += 34
+        x = 20
+        for it in items or []:
+            primary = it.endswith("*")
+            it = clean(it.rstrip("*"))
+            w = len(it) * 8.4 + 26
+            if x + w > 460:
+                x = 20
+                y += 40
+            stroke = C["red_hi"] if primary else C["line"]
+            b.append(f'<rect x="{x}" y="{y-20}" width="{w:.0f}" height="30" rx="3" fill="{C["panel"]}" stroke="{stroke}"/>')
+            b.append(text(x + w / 2, y, it, "plex", 14, C["paper"] if primary else C["text"], "middle"))
+            x += w + 8
+        y += 46
+    H = y + 4
+    b.append(text(460, H - 16, "OUTLINED = PRIMARY", "plex", 10, C["dim"], "end", ls=2))
+    flat = "; ".join(f"{g}: " + ", ".join(i.rstrip('*') for i in v) for g, v in groups.items())
+    return svg_doc(W, H, "\n".join(b), ("Bebas", "Plex"), title=f"Toolkit. {flat}")
+
+
+def system_m(st):
+    s = st.get("system", {})
+    rows = [(k, s.get(v)) for k, v in [("OS", "os"), ("KERNEL", "kernel"), ("MACHINE", "machine"), ("DESKTOP", "desktop"),
+                                         ("SHELL", "shell"), ("TERMINAL", "terminal"), ("CPU", "cpu"), ("GPU", "gpu"),
+                                         ("MEMORY", "memory"), ("FILESYSTEM", "filesystem")] if s.get(v)]
+    W = MW
+    b = [f'<circle cx="70" cy="70" r="44" fill="none" stroke="{C["line"]}"/>',
+         f'<circle cx="70" cy="70" r="49" fill="none" stroke="{C["red"]}" stroke-dasharray="1 5"/>',
+         f'<image x="32" y="32" width="76" height="76" xlink:href="{b64(ASSETS / "img" / "navi.png", "image/png")}" filter="url(#duo2)"/>',
+         f'<text x="140" y="64" class="plex" font-size="17"><tspan fill="{C["red_hi"]}">{esc(s.get("user",""))}</tspan>'
+         f'<tspan fill="{C["dim"]}">@</tspan><tspan fill="{C["paper"]}">{esc(s.get("host",""))}</tspan></text>',
+         text(140, 90, "NAVI  ·  COPLAND OS ENTERPRISE", "plex", 11, C["dim"], ls=1.5)]
+    y = 150
+    for k, v in rows:
+        b.append(f'<line x1="20" y1="{y-20}" x2="460" y2="{y-20}" stroke="{C["line"]}" stroke-dasharray="2 4"/>')
+        b.append(text(20, y, k, "bebas", 17, C["red"], ls=3))
+        lines = wrap(clean(v), 34, 2)
+        for j, line in enumerate(lines):
+            b.append(text(140, y + j * 20, line, "plex", 14, C["paper"]))
+        y += 20 * len(lines) + 20
+    for i, col in enumerate([C["ink"], C["dim"], C["red"], C["red_hi"], C["muted"], C["text"], C["paper"], C["nixie"]]):
+        b.append(f'<rect x="{20 + i*30}" y="{y-8}" width="26" height="12" fill="{col}" stroke="{C["line"]}"/>')
+    y += 34
+    b.append(text(20, y, "SPECS READ FROM FASTFETCH · " + clean(s.get("synced", "")), "plex", 10.5, C["dim"], ls=1.5))
+    H = y + 22
+    duo = f"""<filter id="duo2" color-interpolation-filters="sRGB"><feColorMatrix type="saturate" values="0"/>
+<feComponentTransfer><feFuncR type="table" tableValues=".04 .95"/><feFuncG type="table" tableValues=".04 .15"/>
+<feFuncB type="table" tableValues=".04 .25"/></feComponentTransfer></filter>"""
+    title = "System. " + "; ".join(f"{k.title()}: {v}" for k, v in rows)
+    return svg_doc(W, H, "\n".join(b), ("Bebas", "Plex"), duo, title)
+
+
+def project_m(i, r, tagline, summary, title):
+    W = MW
+    b = [text(20, 36, f"PINNED · {i:02d}", "bebas", 18, C["red_hi"], ls=4),
+         text(460, 35, f"WORLD LINE {world_line(r['name'])}", "plex", 11, C["nixie"], "end", ls=1.5)]
+    name_fs = 40 if len(r["name"]) <= 18 else 34
+    b.append(text(20, 80, r["name"], "bebas", name_fs, C["paper"], ls=1))
+    y = 110
+    for line in wrap(tagline, 40, 2):
+        b.append(text(20, y, line, "play", 18, C["text"]))
+        y += 24
+    y += 4
+    for line in (wrap(summary, 52, 4) if summary else []):
+        b.append(text(20, y, line, "plex", 13, C["muted"]))
+        y += 20
+    if r.get("topics"):
+        x, y = 20, y + 14
+        for t in r["topics"][:6]:
+            t = clean(t)
+            w = len(t) * 7.2 + 18
+            if x + w > 460:
+                x, y = 20, y + 32
+            b.append(f'<rect x="{x}" y="{y-16}" width="{w:.0f}" height="24" rx="2" fill="none" stroke="{C["line"]}"/>')
+            b.append(text(x + w / 2, y, t, "plex", 12, C["text"], "middle"))
+            x += w + 8
+        y += 16
+    y += 18
+    b.append(f'<line x1="20" y1="{y}" x2="460" y2="{y}" stroke="{C["line"]}"/>')
+    y += 28
+    b.append(text(20, y, "COMPOSITION", "plex", 11, C["muted"], ls=3))
+    b.append(text(460, y, (r.get("pushed") or "")[:10], "plex", 11, C["text"], "end", ls=1.5))
+    y += 12
+    langs = r.get("languages") or []
+    x = 20
+    for j, (name, frac) in enumerate(langs):
+        w = max(2, 440 * frac)
+        b.append(f'<rect x="{x:.1f}" y="{y}" width="{w:.1f}" height="8" fill="{RAMP[j % 5]}"/>')
+        x += w
+    if not langs:
+        b.append(f'<rect x="20" y="{y}" width="440" height="8" fill="{C["line"]}"/>')
+    y += 34
+    for j, (name, frac) in enumerate(langs[:4]):
+        lx, ly = 20 + (j % 2) * 220, y + (j // 2) * 24
+        b.append(f'<rect x="{lx}" y="{ly-10}" width="10" height="10" fill="{RAMP[j % 5]}"/>')
+        b.append(text(lx + 18, ly, f"{clean(name)} {frac*100:.1f}%", "plex", 13, C["text"]))
+    y += 24 * ((min(len(langs), 4) + 1) // 2) + 10
+    b.append(text(20, y, f"STARS {r.get('stars',0)}  ·  FORKS {r.get('forks',0)}", "plex", 12, C["text"], ls=1.5))
+    b.append(text(460, y, "OPEN →", "plex", 12, C["red_hi"], "end", ls=2))
+    H = y + 24
+    return svg_doc(W, H, "\n".join(b), ("Bebas", "Plex", "Playfair"), title=title)
+
+
+def abyss_mobile(rows, here, defs, mapb, tops, rank, cleared, cur, contrib, title):
+    W = MW
+    # the map spans x 30..500 of the desktop frame; shift it into the phone frame
+    b = [text(20, 40, "HARSHUL'S DESCENT", "bebas", 32, C["paper"], ls=2),
+         text(20, 60, "ONE LAYER PER STEP OF THE WAY DOWN", "plex", 11, C["muted"], ls=1),
+         f'<g transform="translate(-25 50)">' + "".join(mapb) + "</g>"]
+    y = 800
+    for i, (depth, layer) in enumerate(LAYERS):
+        step, when, cost = rows[i]
+        on = here == i + 1
+        b.append(f'<line x1="20" y1="{y-24}" x2="460" y2="{y-24}" stroke="{C["red"] if on else C["line"]}" stroke-dasharray="2 4"/>')
+        b.append(text(20, y, f"L{i+1}", "bebas", 24, C["red_hi"], ls=1))
+        b.append(text(58, y, layer, "bebas", 20, C["paper"], ls=1.5))
+        b.append(text(460, y, (when or depth).upper(), "plex", 11, C["red_hi"] if on else C["muted"], "end", ls=1))
+        y += 24
+        for line in wrap(step, 48, 2):
+            b.append(text(58, y, line, "plex", 14, C["paper"] if on else C["text"]))
+            y += 21
+        if cost:
+            b.append(f'<text x="58" y="{y}" class="plex" font-size="12"><tspan fill="{C["dim"]}">COST  </tspan>'
+                     f'<tspan fill="{C["muted"]}">{esc(clip(cost, 44))}</tspan></text>')
+            y += 20
+        y += 26
+    b.append(f'<line x1="20" y1="{y-10}" x2="460" y2="{y-10}" stroke="{C["line"]}"/>')
+    y += 18
+    b.append(text(20, y, "WHISTLE RANK", "plex", 12, C["red_hi"], ls=3))
+    y += 30
+    b.append(text(20, y, f"{rank} whistle, {cleared}.", "play", 22, C["paper"]))
+    y += 22
+    b.append(text(20, y, f"From {contrib if contrib is not None else 'unknown'} contributions in 12 months.", "plex", 12, C["muted"]))
+    y += 34
+    for k, (name, need, _) in enumerate(WHISTLES):
+        x, yy = 20 + (k % 3) * 150, y + (k // 3) * 64
+        col = C["red"] if k == cur else (C["paper"] if k < cur else C["dim"])
+        b.append(f'<circle cx="{x+6}" cy="{yy}" r="6" fill="none" stroke="{col}" stroke-width="1.6"/>')
+        b.append(f'<rect x="{x+12}" y="{yy-6}" width="52" height="12" rx="6" fill="{C["red"] if k == cur else "none"}" stroke="{col}" stroke-width="1.6"/>')
+        b.append(text(x, yy + 28, name.upper(), "bebas", 19, C["paper"] if k <= cur else C["dim"], ls=2))
+        b.append(text(x + 62, yy + 28, f"{need}+", "plex", 11, C["muted"] if k <= cur else C["dim"]))
+    H = y + 64 + 52
+    return svg_doc(W, H, "\n".join(b), ("Bebas", "Plex", "Playfair"), defs, title)
+
+
+# --------------------------------------------------------------------------- #
 # README pinned block
 # --------------------------------------------------------------------------- #
+def picture(path, alt):
+    """Desktop card, with the phone version swapped in on narrow screens."""
+    return (f'<picture><source media="(max-width: 700px)" srcset="assets/m/{path}">'
+            f'<img src="assets/{path}" width="100%" alt="{alt}"></picture>')
+
+
 def update_readme_pinned(pinned):
     if not README.exists():
         return
@@ -1105,8 +1589,8 @@ def update_readme_pinned(pinned):
         print("  pinned markers missing in README.md")
         return
     if pinned:
-        parts = [f'<a href="{r["url"]}"><img src="assets/pinned/{r["name"]}.svg" width="100%" '
-                 f'alt="{esc(r["name"])} repository card"></a>' for r in pinned]
+        parts = [f'<a href="{r["url"]}">{picture(f"pinned/{r["name"]}.svg", f"{esc(r["name"])} repository card")}</a>'
+                 for r in pinned]
         block = "\n" + "\n".join(parts) + "\n"
     else:
         block = "\n<sub>No pinned repositories right now.</sub>\n"
@@ -1202,24 +1686,39 @@ def main():
     stats, pinned = fetch_github()
 
     print("rendering cards")
+    M = ASSETS / "m"
     write(ASSETS / "hero.svg", hero(st, stats, today))
-    write(ASSETS / "abyss.svg", abyss_card(stats))
+    write(M / "hero.svg", hero_m(st, stats))
+    write(ASSETS / "abyss.svg", abyss_card(st, stats))
+    write(M / "abyss.svg", abyss_card(st, stats, mobile=True))
     for n in range(1, len(SECTIONS) + 1):
         write(ASSETS / f"layer-{n:02d}.svg", section_header(n))
+        write(M / f"layer-{n:02d}.svg", section_header_m(n))
     write(ASSETS / "about.svg", about_card(st))
+    write(M / "about.svg", about_m(st))
     write(ASSETS / "toolkit.svg", toolkit_card(st))
+    write(M / "toolkit.svg", toolkit_m(st))
     write(ASSETS / "system.svg", system_card(st))
+    write(M / "system.svg", system_m(st))
     write(ASSETS / "signal.svg", signal_card(st, stats, today))
+    write(M / "signal.svg", signal_card(st, stats, today, mobile=True))
     write(ASSETS / "footer.svg", footer_card())
+    write(M / "footer.svg", footer_card(mobile=True))
+    for name, label, value, verb in CONTACT:
+        write(ASSETS / "contact" / f"{name}.svg", contact_button(label, value, verb))
+    for name, label in RING:
+        write(ASSETS / "contact" / f"{name}.svg", ring_button(label))
 
     if pinned is not None:
         overrides = st.get("pinned_overrides", {}) or {}
         keep = set()
         for i, r in enumerate(pinned, 1):
-            write(PINNED_DIR / f"{r['name']}.svg", project_card(i, r, overrides.get(r["name"], {}) or {}))
+            ov = overrides.get(r["name"], {}) or {}
+            write(PINNED_DIR / f"{r['name']}.svg", project_card(i, r, ov))
+            write(ASSETS / "m" / "pinned" / f"{r['name']}.svg", project_card(i, r, ov, mobile=True))
             keep.add(f"{r['name']}.svg")
-        if PINNED_DIR.exists():
-            for f in PINNED_DIR.glob("*.svg"):
+        for d in (PINNED_DIR, ASSETS / "m" / "pinned"):
+            for f in (d.glob("*.svg") if d.exists() else []):
                 if f.name not in keep:
                     f.unlink()
                     print(f"  removed stale {f.relative_to(ROOT)}")

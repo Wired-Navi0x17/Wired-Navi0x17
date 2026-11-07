@@ -59,6 +59,39 @@ toolkit:
     - "Bash"
     - "fish"
 
+# The Abyss map (LAYER 01 to 07): one step of my own descent per layer.
+# here = the layer I am on right now (the map marks it).
+abyss:
+  here: "6"
+  L1:
+    step: "Enrolled in B.Tech CSE (AI/ML) at RV University"
+    when: "2025"
+    cost: "left the surface for good"
+  L2:
+    step: "Python first, then neural nets in PyTorch"
+    when: "2025"
+    cost: "late nights and broken notebooks"
+  L3:
+    step: "Data structures and algorithms in Java, every day"
+    when: "DAILY"
+    cost: "every wrong answer on LeetCode"
+  L4:
+    step: "NixOS and KDE Plasma became the daily driver"
+    when: "DAILY DRIVER"
+    cost: "a whole weekend for one config"
+  L5:
+    step: "Rust, and real projects: Enigmaa, Filevo, this page"
+    when: "2026"
+    cost: "a long war with the borrow checker"
+  L6:
+    step: "Working toward first upstream KDE contributions"
+    when: "NOW"
+    cost: "reading code far bigger than mine"
+  L7:
+    step: "Unknown. Still descending."
+    when: "?????"
+    cost: "no one has come back to say"
+
 signal:
   divergence: "1.048596"
 
