@@ -1,5 +1,5 @@
 <a href="https://harshulkala.dpdns.org">
-  <picture><source media="(min-width: 701px)" srcset="assets/hero.svg"><img src="assets/m/hero.svg" width="100%" alt="Harshul Kala | Navi (Wired-Navi0x17). CSE undergraduate at RV University working on AI, machine learning and Linux systems."></picture>
+  <picture><source media="(min-width: 701px)" srcset="assets/hero.svg"><img src="assets/m/hero.svg" width="100%" alt="Harshul Kala | Navi (l41n-pr0t0). CSE undergraduate at RV University working on AI, machine learning and Linux systems."></picture>
 </a>
 
 <p align="center">
@@ -15,10 +15,10 @@
 
 <picture><source media="(min-width: 701px)" srcset="assets/layer-02.svg"><img src="assets/m/layer-02.svg" width="100%" alt="Layer 02, Forest of Temptation: pinned repositories"></picture>
 <!--PINNED:START-->
-<a href="https://github.com/Wired-Navi0x17/Enigmaa"><picture><source media="(min-width: 701px)" srcset="assets/pinned/Enigmaa.svg"><img src="assets/m/pinned/Enigmaa.svg" width="100%" alt="Enigmaa repository card"></picture></a>
-<a href="https://github.com/Wired-Navi0x17/Wired-Navi0x17"><picture><source media="(min-width: 701px)" srcset="assets/pinned/Wired-Navi0x17.svg"><img src="assets/m/pinned/Wired-Navi0x17.svg" width="100%" alt="Wired-Navi0x17 repository card"></picture></a>
-<a href="https://github.com/Wired-Navi0x17/Filevo"><picture><source media="(min-width: 701px)" srcset="assets/pinned/Filevo.svg"><img src="assets/m/pinned/Filevo.svg" width="100%" alt="Filevo repository card"></picture></a>
-<a href="https://github.com/Wired-Navi0x17/l41n-pr0t0_Portfolio"><picture><source media="(min-width: 701px)" srcset="assets/pinned/l41n-pr0t0_Portfolio.svg"><img src="assets/m/pinned/l41n-pr0t0_Portfolio.svg" width="100%" alt="l41n-pr0t0_Portfolio repository card"></picture></a>
+<a href="https://github.com/l41n-pr0t0/Enigmaa"><picture><source media="(min-width: 701px)" srcset="assets/pinned/Enigmaa.svg"><img src="assets/m/pinned/Enigmaa.svg" width="100%" alt="Enigmaa repository card"></picture></a>
+<a href="https://github.com/l41n-pr0t0/l41n-pr0t0"><picture><source media="(min-width: 701px)" srcset="assets/pinned/l41n-pr0t0.svg"><img src="assets/m/pinned/l41n-pr0t0.svg" width="100%" alt="l41n-pr0t0 repository card"></picture></a>
+<a href="https://github.com/l41n-pr0t0/Filevo"><picture><source media="(min-width: 701px)" srcset="assets/pinned/Filevo.svg"><img src="assets/m/pinned/Filevo.svg" width="100%" alt="Filevo repository card"></picture></a>
+<a href="https://github.com/l41n-pr0t0/l41n-pr0t0_Portfolio"><picture><source media="(min-width: 701px)" srcset="assets/pinned/l41n-pr0t0_Portfolio.svg"><img src="assets/m/pinned/l41n-pr0t0_Portfolio.svg" width="100%" alt="l41n-pr0t0_Portfolio repository card"></picture></a>
 <!--PINNED:END-->
 
 <picture><source media="(min-width: 701px)" srcset="assets/layer-03.svg"><img src="assets/m/layer-03.svg" width="100%" alt="Layer 03, Great Fault: toolkit"></picture>
@@ -40,10 +40,10 @@
 </p>
 
 <p align="center">
-  <a href="https://octo-ring.com/p/Wired-Navi0x17/prev"><img src="assets/contact/ring-prev.svg" height="32" alt="Octo Ring: previous"></a>
+  <a href="https://octo-ring.com/p/l41n-pr0t0/prev"><img src="assets/contact/ring-prev.svg" height="32" alt="Octo Ring: previous"></a>
   <a href="https://octo-ring.com"><img src="assets/contact/ring-home.svg" height="32" alt="Octo Ring"></a>
-  <a href="https://octo-ring.com/p/Wired-Navi0x17/random"><img src="assets/contact/ring-random.svg" height="32" alt="Octo Ring: random"></a>
-  <a href="https://octo-ring.com/p/Wired-Navi0x17/next"><img src="assets/contact/ring-next.svg" height="32" alt="Octo Ring: next"></a>
+  <a href="https://octo-ring.com/p/l41n-pr0t0/random"><img src="assets/contact/ring-random.svg" height="32" alt="Octo Ring: random"></a>
+  <a href="https://octo-ring.com/p/l41n-pr0t0/next"><img src="assets/contact/ring-next.svg" height="32" alt="Octo Ring: next"></a>
 </p>
 
 <picture><source media="(min-width: 701px)" srcset="assets/footer.svg"><img src="assets/m/footer.svg" width="100%" alt="El Psy Kongroo. Close the world, open the next."></picture>

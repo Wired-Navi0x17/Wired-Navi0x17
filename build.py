@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Profile generator for github.com/Wired-Navi0x17.
+Profile generator for github.com/l41n-pr0t0.
 
 Renders every card in assets/*.svg from status.yml plus live GitHub data, and
 rewrites the pinned-repository block in README.md.
@@ -34,7 +34,7 @@ ASSETS = ROOT / "assets"
 PINNED_DIR = ASSETS / "pinned"
 STATUS = ROOT / "status.yml"
 README = ROOT / "README.md"
-USER = "Wired-Navi0x17"
+USER = "l41n-pr0t0"
 OFFLINE = "--offline" in sys.argv
 
 # Palette: Tokyo Ghoul manga. Ink black, off-white paper, one blood red.

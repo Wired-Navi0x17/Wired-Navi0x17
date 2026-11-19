@@ -3,7 +3,7 @@
 
 profile:
   name: "Harshul Kala | Navi"
-  handle: "Wired-Navi0x17"
+  handle: "l41n-pr0t0"
   alias: "Navi"
   motto: "a node in the wired"
   tagline: "AI/ML · Systems · Open source"
@@ -97,14 +97,11 @@ signal:
 
 # Optional: replace the auto-written text on a pinned card.
 # pinned_overrides:
-  Wired-Navi0x17:
-    tagline: "This profile: a README that renders itself"
-    summary: "Python generator and GitHub Actions that draw every card on this page as SVG, read pinned repositories and their READMEs, and keep the system specs and statistics current."
 #   Enigmaa:
 #     tagline: "Bayesian MPC predictive agent for autonomous highway driving"
 #     summary: "..."
 pinned_overrides:
-  Wired-Navi0x17:
+  l41n-pr0t0:
     tagline: "This profile: a README that renders itself"
     summary: "Python generator and GitHub Actions that draw every card on this page as SVG, read pinned repositories and their READMEs, and keep the system specs and statistics current."
 
